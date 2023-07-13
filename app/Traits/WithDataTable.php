@@ -27,9 +27,69 @@ trait WithDataTable {
                 ];
                 break;
 
-            default:
-                # code...
+            case 'grupo':
+                $grupos = $this->model::search($this->search)
+                    ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                    ->paginate($this->perPage);
+
+                return [
+                    "view" => 'livewire.table.grupo',
+                    "grupos" => $grupos,
+                    "data" => array_to_object([
+                        'href' => [
+                            'create_new' => route('grupos.new'),
+                            'create_new_text' => 'Nuevo Grupo',
+                            'export' => '#',
+                            'export_text' => 'Exportar'
+                        ]
+                    ])
+                ];
                 break;
+
+            case 'cuenta':
+                $cuentas = $this->model::search($this->search)
+                    ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                    ->paginate($this->perPage);
+
+                return [
+                    "view" => 'livewire.table.cuenta',
+                    "cuentas" => $cuentas,
+                    "data" => array_to_object([
+                        'href' => [
+                            'create_new' => route('cuentas.new'),
+                            'create_new_text' => 'Nueva cuenta',
+                            'export' => '#',
+                            'export_text' => 'Exportar'
+                        ]
+                    ])
+                ];
+                break;
+
+
+            case 'unidad':
+                $unidads = $this->model::search($this->search)
+                    ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                    ->paginate($this->perPage);
+
+                return [
+                    "view" => 'livewire.table.unidad',
+                    "unidads" => $unidads,
+                    "data" => array_to_object([
+                        'href' => [
+                            'create_new' => route('unidades.new'),
+                            'create_new_text' => 'Nueva Unidad',
+                            'export' => '#',
+                            'export_text' => 'Exportar'
+                        ]
+                    ])
+                ];
+                break;
+
+
+
+            default:
+            #<---------- code...
+            break;
         }
     }
 }

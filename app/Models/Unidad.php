@@ -18,4 +18,10 @@ class Unidad extends Model
      public function productos(){
         return $this->hasMany('App\Models\Producto');
     }
+
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nombre_unidad', 'like', '%'.$query.'%');
+    }
 }

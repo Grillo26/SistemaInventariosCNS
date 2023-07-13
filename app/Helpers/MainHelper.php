@@ -34,9 +34,9 @@ if (!function_exists('create_button')) {
         $action = str_replace($model, "", $action);
 
         return [
-            'submit_text' => ($action == "update") ? "Update" : "Submit",
-            'submit_response' => ($action == "update") ? "Updated." : "Submited.",
-            'submit_response_notyf' => ($action == "update") ? "Data ".$model." updated successfully" : "Data ".$model." added successfully"
+            'submit_text' => ($action == "update") ? "Actualizar" : "Guardar",
+            'submit_response' => ($action == "update") ? "Actualizado" : "Guardado",
+            'submit_response_notyf' => ($action == "update") ? "".$model." actualizado correctamente" : $model." añadido correctamente"
         ];
     }
 }

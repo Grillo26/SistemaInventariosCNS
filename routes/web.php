@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\CuentaController;
+use App\Http\Controllers\UnidadController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\livewire\Productos;
@@ -36,11 +39,18 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('productos', Productos::class)->name('productos');
     Route::view('/productos/new', "pages.productos.productos-new")->name('productos.new');
 
-    Route::get('grupos', Grupos::class)->name('grupos');
+    Route::get('/grupos', [ GrupoController::class, "index_view" ])->name('grupos');
+    Route::view('/grupos/new', "pages.grupo.grupo-new")->name('grupos.new');
+    Route::view('/grupos/edit/{grupoId}', "pages.grupo.grupo-edit")->name('grupos.edit');
 
-    Route::get('cuentas', Cuentas::class)->name('cuentas');
+    Route::get('/cuentas', [ CuentaController::class, "index_view" ])->name('cuentas');
+    Route::view('/cuentas/new', "pages.cuenta.cuenta-new")->name('cuentas.new');
+    Route::view('/cuentas/edit/{cuentaId}', "pages.cuenta.cuenta-edit")->name('cuentas.edit');
 
-    Route::get('unidades', Unidades::class)->name('unidades');
+    Route::get('/unidades', [ UnidadController::class, "index_view" ])->name('unidades');
+    Route::view('/unidades/new', "pages.unidad.unidad-new")->name('unidades.new');
+    Route::view('/unidades/edit/{cuentaId}', "pages.unidad.unidad-edit")->name('unidades.edit');
+
 
     Route::get('salidas', Salidas::class)->name('salidas');
 

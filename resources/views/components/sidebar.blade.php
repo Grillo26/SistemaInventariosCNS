@@ -14,6 +14,30 @@ $links = [
         "is_multi" => false,
 
     ],
+
+    [
+        "href" => "grupos",
+        "text" => "Grupos",
+        "icon" => "fas fa-syringe",
+        "is_multi" => false,
+
+    ],
+    
+    [
+        "href" => "cuentas",
+        "text" => "Cuentas",
+        "icon" => "fas fa-syringe",
+        "is_multi" => false,
+
+    ],
+
+    [
+        "href" => "unidades",
+        "text" => "Unidades",
+        "icon" => "fas fa-syringe",
+        "is_multi" => false,
+
+    ],
     
     [
         "href" => [
@@ -35,20 +59,7 @@ $links = [
         "is_multi" => true,
     ],
 
-    [
-        "href" => [
-            [
-                "section_text" => "Usuarios",
-                "icon" => "fas fa-user",
-                "section_list" => [
-                    ["href" => "user", "text" => "Gestionar Usuarios"],
-                    ["href" => "user.new", "text" => "Crear Usuario"]
-                ]
-            ]
-        ],
-        "text" => "Usuarios",
-        "is_multi" => true,
-    ],
+    
 ];
 $navigation_links = array_to_object($links);
 @endphp
@@ -56,7 +67,7 @@ $navigation_links = array_to_object($links);
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">Administrador</a>
+            <a href="{{ route('dashboard') }}">Contabilidad</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('dashboard') }}">

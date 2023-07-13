@@ -21,4 +21,11 @@ class Grupo extends Model
      public function productos(){
         return $this->hasMany('App\Models\Producto');
     }
+
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nombre_grupo', 'like', '%'.$query.'%')
+                ->orWhere('grupo', 'like', '%'.$query.'%');
+    }
 }
