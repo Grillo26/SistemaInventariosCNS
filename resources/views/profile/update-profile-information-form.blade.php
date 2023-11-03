@@ -9,9 +9,9 @@
 
     <x-slot name="form">
         <!-- Profile Photo -->
-        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+        <!--@if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
+                Profile Photo File Input 
                 <input type="file" class="hidden"
                             wire:model="photo"
                             x-ref="photo"
@@ -26,12 +26,12 @@
 
                 <x-jet-label for="photo" value="{{ __('Foto') }}" />
 
-                <!-- Current Profile Photo -->
+                Current Profile Photo 
                 <div class="mt-2" x-show="! photoPreview">
                     <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
                 </div>
 
-                <!-- New Profile Photo Preview -->
+                New Profile Photo Preview 
                 <div class="mt-2" x-show="photoPreview">
                     <span class="block rounded-full w-20 h-20"
                           x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
@@ -50,34 +50,87 @@
 
                 <x-jet-input-error for="photo" class="mt-2" />
             </div>
-        @endif
+        @endif-->
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label>Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-text-height"></i>
+                                </div>
+                            </div>
+                            <input id="name" type="text" class="form-control phone-number" wire:model.defer="state.name" autocomplete="name">
+                        </div>
+                        <x-jet-input-error for="name" class="mt-2" />
 
-        <!-- Name -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Nombre') }}" />
-            <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
-            <x-jet-input-error for="name" class="mt-2" />
-        </div>
+                    </div>
+                    <div class="form-group col-md-6 col-12">
+                        <label>Apellido</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-text-height"></i>
+                                </div>
+                            </div>
+                            <input id="lastname" type="text" class="form-control phone-number" wire:model.defer="state.lastname" autocomplete="lastname">
+                        </div>
+                    </div>
+                </div>
 
-        <!-- LastName -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="lastname" value="{{ __('Apellido') }}" />
-            <x-jet-input id="lastname" type="text" class="mt-1 block w-full" wire:model.defer="state.lastname" autocomplete="lastname" />
-            <x-jet-input-error for="lastname" class="mt-2" />
-        </div>
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label>Usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <input id="username" type="text" class="form-control phone-number" wire:model.defer="state.username" autocomplete="username">
+                        </div>
+                    </div>
 
-        <!-- Usuario -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="username" value="{{ __('Usuario') }}" />
-            <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.defer="state.username" autocomplete="username" />
-            <x-jet-input-error for="username" class="mt-2" />
-        </div>
+                    <div class="form-group col-md-6 col-12">
+                        <label>Correo Electrónico</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-at"></i>
+                                </div>
+                            </div>
+                            <input id="email" type="text" class="form-control phone-number" wire:model.defer="state.email">
+                        </div>
+                    </div>
 
-        <!-- Email -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
-            <x-jet-input-error for="email" class="mt-2" />
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-7 col-12">
+                        <label>Dirección</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control phone-number">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5 col-12">
+                        <label>Teléfono</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control phone-number">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </x-slot>
 

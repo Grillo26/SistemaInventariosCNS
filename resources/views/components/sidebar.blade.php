@@ -6,38 +6,6 @@ $links = [
         "icon" => "fas fa-chart-line",
         "is_multi" => false,
     ],
-
-    [
-        "href" => "productos",
-        "text" => "Artículos",
-        "icon" => "fas fa-syringe",
-        "is_multi" => false,
-
-    ],
-
-    [
-        "href" => "grupos",
-        "text" => "Grupos",
-        "icon" => "fas fa-syringe",
-        "is_multi" => false,
-
-    ],
-    
-    [
-        "href" => "cuentas",
-        "text" => "Cuentas",
-        "icon" => "fas fa-syringe",
-        "is_multi" => false,
-
-    ],
-
-    [
-        "href" => "unidades",
-        "text" => "Unidades",
-        "icon" => "fas fa-syringe",
-        "is_multi" => false,
-
-    ],
     
     [
         "href" => [
@@ -45,8 +13,6 @@ $links = [
                 "section_text" => "Información",
                 "icon" => "fas fa-database",
                 "section_list" => [
-                    ["href" => "salidas", "text" => "Salida de Artículo"],
-                    ["href" => "entradas", "text" => "Entrada de Artículo"],
                     ["href" => "grupos", "text" => "Grupos"],
                     ["href" => "cuentas", "text" => "Cuentas"],
                     ["href" => "unidades", "text" => "Unidades"],
@@ -66,8 +32,10 @@ $navigation_links = array_to_object($links);
 
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
-        <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">Contabilidad</a>
+        <div class="sidebar-brand p-3 mb-5">
+            <a href="{{ route('dashboard') }}">
+                <img class="d-inline-block" width="300px"src="{{URL::asset('img/cnsAlmacen.png')}}" alt="">
+            </a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('dashboard') }}">

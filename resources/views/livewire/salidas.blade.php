@@ -3,8 +3,8 @@
         <h1>{{ __('Salida de Artículo') }}</h1>
 
         <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="#"></a>Productos</div>
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Sistema</a></div>
+            <div class="breadcrumb-item"><a href="#"></a>Información</div>
             <div class="breadcrumb-item"><a href="{{ route('user') }}">Registrar Salidas</a></div>
         </div>
     </x-slot>
