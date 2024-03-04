@@ -5,23 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pasillo extends Model
+class Dll extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
+    protected $fillable= [
         'id',
-        'n_pasillo'
+        'nombre'
     ];
 
-     //relacion uno a muchos
-     public function productos(){
+    //relacion uno a muchos
+    public function productos(){
         return $this->hasMany('App\Models\Producto');
     }
+
 
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('n_pasillo', 'like', '%'.$query.'%'); 
+            : static::where('nombre', 'like', '%'.$query.'%'); 
     }
 }

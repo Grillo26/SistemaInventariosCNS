@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('bajas', function (Blueprint $table) {
             $table->id();
+            $table->string('fecha_baja');
+            $table->string('hora_baja');
+            $table->string('cantidadb');
+            $table->string('estadob');
             $table->timestamps();
         });
     }

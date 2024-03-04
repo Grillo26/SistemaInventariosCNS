@@ -1,15 +1,15 @@
 <x-app-layout>
     <x-slot name="header_content">
-        <h1>{{ __('Gestionar Grupos') }}</h1>
+        <h1>{{ __('Gestionar Proveedor') }}</h1>
 
         <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Sistema</a></div>
             <div class="breadcrumb-item"><a href="#">Información</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('user') }}">Gestionar Grupos</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('proveedor') }}">Gestionar Proveedor</a></div>
         </div>
     </x-slot>
 
     <div>
-        <livewire:table.main name="grupo" :model="$grupo" />
+        <livewire:table.main name="proveedor" :model="$proveedor" />
     </div>
 </x-app-layout>

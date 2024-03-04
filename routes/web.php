@@ -4,15 +4,22 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\UnidadController;
+use App\Http\Controllers\MesaController;
+use App\Http\Controllers\PasilloController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\DllController;
+use App\Http\Controllers\SolicitanteController;
+use App\Http\Controllers\ProductoController;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\livewire\Productos;
-use App\Http\livewire\Grupos;
 use App\Http\livewire\Cuentas;
 use App\Http\livewire\Salidas;
 use App\Http\livewire\Unidades;
 use App\Http\livewire\Entradas;
 use App\Http\livewire\Comprobate;
+use App\Http\livewire\Mesa;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +58,29 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::view('/unidades/new', "pages.unidad.unidad-new")->name('unidades.new');
     Route::view('/unidades/edit/{cuentaId}', "pages.unidad.unidad-edit")->name('unidades.edit');
 
+    Route::get('/mesas', [ MesaController::class, "index_view" ])->name('mesas');
+    Route::view('/mesas/new', "pages.mesa.mesa-new")->name('mesas.new');
+    Route::view('/mesas/edit/{mesaId}', "pages.mesa.mesa-edit")->name('mesas.edit');
+
+    Route::get('/pasillos', [ PasilloController::class, "index_view" ])->name('pasillos');
+    Route::view('/pasillos/new', "pages.pasillo.pasillo-new")->name('pasillos.new');
+    Route::view('/pasillos/edit/{pasilloId}', "pages.pasillo.pasillo-edit")->name('pasillos.edit');
+    
+    Route::get('/proveedor', [ ProveedorController::class, "index_view" ])->name('proveedor');
+    Route::view('/proveedor/new', "pages.proveedor.proveedor-new")->name('proveedor.new');
+    Route::view('/proveedor/edit/{proveedorId}', "pages.proveedor.proveedor-edit")->name('proveedor.edit');
+
+    Route::get('/dll', [ DllController::class, "index_view" ])->name('dll');
+    Route::view('/dll/new', "pages.dll.dll-new")->name('dll.new');
+    Route::view('/dll/edit/{dllId}', "pages.dll.dll-edit")->name('dll.edit');
+
+    Route::get('/solicitante', [ SolicitanteController::class, "index_view" ])->name('solicitante');
+    Route::view('/solicitante/new', "pages.solicitante.solicitante-new")->name('solicitante.new');
+    Route::view('/solicitante/edit/{solicitanteId}', "pages.solicitante.solicitante-edit")->name('solicitante.edit');
+
+    Route::get('/producto', [ ProductoController::class, "index_view" ])->name('producto');
+    Route::view('/producto/new', "pages.producto.producto-new")->name('producto.new');
+    Route::view('/producto/edit/{productoId}', "pages.producto.producto-edit")->name('producto.edit');
 
     Route::get('salidas', Salidas::class)->name('salidas');
 

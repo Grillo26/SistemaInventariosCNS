@@ -6,6 +6,22 @@ $links = [
         "icon" => "fas fa-chart-line",
         "is_multi" => false,
     ],
+
+    [
+        "href" => [
+            [
+                "section_text" => "Artículos",
+                "icon" => "fas fa-box",
+                "section_list" => [
+                    ["href" => "producto.new", "text" => "Añadir Artículos"],
+                    ["href" => "producto", "text" => "Gestionar Artículos"],
+                ]
+    
+            ]
+        ],
+        "text" => "Detalles de Artículos",
+        "is_multi" => true,
+    ],
     
     [
         "href" => [
@@ -16,12 +32,17 @@ $links = [
                     ["href" => "grupos", "text" => "Grupos"],
                     ["href" => "cuentas", "text" => "Cuentas"],
                     ["href" => "unidades", "text" => "Unidades"],
-                    ["href" => "comprobantes", "text" => "Comprobantes"]
+                    ["href" => "comprobantes", "text" => "Comprobantes"],
+                    ["href" => "mesas", "text" => "Mesas"],
+                    ["href" => "pasillos", "text" => "Pasillo"],
+                    ["href" => "proveedor", "text" => "Proveedores"],
+                    ["href" => "dll", "text" => "Dll"],
+                    ["href" => "solicitante", "text" => "Solicitante"],
                 ]
     
             ]
         ],
-        "text" => "Gestión de Artículos",
+        "text" => "Detalles de Artículos",
         "is_multi" => true,
     ],
 

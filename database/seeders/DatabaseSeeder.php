@@ -2,6 +2,16 @@
 
 namespace Database\Seeders;
 use App\Models\User;
+use App\Models\Unidad;
+use App\Models\Cuenta;
+use App\Models\Estante;
+use App\Models\Grupo;
+use App\Models\Mesa;
+use App\Models\Pasillo;
+use App\Models\Baja;
+use App\Models\Proveedor;
+use App\Models\Dl;
+use App\Models\Comprobante;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -33,6 +43,17 @@ class DatabaseSeeder extends Seeder
         $user2->password =  bcrypt('kuynva26101997');
         $user2->remember_token = Str::random(10);
         $user2->save();
+
+        \App\Models\Unidad::factory(10)->create();
+        \App\Models\Cuenta::factory(10)->create();
+        \App\Models\Estante::factory(10)->create();
+        \App\Models\Grupo::factory(10)->create();
+        \App\Models\Mesa::factory(10)->create();
+        \App\Models\Pasillo::factory(20)->create();
+        \App\Models\Baja::factory(20)->create();
+        \App\Models\Proveedor::factory(50)->create();
+        \App\Models\Dl::factory(50)->create();
+        \App\Models\Comprobante::factory(50)->create();
 
     
     }

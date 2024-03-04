@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ComprobanteFactory extends Factory
+class CuentaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,8 +14,8 @@ class ComprobanteFactory extends Factory
     public function definition()
     {
         return [
-            'n_comprobante' => $this->faker->randomNumber(5),
-            'detalle' => $this->faker->sentence(8)
+            'nombre_cuenta'=> $this->faker->name(),
+            'codigo_cuenta'=> $this->faker->randomNumber(3)
         ];
     }
 }

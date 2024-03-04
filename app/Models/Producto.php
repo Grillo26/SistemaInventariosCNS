@@ -38,5 +38,15 @@ class Producto extends Model
         return $this->belongsTo('App\Models\Pasillos');
     }
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nombre_producto', 'like', '%'.$query.'%')
+            ->orWhere('codigo_producto', 'like', '%'.$query.'%')
+            ->orWhere('unidad_idUnidad', 'like', '%'.$query.'%')
+            ->orWhere('grupo_idGrupo', 'like', '%'.$query.'%')
+            ->orWhere('cuenta_idCuenta', 'like', '%'.$query.'%');
+    }
+
 
 }

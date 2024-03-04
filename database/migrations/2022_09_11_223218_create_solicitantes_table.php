@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('solicitantes', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_u');
+            $table->string('codigo_u');
+            $table->string('codigo_u2');
             $table->timestamps();
         });
     }

@@ -604,7 +604,7 @@ select.form-control:not([size]):not([multiple]) {
   border-radius: 3px;
   border: none;
   position: relative;
-  margin-bottom: 30px; }
+  margin-bottom: 20px; }
   .card .card-header, .card .card-body, .card .card-footer {
     background-color: transparent;
     padding: 20px 25px; }
