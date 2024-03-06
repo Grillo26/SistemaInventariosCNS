@@ -13,14 +13,49 @@ $links = [
                 "section_text" => "Artículos",
                 "icon" => "fas fa-box",
                 "section_list" => [
-                    ["href" => "producto.new", "text" => "Añadir Artículos"],
+                    ["href" => "producto.new", "text" => "Nuevo Artículo"],
                     ["href" => "producto", "text" => "Gestionar Artículos"],
-                    ["href" => "producto", "text" => "Salidas"],
+                    ["href" => "producto", "text" => "Entrada de Artículos"],
+                    ["href" => "producto", "text" => "Salida de Artículos"],
                 ]
     
             ]
         ],
         "text" => "Inventario",
+        "is_multi" => true,
+    ],
+
+    [
+        "href" => [
+            [
+                "section_text" => "Grupos",
+                "icon" => "fas fa-users",
+                "section_list" => [
+                    ["href" => "grupos.new", "text" => "Añadir Grupo"],
+                    ["href" => "grupos", "text" => "Gestionar Grupos"],
+                ]
+    
+            ],
+            [
+                "section_text" => "Cuentas",
+                "icon" => "fas fa-list-ol",
+                "section_list" => [
+                    ["href" => "cuentas.new", "text" => "Añadir Cuenta"],
+                    ["href" => "cuentas", "text" => "Gestionar Cuentas"],
+                ]
+    
+            ],
+            [
+                "section_text" => "Unidades",
+                "icon" => "fas fa-building",
+                "section_list" => [
+                    ["href" => "unidades.new", "text" => "Añadir Unidad"],
+                    ["href" => "unidades", "text" => "Gestionar Unidades"],
+                ]
+    
+            ],
+        ],
+        "text" => "Categorías",
         "is_multi" => true,
     ],
     
@@ -30,14 +65,12 @@ $links = [
                 "section_text" => "Información",
                 "icon" => "fas fa-database",
                 "section_list" => [
-                    ["href" => "grupos", "text" => "Grupos"],
-                    ["href" => "cuentas", "text" => "Cuentas"],
-                    ["href" => "unidades", "text" => "Unidades"],
-                    ["href" => "comprobantes", "text" => "Comprobantes"],
+                    ["href" => "pasillos", "text" => "Pasillos"],
                     ["href" => "mesas", "text" => "Mesas"],
-                    ["href" => "pasillos", "text" => "Pasillo"],
+                    ["href" => "mesas", "text" => "Estantes"],
+                    ["href" => "comprobantes", "text" => "Comprobantes"],
                     ["href" => "dll", "text" => "Dll"],
-                    ["href" => "solicitante", "text" => "Solicitante"],
+                    ["href" => "dll", "text" => "Estados"],
                 ]
     
             ]
@@ -57,6 +90,13 @@ $links = [
     "href" => "solicitante",
         "text" => "Solicitudes",
         "icon" => "fas fa-paperclip",
+        "is_multi" => false,
+    ],
+
+    [
+    "href" => "solicitante",
+        "text" => "Reportes",
+        "icon" => "fas fa-file-pdf",
         "is_multi" => false,
     ],
 

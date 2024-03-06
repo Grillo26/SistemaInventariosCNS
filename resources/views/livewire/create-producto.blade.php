@@ -89,7 +89,12 @@
                                 <i class="fas fa-truck"></i>
                             </div>
                         </div>
-                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                        <select wire:model="grupoId" class="form-control" id="grupo">
+                            <option value="">Seleccione Proveedor</option>
+                            @foreach($grupos as $id => $nombre)
+                                <option value="{{ $id }}">{{ $nombre }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
                 </div>
@@ -149,7 +154,7 @@
 
             <x-jet-section-border />
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-5 mb-3">
 
                 <!--Pasillo -->
                 <div class="p-1">
@@ -204,9 +209,19 @@
                                 <i class="fas fa-thumbs-up"></i>
                             </div>
                         </div>
-                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
-                    </div>
+                        <select wire:model="grupoId" class="form-control" id="grupo">
+                            <option value="">Estado</option>
+                            @foreach($grupos as $id => $nombre)
+                                <option value="{{ $id }}">{{ $nombre }}</option>
+                            @endforeach
+                        </select>                    </div>
                     <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+                <!--Fecha Caducidad-->
+                <div  class="col-span-1 p-1">
+                    <x-jet-label for="fecha" value="{{ __('Fecha Caducidad') }}" />
+
+                    <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model.defer="produccion.fecha" required>
                 </div>
             </div>
 
@@ -219,30 +234,62 @@
                     <x-jet-label for="grupo_idGrupo" value="{{ __('Grupo') }}" />
     
                     <!--<x-jet-input id="grupo_idGrupo" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.grupo_idGrupo" required/>-->
-                    <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
                         <select wire:model="grupoId" class="form-control" id="grupo">
                             <option value="">Selecciona un grupo</option>
                             @foreach($grupos as $id => $nombre)
                                 <option value="{{ $id }}">{{ $nombre }}</option>
                             @endforeach
                         </select>
-                        </div>
+                    </div>
                     <x-jet-input-error for="producto.grupo_idGrupo" class="mt-2" />
                 </div>
 
                 <!--cuenta_a-->
                 <div class="">
                     <x-jet-label for="cuenta_idCuenta" value="{{ __('Cuenta') }}" />
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-ol"></i>
+                            </div>
+                        </div>
+                        <select wire:model="grupoId" class="form-control" id="grupo">
+                            <option value="">Selecciona un grupo</option>
+                            @foreach($grupos as $id => $nombre)
+                                <option value="{{ $id }}">{{ $nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     
-                    <x-jet-input id="cuenta_idCuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.cuenta_idCuenta" required />
+                    <!--<x-jet-input id="cuenta_idCuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.cuenta_idCuenta" required />-->
                     <x-jet-input-error for="producto.cuenta_idCuenta" class="mt-2" />
                 </div>
 
                 <!--unidad-->
                 <div class="">
                     <x-jet-label for="unidad_idUnidad" value="{{ __('Unidad') }}" />
-                    
-                    <x-jet-input id="unidad_idUnidad" type="text" class="mt-1 block w- form-control shadow-none"  wire:model.defer="producto.unidad_idUnidad" required/>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <select wire:model="grupoId" class="form-control" id="grupo">
+                            <option value="">Selecciona un grupo</option>
+                            @foreach($grupos as $id => $nombre)
+                                <option value="{{ $id }}">{{ $nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>                    
+                    <!--<x-jet-input id="unidad_idUnidad" type="text" class="mt-1 block w- form-control shadow-none"  wire:model.defer="producto.unidad_idUnidad" required/>-->
                     <x-jet-input-error for="producto.unidad_idUnidad" class="mt-2" />
                 </div>
             </div>

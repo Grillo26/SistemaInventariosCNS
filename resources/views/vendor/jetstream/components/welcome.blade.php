@@ -89,7 +89,9 @@ $user = auth()->user();
 	
 </div>
 
+
 <div class="row">
+	<!--TABLA-->
 	<div class="col-xl-8">
 		<div class="card">
 			<div class="card-body">
@@ -233,6 +235,52 @@ $user = auth()->user();
 		<!-- end card -->
 	</div>
 	<!-- end col -->
+
+	<div class="col-xl-4 bg-white">
+		<div class="card-body">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active show" id="nosotros-tab" data-toggle="tab" href="#nosotros" role="tab" aria-controls="nosotros" aria-selected="true">Nosotros</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="mision-tab" data-toggle="tab" href="#mision" role="tab" aria-controls="mision" aria-selected="false">Misión</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="vision-tab" data-toggle="tab" href="#vision" role="tab" aria-controls="vision" aria-selected="false">Visión</a>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade active show" id="nosotros" role="tabpanel" aria-labelledby="nosotros-tab">
+			La Caja Nacional de Salud es una institución descentralizada de derecho público sin fines de lucro, con personeria jurídica, autonomía de gestión y patrimonio independiente, encargada de la gestión, aplicación y ejecución del régimen de Seguridad Social a corto plazo (enfermedad, maternidad y riesgos profesionales).
+			<div class="col-12 col-sm-6 col-md-6 col-lg-12">
+                <article class="article">
+                  <div class="article-header">
+                    <div class="article-image" data-background="url('{{ asset('img/personal.jpg') }}" style="background-image: url('{{ asset('img/personal.jpg') }}');">
+                    </div>
+                    <div class="article-title">
+                      <h2><a href="#">Caja Nacional de Salud Distrital Yacuiba</a></h2>
+                    </div>
+                  </div>
+                  <div class="article-details">
+                    <p>			Se rige por los principios de Universalidad, Solidaridad, Unidad de Gestión, Economía, Oportunidad y Eficacia en el otorgamiento de las prestaciones de salud, optimizando el uso de recursos y buscando ampliar el nivel de cobertura
+</p>
+                    <div class="article-cta">
+                      
+					<x-jet-button>
+					  <a href="https://www.cns.gob.bo/contactos/contactos" ><i class="text-white">Página Web</i></a>
+           			</x-jet-button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+			</div>
+			<div class="tab-pane fade" id="mision" role="tabpanel" aria-labelledby="mision-tab">
+			La Caja Nacional de Salud suministrará a sus asegurados las prestaciones en servicios, especie y dinero del régimen de enfermedad, maternidad y riesgos profesionales a corto plazo establecidas por el Código de Seguridad Social, su Reglamento y disposiciones conexas.
+			</div>
+			<div class="tab-pane fade" id="vision" role="tabpanel" aria-labelledby="vision-tab">
+			La Caja Nacional de Salud es referente nacional e internacional en la prestación de servicios integrales de salud de la seguridad social de corto plazo, con calidad, transparencia, compromiso, integralidad, excelencia y sostenibilidad
+			</div>
+		</div>
+	</div>
 </div>
-<!-- end row -->
-</div>
+
