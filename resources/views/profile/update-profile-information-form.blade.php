@@ -58,7 +58,7 @@
                         <label>Nombre</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">
+                                <div class="input-group-text"> 
                                     <i class="fas fa-text-height"></i>
                                 </div>
                             </div>

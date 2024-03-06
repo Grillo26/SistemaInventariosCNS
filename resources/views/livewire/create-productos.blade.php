@@ -63,6 +63,88 @@
             
           </div>
         </form>
+
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label>Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-text-height"></i>
+                                </div>
+                            </div>
+                            <input id="name" type="text" class="form-control phone-number" wire:model.defer="state.name" autocomplete="name">
+                        </div>
+                        <x-jet-input-error for="name" class="mt-2" />
+
+                    </div>
+                    <div class="form-group col-md-6 col-12">
+                        <label>Apellido</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-text-height"></i>
+                                </div>
+                            </div>
+                            <input id="lastname" type="text" class="form-control phone-number" wire:model.defer="state.lastname" autocomplete="lastname">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label>Usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <input id="username" type="text" class="form-control phone-number" wire:model.defer="state.username" autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label>Correo Electrónico</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-at"></i>
+                                </div>
+                            </div>
+                            <input id="email" type="text" class="form-control phone-number" wire:model.defer="state.email">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-7 col-12">
+                        <label>Dirección</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control phone-number">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-5 col-12">
+                        <label>Teléfono</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control phone-number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
          
   </div>

@@ -15,11 +15,12 @@ $links = [
                 "section_list" => [
                     ["href" => "producto.new", "text" => "Añadir Artículos"],
                     ["href" => "producto", "text" => "Gestionar Artículos"],
+                    ["href" => "producto", "text" => "Salidas"],
                 ]
     
             ]
         ],
-        "text" => "Detalles de Artículos",
+        "text" => "Inventario",
         "is_multi" => true,
     ],
     
@@ -35,7 +36,6 @@ $links = [
                     ["href" => "comprobantes", "text" => "Comprobantes"],
                     ["href" => "mesas", "text" => "Mesas"],
                     ["href" => "pasillos", "text" => "Pasillo"],
-                    ["href" => "proveedor", "text" => "Proveedores"],
                     ["href" => "dll", "text" => "Dll"],
                     ["href" => "solicitante", "text" => "Solicitante"],
                 ]
@@ -44,6 +44,20 @@ $links = [
         ],
         "text" => "Detalles de Artículos",
         "is_multi" => true,
+    ],
+
+    [
+        "href" => "proveedor",
+        "text" => "Proveedores",
+        "icon" => "fas fa-truck",
+        "is_multi" => false,
+    ],
+
+    [
+    "href" => "solicitante",
+        "text" => "Solicitudes",
+        "icon" => "fas fa-paperclip",
+        "is_multi" => false,
     ],
 
     

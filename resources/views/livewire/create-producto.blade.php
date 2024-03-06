@@ -22,54 +22,203 @@
 
         
         <x-slot name="form">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 mb-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
                 <!--Nombre-->
-                <div class="">
+                <div class="col-span-2 p-1">
                     <x-jet-label for="nombre_producto" value="{{ __('Nombre') }}" />
-                    @if($action == "updateProducto")
-                    <small>Edite el Nombre del Artículo</small>
-                    @endif
-                    @if($action == "createProducto")
-                    <small>Intro. Nombre de Artículo</small>
-                    @endif
-                    <x-jet-input id="lote" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.nombre_producto" required/>
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-text-height"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
                     <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
                 </div>
 
-                <!--Codigo-->
-                <div class="">
-                    <x-jet-label for="codigo_producto" value="{{ __('Codigo Artículo') }}" />
-                    @if($action == "updateProducto")
-                    <small>Edite el número del código del Artículo</small>
-                    @endif
-                    @if($action == "createProducto")
-                    <small>Intro. Código de Artículo</small>
-                    @endif
-                    <x-jet-input id="codigo_producto" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.codigo_producto" required/>
-                    <x-jet-input-error for="producto.codigo_producto" class="mt-2" />
+                <!--Codigo Identificación -->
+                <div class="col-span-1 p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Código Artículo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+
+                <!--Fecha Adquisición-->
+                <div  class="col-span-1 p-1">
+                    <x-jet-label for="fecha" value="{{ __('Fecha') }}" />
+
+                    <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model.defer="produccion.fecha" required>
                 </div>
             </div>
-        <script>
-        // Inicializar Select2 en el campo de selección
-        $(document).ready(function() {
-            $('#grupo').select2();
-        });
-        </script>
-        
 
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
+                <!--Descripción-->
+                <div class="col-span-3 p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Descripción Artículo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-text-width"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+                
+
+                <!--Proveedor -->
+                <div class="col-span-1 p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Proveedor') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+            </div>
+
+            <x-jet-section-border />
+
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-3">
+                <!--Valor Artículo-->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Valor por Artículo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+                
+
+                <!--Cantidad Stock -->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Cantidad Stock') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+
+                <!--Valor de Inventario -->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Valor de Inventario') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+            </div>
+
+            <x-jet-section-border />
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
+
+                <!--Pasillo -->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Pasillo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+                <!--Estante-->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Estante') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+                <!--Mesa -->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Mesa') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+                <!-- Estado Artículo -->
+                <div class="p-1">
+                    <x-jet-label for="nombre_producto" value="{{ __('Estado Artículo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                        </div>
+                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                    </div>
+                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                </div>
+            </div>
+
+            
+        
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
 
                 <!--Grupo-->
                 <div class="">
                     <x-jet-label for="grupo_idGrupo" value="{{ __('Grupo') }}" />
-                    @if($action == "updateProducto")
-                    <small>Edite el Nombre del Grupo</small>
-                    @endif
-                    @if($action == "createProducto")
-                    <small>Escriba y seleccione Grupo</small>
-                    @endif
+    
                     <!--<x-jet-input id="grupo_idGrupo" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.grupo_idGrupo" required/>-->
-                    <br>
                     <div class="form-group">
                         <select wire:model="grupoId" class="form-control" id="grupo">
                             <option value="">Selecciona un grupo</option>
@@ -81,17 +230,10 @@
                     <x-jet-input-error for="producto.grupo_idGrupo" class="mt-2" />
                 </div>
 
-               
-
                 <!--cuenta_a-->
                 <div class="">
                     <x-jet-label for="cuenta_idCuenta" value="{{ __('Cuenta') }}" />
-                    @if($action == "updateProducto")
-                    <small>Edite el la Cuenta </small>
-                    @endif
-                    @if($action == "createProducto")
-                    <small>Escriba y seleecione Cuenta</small>
-                    @endif
+                    
                     <x-jet-input id="cuenta_idCuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.cuenta_idCuenta" required />
                     <x-jet-input-error for="producto.cuenta_idCuenta" class="mt-2" />
                 </div>
@@ -99,12 +241,7 @@
                 <!--unidad-->
                 <div class="">
                     <x-jet-label for="unidad_idUnidad" value="{{ __('Unidad') }}" />
-                    @if($action == "updateProducto")
-                    <small>Edite el Grupo</small>
-                    @endif
-                    @if($action == "createProducto")
-                    <small>Escriba y seleccione Unidad</small>
-                    @endif
+                    
                     <x-jet-input id="unidad_idUnidad" type="text" class="mt-1 block w- form-control shadow-none"  wire:model.defer="producto.unidad_idUnidad" required/>
                     <x-jet-input-error for="producto.unidad_idUnidad" class="mt-2" />
                 </div>
