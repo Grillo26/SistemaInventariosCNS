@@ -67,10 +67,10 @@ $links = [
                 "section_list" => [
                     ["href" => "pasillos", "text" => "Pasillos"],
                     ["href" => "mesas", "text" => "Mesas"],
-                    ["href" => "mesas", "text" => "Estantes"],
+                    ["href" => "estantes", "text" => "Estantes"],
                     ["href" => "comprobantes", "text" => "Comprobantes"],
                     ["href" => "dll", "text" => "Dll"],
-                    ["href" => "dll", "text" => "Estados"],
+                    ["href" => "estados", "text" => "Estados"],
                 ]
     
             ]

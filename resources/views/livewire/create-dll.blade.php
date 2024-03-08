@@ -24,15 +24,17 @@
         <x-slot name="form">
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <!--Nombre-->
-                <div class="">
+                <div class="col-span-2 p-1">
                     <x-jet-label for="nombre" value="{{ __('Nombre Dll') }}" />
-                    @if($action == "updateDll")
-                    <small>Edite el Nombre del Dll</small>
-                    @endif
-                    @if($action == "createDll")
-                    <small>Ingrese el Nombre del Dll</small>
-                    @endif
-                    <x-jet-input id="nombre" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="dll.nombre" required/>
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                        </div>
+                        <input id="nombre" type="text" class="form-control phone-number" wire:model.defer="dll.nombre" required>
+                    </div>
                     <x-jet-input-error for="dll.nombre" class="mt-2" />
                 </div>
             </div>

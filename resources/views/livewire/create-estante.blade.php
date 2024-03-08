@@ -1,19 +1,19 @@
 <div id="form-create">
     <x-jet-form-section :submit="$action" class="mb-4">
         <x-slot name="title">
-            {{ __('Proveedor') }}
+            {{ __('Estante') }}
 
         </x-slot>
 
         <x-slot name="description">
-            @if ($action == "createProveedor")
-            {{ __('Complete los siguientes datos para registrar un nuevo proveedor. Nota: lea correctamente los campos y verifique  si están escritos de
+            @if ($action == "createEstante")
+            {{ __('Complete los siguientes datos para registrar un nuevo estante. Nota: lea correctamente los campos y verifique  si están escritos de
                 manera adecuada dentro del formulario.') }} 
             
             @endif
 
-            @if($action == "updateProveedor")
-            {{ __('Complete los siguientes datos para editar el proveedor que seleccionó. Nota: lea correctamente los campos y verifique  si están escritos de
+            @if($action == "updateEstante")
+            {{ __('Complete los siguientes datos para editar el estante que seleccionó. Nota: lea correctamente los campos y verifique  si están escritos de
                 manera adecuada dentro del formulario.') }} 
             
             @endif
@@ -22,11 +22,25 @@
 
         
         <x-slot name="form">
-            <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <!--Nombre-->
-                
+             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <!--Numero-->
+                <div class="col-span- p-1">
+                    <x-jet-label for="n_estante" value="{{ __('Número de Estante') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                        </div>
+                        <input id="n_estante" type="text" class="form-control phone-number" wire:model.defer="estante.n_estante" required>
+                    </div>
+                    <x-jet-input-error for="estante.n_estante" class="mt-2" />
+                </div>
+
+                <!--Descripcion-->
                 <div class="col-span-2 p-1">
-                        <x-jet-label for="nombre_proveedor" value="{{ __('Nombre del Proveedor') }}" />
+                    <x-jet-label for="estante.descripcion" value="{{ __('Descripción') }}" />
                     
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -34,29 +48,12 @@
                                 <i class="fas fa-text-height"></i>
                             </div>
                         </div>
-                        <input id="nombre_proveedor" type="text" class="form-control phone-number" wire:model.defer="proveedor.nombre_proveedor" required>
+                        <input id="descripcion" type="text" class="form-control phone-number" wire:model.defer="estante.descripcion" required>
                     </div>
-                    <x-jet-input-error for="proveedor.nombre_proveedor" class="mt-2" />
+                    <x-jet-input-error for="estante.descripcion" class="mt-2" />
                 </div>
-                <!--Correo-->
-                
-                <div class="col-span-2 p-1">
-                    <x-jet-label for="email" value="{{ __('Correo del Proveedor') }}" />
-                    
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-at"></i>
-                            </div>
-                        </div>
-                        <input id="email" type="text" class="form-control phone-number" wire:model.defer="proveedor.email" required>
-                    </div>
-                    <x-jet-input-error for="proveedor.email" class="mt-2" />
-                </div>
-            </div>
 
-            
-             
+            </div>
 
         </x-slot>
 

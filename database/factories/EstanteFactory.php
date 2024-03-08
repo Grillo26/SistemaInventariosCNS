@@ -14,7 +14,8 @@ class EstanteFactory extends Factory
     public function definition()
     {
         return [
-            'n_estante' => $this->faker->randomNumber(5)
+            'n_estante' => $this->faker->randomNumber(5),
+            'descripcion' => $this->faker->sentence(8)
         ];
     }
 }

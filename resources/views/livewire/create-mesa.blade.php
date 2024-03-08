@@ -23,16 +23,18 @@
         
         <x-slot name="form">
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <!--Nombre-->
-                <div class="">
-                    <x-jet-label for="nombre_unidad" value="{{ __('Número Mesa') }}" />
-                    @if($action == "updateMesa")
-                    <small>Edite el Nombre de la Unidad</small>
-                    @endif
-                    @if($action == "createMesa")
-                    <small>Ingrese el Nombre de la Unidad</small>
-                    @endif
-                    <x-jet-input id="n_mesa" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="mesa.n_mesa" required/>
+                <!--N de mesa-->
+                <div class="col-span-2 p-1">
+                    <x-jet-label for="n_mesa" value="{{ __('Número de Mesa') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                        </div>
+                        <input id="n_mesa" type="text" class="form-control phone-number" wire:model.defer="mesa.n_mesa" required>
+                    </div>
                     <x-jet-input-error for="mesa.n_mesa" class="mt-2" />
                 </div>
             </div>

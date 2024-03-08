@@ -124,6 +124,25 @@ trait WithDataTable {
                 ];
                 break;
 
+            case 'estante':
+                $estantes = $this->model::search($this->search)
+                    ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                    ->paginate($this->perPage);
+
+                return [
+                    "view" => 'livewire.table.estante',
+                    "estantes" => $estantes,
+                    "data" => array_to_object([
+                        'href' => [
+                            'create_new' => route('estantes.new'),
+                            'create_new_text' => 'Nuevo Estante',
+                            'export' => '#',
+                            'export_text' => 'Exportar'
+                        ]
+                    ])
+                ];
+                break;
+
             case 'proveedor':
                 $proveedors = $this->model::search($this->search)
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')

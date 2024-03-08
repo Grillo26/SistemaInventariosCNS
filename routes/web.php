@@ -10,6 +10,8 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\DllController;
 use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\EstanteController;
+use App\Http\Controllers\EstadoController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,7 @@ use App\Http\livewire\Salidas;
 use App\Http\livewire\Unidades;
 use App\Http\livewire\Entradas;
 use App\Http\livewire\Comprobate;
+use App\Http\livewire\Estad;
 use App\Http\livewire\Mesa;
 
 /*
@@ -56,11 +59,15 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
 
     Route::get('/unidades', [ UnidadController::class, "index_view" ])->name('unidades');
     Route::view('/unidades/new', "pages.unidad.unidad-new")->name('unidades.new');
-    Route::view('/unidades/edit/{cuentaId}', "pages.unidad.unidad-edit")->name('unidades.edit');
+    Route::view('/unidades/edit/{unidadId}', "pages.unidad.unidad-edit")->name('unidades.edit');
 
     Route::get('/mesas', [ MesaController::class, "index_view" ])->name('mesas');
     Route::view('/mesas/new', "pages.mesa.mesa-new")->name('mesas.new');
     Route::view('/mesas/edit/{mesaId}', "pages.mesa.mesa-edit")->name('mesas.edit');
+
+    Route::get('/estantes', [ EstanteController::class, "index_view" ])->name('estantes');
+    Route::view('/estantes/new', "pages.estante.estante-new")->name('estantes.new');
+    Route::view('/estantes/edit/{estanteId}', "pages.estante.estante-edit")->name('estantes.edit');
 
     Route::get('/pasillos', [ PasilloController::class, "index_view" ])->name('pasillos');
     Route::view('/pasillos/new', "pages.pasillo.pasillo-new")->name('pasillos.new');
@@ -87,4 +94,6 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('entradas', Entradas::class)->name('entradas');
 
     Route::get('comprobantes', Comprobate::class)->name('comprobantes');
+
+    Route::get('estados', Estad::class)->name('estados');
 });

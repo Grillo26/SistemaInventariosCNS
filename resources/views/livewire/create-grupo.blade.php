@@ -24,54 +24,62 @@
         <x-slot name="form">
              <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <!--Nombre-->
-                <div class="">
-                    <x-jet-label for="nombre_grupo" value="{{ __('Nombre Grupo') }}" />
-                    @if($action == "updateGrupo")
-                    <small>Edite el Nombre del Grupo</small>
-                    @endif
-                    @if($action == "createGrupo")
-                    <small>Ingrese el Nombre del Grupo</small>
-                    @endif
-                    <x-jet-input id="lote" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="grupo.nombre_grupo" required/>
+                <div class="col-span-2 p-1">
+                    <x-jet-label for="nombre_grupo" value="{{ __('Nombre de Grupo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-text-height"></i>
+                            </div>
+                        </div>
+                        <input id="nombre_grupo" type="text" class="form-control phone-number" wire:model.defer="grupo.nombre_grupo" required>
+                    </div>
                     <x-jet-input-error for="grupo.nombre_grupo" class="mt-2" />
                 </div>
 
                 <!--Grupo-->
-                <div class="">
-                    <x-jet-label for="grupo" value="{{ __('Codigo Grupo') }}" />
-                    @if($action == "updateGrupo")
-                    <small>Edite el número del código del Grupo</small>
-                    @endif
-                    @if($action == "createGrupo")
-                    <small>Ingrese número del código del Grupo</small>
-                    @endif
-                    <x-jet-input id="grupo" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="grupo.grupo" required/>
+                <div class="col-span-2 p-1">
+                    <x-jet-label for="grupo" value="{{ __('Grupo') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-ol"></i>
+                            </div>
+                        </div>
+                        <input id="grupo" type="text" class="form-control phone-number" wire:model.defer="grupo.grupo" required>
+                    </div>
                     <x-jet-input-error for="grupo.grupo" class="mt-2" />
                 </div>
 
                 <!--cuenta_a-->
-                <div class="">
-                    <x-jet-label for="cuenta_a" value="{{ __('Cuenta Analítica') }}" />
-                    @if($action == "updateGrupo")
-                    <small>Edite el la cuenta analítica </small>
-                    @endif
-                    @if($action == "createGrupo")
-                    <small>Ingrese la cuenta analítica</small>
-                    @endif
-                    <x-jet-input id="cuenta_a" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="grupo.cuenta_a" required />
+                <div class="col-span-1 p-1">
+                    <x-jet-label for="grupo.cuenta_a" value="{{ __('Cuenta Analítica') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-ol"></i>
+                            </div>
+                        </div>
+                        <input id="cuenta_a" type="text" class="form-control phone-number" wire:model.defer="grupo.cuenta_a" required>
+                    </div>
                     <x-jet-input-error for="grupo.cuenta_a" class="mt-2" />
                 </div>
 
                 <!--partida_a-->
-                <div class="">
+                <div class="col-span-2 p-1">
                     <x-jet-label for="partida_a" value="{{ __('Partida Presupuestaria') }}" />
-                    @if($action == "updateGrupo")
-                    <small>Edite la partida presupuestarias</small>
-                    @endif
-                    @if($action == "createGrupo")
-                    <small>Ingrese la partida presupuestaria</small>
-                    @endif
-                    <x-jet-input id="partida_a" type="text" class="mt-1 block w- form-control shadow-none"  wire:model.defer="grupo.partida_a" required/>
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-list-ol"></i>
+                            </div>
+                        </div>
+                        <input id="partida_a" type="text" class="form-control phone-number" wire:model.defer="grupo.partida_a" required>
+                    </div>
                     <x-jet-input-error for="grupo.partida_a" class="mt-2" />
                 </div>
             </div>

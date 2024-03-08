@@ -1,11 +1,11 @@
 <div>
 <x-slot name="header_content">
-        <h1>{{ __('Gestionar Comprobantes') }}</h1>
+        <h1>{{ __('Gestionar Estados') }}</h1>
 
         <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Sistema</a></div>
             <div class="breadcrumb-item"><a href="#">Información</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('comprobantes') }}">Gestionar Comprobantes</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('estados') }}">Gestionar Estados</a></div>
         </div>
 </x-slot>
 
@@ -13,7 +13,7 @@
         <!--Butons-->
         <div class="flex pb-4 -ml-3">
             <a wire:click="$set('open', true)" class="-ml- btn btn-primary shadow-none">
-                Añadir Comprobate
+                Añadir Estado
                 <span class="fas fa-plus"></span> 
             </a>
             <a href="#" class="ml-2 btn btn-success shadow-none">
@@ -24,20 +24,25 @@
 
         <!--Modal-->
         <x-jet-dialog-modal wire:model="open">
-            <x-slot name="title">Crear Nuevo Comprobante</x-slot>
+            <x-slot name="title">Crear Nuevo Estado</x-slot>
             <x-slot name="content">
-                <!--número de Comprobante-->
-                <div class="mb-4">
-                    <label>Número de Comprobante</label><br>
-                    <x-jet-input wire:model.defer="nComp" type="text"  class="mt-1 block w-full border-gray-200 form-control shadow-none" placeholder="Ej. 445" autocomplete="off"/>
+                <!--número de Estado-->
+
+                <div class="col-span-2 p-1">
+                    <x-jet-label for="estado" value="{{ __('Nombre Estado') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-text-width"></i>
+                            </div>
+                        </div>
+                        <input id="estado" type="text" class="form-control phone-number" wire:model.defer="estado" required>
+                    </div>
+                    <x-jet-input-error for="estado" class="mt-2" />
                 </div>
 
-                <!--Grupo-->
-                <div class="mb-4">
-                    <label>Detalle del Comprobate</label><br>
-                    <x-jet-input wire:model.defer="detall" type="text"  class="mt-1 block w-full border-gray-200 form-control shadow-none" placeholder="Comprbante Kardex" autocomplete="off"/>
-                </div>
-  
+                
             </x-slot>
             <x-slot name="footer">
                 <x-jet-button wire:click="guardar" class="justify-center"> Guardar</x-jet-button>
@@ -46,8 +51,8 @@
         </x-jet-dialog-modal>
   
 
-        <x-notify-message on="saved" type="success" message="Comprobante creado correctamente!" /> 
-        <x-notify-message on="edit" type="success" message="Comprobante modificado correctamente!" /> 
+        <x-notify-message on="saved" type="success" message="Estado creado correctamente!" /> 
+        <x-notify-message on="edit" type="success" message="Estado modificado correctamente!" /> 
 
         <!--Options-->
         <div class="row mb-4">
@@ -66,15 +71,15 @@
         </div>
 
         <!--TABLE-->
-        @if($comprobantes->count())
+        @if($estados->count())
         <div class="row">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped text-sm text-gray-600">
                     <thead>
                     <tr>
-                        <th class="cursor-pointer" wire:click="order('n_comprobante')" >
-                            <a>Número de Comprobante
-                                @if ($sort == 'n_comprobante')
+                        <th class="cursor-pointer" wire:click="order('estado')" >
+                            <a>Número de Estado
+                                @if ($sort == 'estado')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -84,17 +89,6 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                         </th>
-                        <th class="cursor-pointer" wire:click="order('detalle')" >
-                            <a>Detalle Comprobante
-                                @if ($sort == 'detalle')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif</th>
 
                         
                         <th><a>Action</th>
@@ -102,12 +96,11 @@
                     </thead>
 
                     <tbody>
-                    @foreach ($comprobantes as $comprobante)
-                    <tr x-data="window.__controller.dataTableController({{ $comprobante->id }})">
-                        <td>{{ $comprobante->n_comprobante }}</td>
-                        <td>{{ $comprobante->detalle}}</td>
+                    @foreach ($estados as $estado)
+                    <tr x-data="window.__controller.dataTableController({{ $estado->id }})">
+                        <td>{{ $estado->estado }}</td>
                         <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$comprobante->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
+                            <a wire:click="editar({{$estado->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
                             <a x-on:click.prevent="deleteItem"  role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
                         </td>
                     </tr>

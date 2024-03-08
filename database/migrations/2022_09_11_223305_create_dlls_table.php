@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estantes', function (Blueprint $table) {
+        Schema::create('dlls', function (Blueprint $table) {
             $table->id();
-            $table->string('n_estante');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estantes');
+        Schema::dropIfExists('dlls');
     }
 };

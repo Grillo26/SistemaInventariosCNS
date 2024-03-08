@@ -22,30 +22,34 @@
 
         
         <x-slot name="form">
-             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
+             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-4">
                 <!--Nombre-->
-                <div class="">
+                <div class="col-span-2 p-1">
                     <x-jet-label for="nombre_cuenta" value="{{ __('Nombre Cuenta') }}" />
-                    @if($action == "updateCuenta")
-                    <small>Edite el Nombre de la Cuenta</small>
-                    @endif
-                    @if($action == "createCuenta")
-                    <small>Ingrese el Nombre de la Cuenta</small>
-                    @endif
-                    <x-jet-input id="nombre_cuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="cuenta.nombre_cuenta" required/>
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-text-height"></i>
+                            </div>
+                        </div>
+                        <input id="nombre_cuenta" type="text" class="form-control phone-number" wire:model.defer="cuenta.nombre_cuenta" required>
+                    </div>
                     <x-jet-input-error for="cuenta.nombre_cuenta" class="mt-2" />
                 </div>
 
-                <!--Grupo-->
-                <div class="">
-                    <x-jet-label for="codigo_cuenta" value="{{ __('Codigo Cuenta') }}" />
-                    @if($action == "updateCuenta")
-                    <small>Edite el número del código de la Cuenta</small>
-                    @endif
-                    @if($action == "createCuenta")
-                    <small>Ingrese número del código de la Cuenta</small>
-                    @endif
-                    <x-jet-input id="codigo_cuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="cuenta.codigo_cuenta" required/>
+                <!--Codigo Cuenta-->
+                <div class="col-span-2 p-1">
+                    <x-jet-label for="codigo_cuenta" value="{{ __('Código Cuenta') }}" />
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                        </div>
+                        <input id="codigo_cuenta" type="text" class="form-control phone-number" wire:model.defer="cuenta.codigo_cuenta" required>
+                    </div>
                     <x-jet-input-error for="cuenta.codigo_cuenta" class="mt-2" />
                 </div>
 

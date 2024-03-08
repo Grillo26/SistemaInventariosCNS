@@ -16,17 +16,15 @@ class CreateUnidad extends Component
     protected function getRules()
     {
         $rules = ($this->action == "updateUnidad" . $this->unidadId) ? [
-            'unidad.nombre_unidad' => 'required',
+            'unidad.nombre_unidad' => 'required'
         ] : [
-            'unidad.nombre_unidad' => 'required',
+            'unidad.nombre_unidad' => 'required'
     
         ];
 
         return array_merge([
-            'user.name' => 'required|min:3',
-            'user.lastname' => 'required|min:3',
-            'user.username' => 'required|min:3',
-            'user.email' => 'required|email|unique:users,email'
+            'unidad.nombre_unidad' => 'required|min:3'
+            
         ], $rules);
     }
 
@@ -45,7 +43,7 @@ class CreateUnidad extends Component
         Unidad::query()
             ->where('id', $this->unidadId)
             ->update([
-                "nombre_unidad" => $this->unidad->nombre_unidad,
+                "nombre_unidad" => $this->unidad->nombre_unidad
             ]);
 
         $this->emit('saved');
@@ -57,7 +55,7 @@ class CreateUnidad extends Component
             $this->unidad = Unidad::find($this->unidadId);
         }
 
-        $this->button = create_button($this->action, "Cuenta");
+        $this->button = create_button($this->action, "Unidad");
     }
 
     public function render()

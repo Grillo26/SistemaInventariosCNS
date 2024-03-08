@@ -24,15 +24,17 @@
         <x-slot name="form">
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <!--Nombre-->
-                <div class="">
+                <div class="col-span-2 p-1">
                     <x-jet-label for="nombre_unidad" value="{{ __('Nombre Unidad') }}" />
-                    @if($action == "updateUnidad")
-                    <small>Edite el Nombre de la Unidad</small>
-                    @endif
-                    @if($action == "createUnidad")
-                    <small>Ingrese el Nombre de la Unidad</small>
-                    @endif
-                    <x-jet-input id="nombre_unidad" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="unidad.nombre_unidad" required/>
+                    
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <input id="nombre_unidad" type="text" class="form-control" wire:model.defer="unidad.nombre_unidad" required>
+                    </div>
                     <x-jet-input-error for="unidad.nombre_unidad" class="mt-2" />
                 </div>
             </div>

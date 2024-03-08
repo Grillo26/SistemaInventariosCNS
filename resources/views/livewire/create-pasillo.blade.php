@@ -23,17 +23,18 @@
         
         <x-slot name="form">
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <!--Nombre-->
-                <div class="">
-                    <x-jet-label for="nombre_unidad" value="{{ __('Número Pasillo') }}" />
-                    @if($action == "updatePasillo")
-                    <small>Edite el Numero del Pasillo</small>
+                <!--Numero de Pasillo-->
+                <div class="col-span-2 p-1">
+                    <x-jet-label for="pasillo" value="{{ __('Número de Pasillo') }}" />
                     
-                    @endif
-                    @if($action == "createPasillo")
-                    <small>Ingrese el Numero del pasillo </small>
-                    @endif
-                    <x-jet-input id="n_pasillo" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="pasillo.n_pasillo" required/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                        </div>
+                        <input id="n_pasillo" type="text" class="form-control phone-number" wire:model.defer="pasillo.n_pasillo" required>
+                    </div>
                     <x-jet-input-error for="pasillo.n_pasillo" class="mt-2" />
                 </div>
             </div>

@@ -10,7 +10,7 @@ use App\Models\Mesa;
 use App\Models\Pasillo;
 use App\Models\Baja;
 use App\Models\Proveedor;
-use App\Models\Dl;
+use App\Models\Dll;
 use App\Models\Comprobante;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pasillo::factory(20)->create();
         \App\Models\Baja::factory(20)->create();
         \App\Models\Proveedor::factory(50)->create();
-        \App\Models\Dl::factory(50)->create();
+        \App\Models\Dll::factory(50)->create();
         \App\Models\Comprobante::factory(50)->create();
 
     
