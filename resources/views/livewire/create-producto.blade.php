@@ -20,8 +20,7 @@
 
         </x-slot>
 
-        <link href="path/to/select2.min.css" rel="stylesheet">
-        <script src="path/to/select2.min.js"></script>
+    
 
         <x-slot name="form">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
@@ -57,43 +56,37 @@
             </div>
 
             <x-jet-section-border />
-            
-        
+
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <!--Grupo-->
-                <div class="">
+                <div class="" >
                     <x-jet-label for="grupo_idGrupo" value="{{ __('Grupo') }}" />
-    
-                    <!--<x-jet-input id="grupo_idGrupo" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.grupo_idGrupo" required/>-->
-                    <div class="input-group" >
+                    <div class="input-group" wire:ignore>
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="fas fa-users"></i>
                             </div>
                         </div>
-                        <select class="form-control" wire:model="grupo" id="grupo">
-                            <option value="">Selecciona un grupo</option>
-                            @foreach($grupos as $id => $nombre)
-                                <option value="{{ $id }}">{{ $nombre }}</option>
+                        <select wire:model="nombre_grupo" class="form-control select2"  id="grupo">
+                            <option value=" ">Selecciona un grupo</option>
+                            @foreach($grupos as $grupo)
+                                <option value="{{ $grupo->id }}">{{ $grupo->nombre_grupo }}</option>
                             @endforeach
+    
                         </select>
+                        
                     </div>
-                    <x-jet-input-error for="producto.grupo_idGrupo" class="mt-2" />
                 </div>
                 <script>
-                    document.addEventListener('livewire:load', function() {
-                        $('#grupo').select2();
-
-                        // capturamos valores cuando se produce el evento change
-                        $('#grupo').on('change', function(e) {
-                            var groupId = $('#grupo').select2("id"); // Obtener el ID del grupo seleccionado
-                            var groupName = $('#grupo option:selected').text(); // Obtener el nombre del grupo seleccionado
-
-                            @this.set('grupo_idGrupo', groupId) // Establecer el ID del grupo seleccionado mediante Livewire
-                            @this.set('nombre_grupo', groupName) // Establecer el ID del grupo seleccionado mediante Livewire
+                    document.addEventListener('livewire:load', function(){
+                        
+                        $('.grupo').select2();
+                        $('#grupo').on('change', function(){
+                            @this.set('idGrupo', this.value); //Conecta con la variable en el controlador
                         });
                     });
                 </script>
+                
                 <!--cuenta_a-->
                 <div class="">
                     <x-jet-label for="cuenta_idCuenta" value="{{ __('Cuenta') }}" />
@@ -136,6 +129,7 @@
                     <!--<x-jet-input id="unidad_idUnidad" type="text" class="mt-1 block w- form-control shadow-none"  wire:model.defer="producto.unidad_idUnidad" required/>-->
                     <x-jet-input-error for="producto.unidad_idUnidad" class="mt-2" />
                 </div>
+                {{$idGrupo}}
             </div>
 
         </x-slot>

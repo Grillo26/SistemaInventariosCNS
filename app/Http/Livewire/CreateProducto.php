@@ -13,7 +13,7 @@ class CreateProducto extends Component
     public $productoId;
     public $action;
     public $button;
-    public $grupoId;
+    public $idGrupo="q"; //Conecta el id del select con el front
     public $grupos;
 
     protected function getRules()
@@ -67,15 +67,13 @@ class CreateProducto extends Component
             $this->producto = Producto::find($this->productoId);
         }
 
-        $this->button = create_button($this->action, "Producto");
-        // Obtener la lista de grupos para el select
-        $this->grupos = Grupo::pluck('nombre_grupo', 'id');
+        $this->button = create_button($this->action, "grupos");
+        $this->grupos = [];
     }
 
     public function render()
     {
-        return view('livewire.create-producto',[
-            'grupos'=>Grupo::get(),
-        ]);
+        $this->grupos = Grupo::orderBy('id', 'asc')->get();   
+        return view('livewire.create-producto');
     }
 }
