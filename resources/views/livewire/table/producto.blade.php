@@ -1,5 +1,5 @@
 <div>
-    <x-data-table :data="$data" :model="$productos">
+    <x-data-table :data="$data" :model="$productos, $unidades, $cuentas">
         <x-slot name="head">
             <tr>
                
@@ -36,9 +36,23 @@
                 <tr x-data="window.__controller.dataTableController({{ $producto->id }})">
                     <td>{{ $producto->codigo_producto }}</td>
                     <td>{{ $producto->nombre_producto }}</td>
-                    <td>{{ $producto->unidad_idUnidad }}</td>
-                    <td>{{ $producto->grupo_idGrupo }}</td>
-                    <td>{{ $producto->idCuenta }}</td>
+                    @foreach ($unidades as $unidad )
+                        @if(  $producto->unidad_idUnidad == $unidad->id)
+                        <td>{{ $unidad->nombre_unidad}}</td>
+                        @endif
+                    @endforeach
+
+                    @foreach ($grupos as $grupo )
+                        @if(  $producto->grupo_idGrupo == $grupo->id)
+                        <td>{{ $grupo->nombre_grupo}}</td>
+                        @endif
+                    @endforeach
+                    
+                    @foreach ($cuentas as $cuenta )
+                        @if(  $producto->cuenta_idCuenta == $cuenta->id)
+                        <td>{{ $cuenta->nombre_cuenta}}</td>
+                        @endif
+                    @endforeach
                     
                     <td class="whitespace-no-wrap row-action--icon">
                         <a role="button" href="/producto/edit/{{$producto->id }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>

@@ -5,6 +5,11 @@ use App\Models\CompraProducto;
 use App\Models\Grupo;
 use App\Models\Cuenta;
 use App\Models\Unidad;
+use App\Models\Proveedor;
+use App\Models\Pasillo;
+use App\Models\Estante;
+use App\Models\Mesa;
+use App\Models\Producto;
 
 use Livewire\Component;
 
@@ -18,32 +23,37 @@ class Entradas extends Component
     public $open = false;
     public $verifiEdit = false;
 
+    public $codigo_producto, $nombre_producto;
+
     public $fecha_compra, $horac, $total, $ady, $proveedor_idProveedor, $id_entrada;
     protected $listeners = [ "deleteItem" => "delete_item" ];
-    
-    public function render(){
-        $entradas = CompraProducto::where('id', 'like', '%' . $this->search . '%')
-        ->orwhere('fecha_compra', 'like', '%' . $this->search . '%')
-        ->orwhere('horac', 'like', '%' . $this->search . '%')
-        ->orwhere('total', 'like', '%' . $this->search . '%')
-        ->orwhere('ady', 'like', '%' . $this->search . '%')
-        ->orwhere('proveedor_idProveedor', 'like', '%' . $this->search . '%')
-        ->orderBy($this->sort, $this->direction)
-        ->get();
-        $grupos = Grupo::where('id', 'like', '%' . $this->search . '%')
-        ->orwhere('nombre_grupo', 'like', '%' . $this->search . '%')
-        ->orderBy($this->sort, $this->direction)
-        ->get();
-        $unidades = Unidad::where('id', 'like', '%' . $this->search . '%')
-        ->orwhere('nombre_unidad', 'like', '%' . $this->search . '%')
-        ->orderBy($this->sort, $this->direction)
-        ->get();
-        $cuentas = Cuenta::where('id', 'like', '%' . $this->search . '%')
-        ->orwhere('nombre_cuenta', 'like', '%' . $this->search . '%')
-        ->orderBy($this->sort, $this->direction)
-        ->get();
+    public function updatedCodigoProducto($value)
+    {
+        if ($value) {
+            $producto = Producto::find($value);
+            if ($producto) {
+                $this->nombre_producto = $producto->nombre_producto;
+            } else {
+                $this->nombre_producto = null;
+            }
+        } else {
+            $this->nombre_producto = null;
+        }
+    }
 
-        return view('livewire.entradas', compact ('entradas','grupos','cuentas','unidades'));
+
+    public function render(){
+        $this->productos = Producto::orderBy('id', 'asc')->get();
+        $this->entradas = CompraProducto::orderBy('id', 'asc')->get();
+        $this->grupos = Grupo::orderBy('id', 'asc')->get();   
+        $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
+        $this->unidades = Unidad::orderBy('id', 'asc')->get();   
+        $this->proveedores = Proveedor::orderBy('id', 'asc')->get();   
+        $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
+        $this->estantes = Estante::orderBy('id', 'asc')->get();   
+        $this->mesas = Mesa::orderBy('id', 'asc')->get();   
+
+        return view('livewire.entradas'); 
     }
 
     public function order($sort){ //Metodo para ordenar

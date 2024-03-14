@@ -1,19 +1,19 @@
 <div id="form-create">
     <x-jet-form-section :submit="$action" class="mb-4">
         <x-slot name="title">
-            {{ __('Producto') }}
+            {{ __('Artículo') }}
 
         </x-slot>
 
         <x-slot name="description">
             @if ($action == "createProducto")
-            {{ __('Complete los siguientes datos para registrar un nuevo Producto. Nota: lea correctamente los campos y verifique  si están escritos de
+            {{ __('Complete los siguientes datos para registrar un nuevo Artículo. Nota: lea correctamente los campos y verifique  si están escritos de
                 manera adecuada dentro del formulario.') }} 
             
             @endif
 
             @if($action == "updateProducto")
-            {{ __('Complete los siguientes datos para editar el producto que seleccionó. Nota: lea correctamente los campos y verifique  si están escritos de
+            {{ __('Complete los siguientes datos para editar el Artículo que seleccionó. Nota: lea correctamente los campos y verifique  si están escritos de
                 manera adecuada dentro del formulario.') }} 
             
             @endif
@@ -41,7 +41,7 @@
 
                 <!--Codigo Identificación -->
                 <div class="col-span-2 p-1">
-                    <x-jet-label for="nombre_producto" value="{{ __('Código Artículo') }}" />
+                    <x-jet-label for="codigo_producto" value="{{ __('Código Artículo') }}" />
                     
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -49,15 +49,43 @@
                                 <i class="fas fa-lock"></i>
                             </div>
                         </div>
-                        <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                        <input id="codigo_producto" type="text" class="form-control phone-number" wire:model.defer="producto.codigo_producto" required>
                     </div>
-                    <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                    <x-jet-input-error for="producto.codigo_producto" class="mt-2" />
                 </div>
             </div>
 
             <x-jet-section-border />
 
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <!--unidad-->
+                <div class="">
+                    <x-jet-label for="producto.unidad_idUnidad" value="{{ __('Unidad') }}" />
+
+                    <div class="input-group" wire:ignore>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <select wire:model.defer="producto.unidad_idUnidad" class="form-control  select2" id="unidad">
+                            <option value=" ">Selecciona Unidad</option>
+                            @foreach($unidades as $unidad)
+                                <option value="{{ $unidad->id }}">{{ $unidad->nombre_unidad }}</option>
+                            @endforeach
+    
+                        </select>
+                    </div>                    
+                </div>
+                <script>
+                    document.addEventListener('livewire:load', function(){
+                        
+                        $('.unidad').select2();
+                        $('#unidad').on('change', function(){
+                            @this.set('idUnidad', this.value); //Conecta con la variable en el controladors
+                        });
+                    });
+                </script>
                 <!--Grupo-->
                 <div class="" >
                     <x-jet-label for="grupo_idGrupo" value="{{ __('Grupo') }}" />
@@ -67,7 +95,7 @@
                                 <i class="fas fa-users"></i>
                             </div>
                         </div>
-                        <select wire:model="nombre_grupo" class="form-control select2"  id="grupo">
+                        <select wire:model="producto.grupo_idGrupo" class="form-control select2"  id="grupo">
                             <option value=" ">Selecciona un grupo</option>
                             @foreach($grupos as $grupo)
                                 <option value="{{ $grupo->id }}">{{ $grupo->nombre_grupo }}</option>
@@ -82,7 +110,7 @@
                         
                         $('.grupo').select2();
                         $('#grupo').on('change', function(){
-                            @this.set('idGrupo', this.value); //Conecta con la variable en el controlador
+                            @this.set('idGrupo', this.value); //Conecta con la variable en el controladors
                         });
                     });
                 </script>
@@ -91,45 +119,35 @@
                 <div class="">
                     <x-jet-label for="cuenta_idCuenta" value="{{ __('Cuenta') }}" />
 
-                    <div class="input-group">
+                    <div class="input-group" wire:ignore>
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="fas fa-list-ol"></i>
                             </div>
                         </div>
-                        <select wire:model="grupoId" class="form-control" id="grupo">
-                            <option value="">Selecciona un grupo</option>
-                            @foreach($grupos as $id => $nombre)
-                                <option value="{{ $id }}">{{ $nombre }}</option>
+                        <select wire:model.defer="producto.cuenta_idCuenta" class="form-control select2"  id="cuenta">
+                            <option value=" ">Selecciona un cuenta</option>
+                            @foreach($cuentas as $cuenta)
+                                <option value="{{ $cuenta->id }}">{{ $cuenta->nombre_cuenta }}</option>
                             @endforeach
+    
                         </select>
                     </div>
-                    
-                    <!--<x-jet-input id="cuenta_idCuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.cuenta_idCuenta" required />-->
-                    <x-jet-input-error for="producto.cuenta_idCuenta" class="mt-2" />
                 </div>
+                <script>
+                    document.addEventListener('livewire:load', function(){
+                        
+                        $('.cuenta').select2();
+                        $('#cuenta').on('change', function(){
+                            @this.set('idCuenta', this.value); //Conecta con la variable en el controladors
+                        });
+                    });
+                </script>
 
-                <!--unidad-->
-                <div class="">
-                    <x-jet-label for="unidad_idUnidad" value="{{ __('Unidad') }}" />
-
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-building"></i>
-                            </div>
-                        </div>
-                        <select wire:model="grupoId" class="form-control" id="grupo">
-                            <option value="">Selecciona un grupo</option>
-                            @foreach($grupos as $id => $nombre)
-                                <option value="{{ $id }}">{{ $nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>                    
-                    <!--<x-jet-input id="unidad_idUnidad" type="text" class="mt-1 block w- form-control shadow-none"  wire:model.defer="producto.unidad_idUnidad" required/>-->
-                    <x-jet-input-error for="producto.unidad_idUnidad" class="mt-2" />
-                </div>
+                
                 {{$idGrupo}}
+                {{$idCuenta}}
+                {{$idUnidad}}
             </div>
 
         </x-slot>

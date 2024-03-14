@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 use App\Models\Grupo;
+use App\Models\Unidad;
+use App\Models\Cuenta;
 
 
 trait WithDataTable {
@@ -205,11 +207,15 @@ trait WithDataTable {
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
                 $grupos = Grupo::get(); //Extrayendo de otra tabl
+                $unidades = Unidad::get(); //Extrayendo de otra tabl
+                $cuentas = Cuenta::get(); //Extrayendo de otra tabl
                 
                 return [
                     "view" => 'livewire.table.producto',
                     "productos" => $productos,
                     "grupos" => $grupos,
+                    "unidades" => $unidades,
+                    "cuentas" => $cuentas,
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('producto.new'),

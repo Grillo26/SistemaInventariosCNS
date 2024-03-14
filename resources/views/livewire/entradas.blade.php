@@ -30,20 +30,32 @@
 
                     <!--Codigo Identificación -->
                     <div class="col-span-1 p-1">
-                        <x-jet-label for="nombre_producto" value="{{ __('Código Artículo') }}" />
+                        <x-jet-label for="codigo_producto" value="{{ __('Código Artículo') }}" />
                         
-                        <div class="input-group">
+                        <div class="input-group" wire:ignore>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="fas fa-lock"></i>
                                 </div>
+                                <select wire:model="codigo_producto" class="form-control select2" id="producto">
+                                    <option value=" "> </option>
+                                        @foreach($productos as $producto)
+                                        <option value="{{ $producto->id }}">{{ $producto->codigo_producto}}</option>
+                                        @endforeach
+                                </select>
                             </div>
-                            <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
                     </div>
-
-                    <!--Nombre-->
+                    <script>
+                        document.addEventListener('livewire:load', function(){
+                            
+                            $('.producto').select2();
+                            $('#producto').on('change', function(){
+                                @this.set('codigo_producto', this.value); //Conecta con la variable en el controladors
+                            });
+                        });
+                    </script>
+                    <!--Nombre--> 
                     <div class="col-span-3 p-1">
                         <x-jet-label for="nombre_producto" value="{{ __('Nombre') }}" />
                         
@@ -53,9 +65,9 @@
                                     <i class="fas fa-text-height"></i>
                                 </div>
                             </div>
-                            <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" disabled>
+                            <input id="nombre_producto" type="text" class="form-control phone-number" wire:model.defer="nombre_producto" disabled>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="nombre_producto" class="mt-2" />
                     </div>
                 </div>
 
@@ -254,7 +266,7 @@
                     <x-jet-input-error for="producto.cuenta_idCuenta" class="mt-2" />
                 </div>
 
-                <!--unidad-->
+                <!--entrada-->
                 <div class="">
                     <x-jet-label for="unidad_idUnidad" value="{{ __('Unidad') }}" />
                     <div class="input-group">

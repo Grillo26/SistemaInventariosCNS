@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header_content">
-        <h1>{{ __('Gestionar Productos') }}</h1>
+        <h1>{{ __('Gestionar Artículos') }}</h1>
 
         <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Sistema</a></div>
             <div class="breadcrumb-item"><a href="#">Información</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('user') }}">Gestionar Productos</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('producto') }}">Gestionar Artículos</a></div>
         </div>
     </x-slot>
 
