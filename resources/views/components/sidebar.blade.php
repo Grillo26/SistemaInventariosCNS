@@ -16,7 +16,7 @@ $links = [
                     ["href" => "producto.new", "text" => "Nuevo Artículo"],
                     ["href" => "producto", "text" => "Gestionar Artículos"],
                     ["href" => "entradas", "text" => "Entrada de Artículos"],
-                    ["href" => "producto", "text" => "Salida de Artículos"],
+                    ["href" => "salidas", "text" => "Salida de Artículos"],
                 ]
     
             ]
