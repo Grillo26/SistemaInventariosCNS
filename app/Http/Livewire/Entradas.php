@@ -24,15 +24,20 @@ class Entradas extends Component
     public $verifiEdit = false;
 
     public $codigo_producto, $nombre_producto, 
-    $nombre_proveedor, $descripcion, $pasillo, $estante, $mesa, 
+    $nombre_proveedor, $descripcion, 
+    $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
     $fecha_adquisicion, $fecha_caducidad,
      $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
-    $cantidad=0, $valor_articulo=0, $total=0;
+    $cantidad, $valor_articulo, $total=0;
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
-    public function updatedCodigoProducto($value)
-    {
+    public function closeModal(){
+        $this->open = false;
+        $this->limpiarCampos();
+    }
+
+    public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
         if ($value) {
             $producto = Producto::find($value);
             if ($producto) {
@@ -54,24 +59,58 @@ class Entradas extends Component
             $this->nombre_unidad = null;
         }
     }
-    public function calcular()
-    {
+
+    public function calcular(){
         $this->total = $this->valor_articulo * $this->cantidad;
+
+    }
+
+    public function guardar(){
+        CompraProducto::updateOrCreate(
+        [
+            'producto_idProducto' => $this->codigo_producto,
+            'proveedor_idProveedor' => $this->nombre_proveedor,
+            'descripcion' => $this->descripcion,
+            'fecha_adquisicion' => $this->fecha_adquisicion,
+            'pasillo_idPasillo' => $this->pasillo_idPasillo,
+            'estante_idEstante' => $this->estante_idEstante,
+            'mesa_idMesa' => $this->mesa_idMesa,
+            'fecha_caducidad' => $this->fecha_caducidad,
+            'cantidad' => $this->cantidad,
+            'valor_articulo' => $this->valor_articulo,
+            'total' => $this->total,
+        ]);
+        $this->limpiarCampos();
+        
+        $this->open=false;
+        $this->emit('saved');
+
+        //Para alerta de Editado
+        if($this->verifiEdit == true){
+            $this->emit('edit');
+        }
+        $this->verifiEdit=false;
     }
 
 
     public function render(){
         $this->productos = Producto::orderBy('id', 'asc')->get();
-        $this->entradas = CompraProducto::orderBy('id', 'asc')->get();
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
         $this->proveedors = Proveedor::orderBy('id', 'asc')->get();   
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
-        $this->mesas = Mesa::orderBy('id', 'asc')->get();   
+        $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
+        
+        $entradas = CompraProducto::where('producto_idProducto', 'like', '%' . $this->search . '%')
+        ->orwhere('proveedor_idProveedor', 'like', '%' . $this->search . '%')
+        ->orwhere('fecha_adquisicion', 'like', '%' . $this->search . '%')
+        ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')
+        ->orderBy($this->sort, $this->direction)
+        ->get();
 
-        return view('livewire.entradas'); 
+        return view('livewire.entradas', compact ('entradas')); 
     }
 
     public function order($sort){ //Metodo para ordenar
@@ -89,35 +128,21 @@ class Entradas extends Component
         }
     }
 
-    public function guardar(){
-        CompraProducto::updateOrCreate(['id'=>$this->id_entrada],
-        [
-            'fecha__compra' => $this->fecha_compra,
-            'horac' => $this->horac,
-            'total' => $this->total,
-            'ady' => $this->ady,
-            'proveedor_idProveedor' => $this->proveedor_idProveedor
-        ]);
-        $this->limpiarCampos();
-        
-        $this->open=false;
-        $this->emit('saved');
-
-        //Para alerta de Editado
-        if($this->verifiEdit == true){
-            $this->emit('edit');
-        }
-        $this->verifiEdit=false;
-    }
+    
 
     public function editar($id){
         $entrada = CompraProducto::findOrFail($id);
-        $this->id_entrada = $id;
-        $this->fecha_compra = $entrada->fecha_compra;
-        $this->horac = $entrada->horac;
-        $this->total = $entrada->total;
-        $this->ady = $entrada->ady;
+        $this->producto_idProducto = $entrada->producto_idProducto;
         $this->proveedor_idProveedor = $entrada->proveedor_idProveedor;
+        $this->descripcion = $entrada->descripcion;
+        $this->fecha_adquisicion = $entrada->fecha_adquisicion;
+        $this->pasillo_idPasillo = $entrada->pasillo_idPasillo;
+        $this->estante_idEstante = $entrada->estante_idEstante;
+        $this->mesa_idMesa = $entrada->mesa_idMesa;
+        $this->fecha_caducidad = $entrada->fecha_caducidad;
+        $this->cantidad = $entrada->cantidad;
+        $this->valor_articulo = $entrada->valor_articulo;
+        $this->total = $entrada->total;
         $this->open=true;
         $this->verifiEdit=true;
     }
@@ -144,12 +169,18 @@ class Entradas extends Component
     }
 
     public function limpiarCampos(){
-        $this->id_entrada = '';
-        $this->fecha_compra = '';
-        $this->horac = '';
-        $this->total ='';
-        $this->ady = '';
-        $this->proveedor_idProveedor ='';
+        $this->codigoProducto = '';
+        $this->nombreProducto = '';
+        $this->proveedor_idProveedor = '';
+        $this->descripcion = '';
+        $this->fecha_adquisicion = '';
+        $this->pasillo_idPasillo = '';
+        $this->estante_idEstante = '';
+        $this->mesa_idMesa = '';
+        $this->fecha_caducidad = '';
+        $this->cantidad = null;
+        $this->valor_articulo = null;
+        $this->total = 0;
 
 
     }

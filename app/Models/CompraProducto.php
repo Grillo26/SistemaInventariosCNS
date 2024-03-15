@@ -27,6 +27,7 @@ class CompraProducto extends Model
         'estante_idEstante',
         'mesa_idMesa',
         'fecha_caducidad',
+        'cantidad',
         'valor_articulo',
         'total'
     ];
