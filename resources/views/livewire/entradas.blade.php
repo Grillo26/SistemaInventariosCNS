@@ -39,9 +39,9 @@
                                 </div>
                                 <select wire:model="codigo_producto" class="form-control select2" id="producto">
                                     <option value=" "> </option>
-                                        @foreach($productos as $producto)
+                                    @foreach($productos as $producto)
                                         <option value="{{ $producto->id }}">{{ $producto->codigo_producto}}</option>
-                                        @endforeach
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                         });
                     </script>
                     <!--Nombre--> 
-                    <div class="col-span-3 p-1">
+                    <div class="col-span-2 p-1">
                         <x-jet-label for="nombre_producto" value="{{ __('Nombre') }}" />
                         
                         <div class="input-group">
@@ -69,35 +69,50 @@
                         </div>
                         <x-jet-input-error for="nombre_producto" class="mt-2" />
                     </div>
+                    <!--Fecha Adquisición-->
+                    <div  class="col-span-1 p-1">
+                        <x-jet-label for="fecha" value="{{ __('Fecha Adquisición') }}" />
+
+                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model.defer="fecha_adquisicion" required>
+                    </div>
                 </div>
 
 <!--#################################################################################################-->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
-                    
-
                     <!--Proveedor -->
-                    <div class="col-span-1 p-1">
-                        <x-jet-label for="nombre_producto" value="{{ __('Proveedor') }}" />
+                    <div class="col-span-2 p-1">
+                        <x-jet-label for="nombre_proveedor" value="{{ __('Proveedor') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="fas fa-truck"></i>
                                 </div>
-                                <select wire:model="grupoId" class="form-control" id="grupo">
-                                <option value="">Seleccione Proveedor</option>
-                                @foreach($grupos as $id => $nombre)
-                                    <option value="{{ $id }}">{{ $nombre }}</option>
+                            </div>
+                            <select wire:model="nombre_proveedor" class="form-control select2" id="proveedor">
+                                <option value=""> </option>
+                                @foreach($proveedors as $proveedor)
+                                    <option value="{{ $proveedor->id }}">{{ $proveedor->nombre_proveedor}}</option>
                                 @endforeach
                             </select>
                         </div>
-                            
-                        </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
                     </div>
+
+                    @push('scripts')
+                        <script>
+                            document.addEventListener('livewire:load', function(){
+                                $('.proveedor').select2(); // Inicializar Select2 después de que Livewire haya completado las actualizaciones
+                                $('#proveedor').on('change', function(){
+                                    @this.set('nombre_proveedor', this.value); //Conecta con la variable en el controlador
+                                });
+                            });
+                        </script>
+                    @endpush
+                    
+                
                     <!--Descripción-->
                     <div class="col-span-2 p-1">
-                        <x-jet-label for="nombre_producto" value="{{ __('Descripción Artículo') }}" />
+                        <x-jet-label for="descripcion" value="{{ __('Descripción Artículo') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -105,17 +120,12 @@
                                     <i class="fas fa-text-width"></i>
                                 </div>
                             </div>
-                            <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                            <input id="descripcion" type="text" class="form-control phone-number" wire:model.defer="descripcion" required>
                         </div>
                         
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="descripcion" class="mt-2" />
                     </div>
-                    <!--Fecha Adquisición-->
-                    <div  class="col-span-1 p-1">
-                        <x-jet-label for="fecha" value="{{ __('Fecha Adquisición') }}" />
-
-                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model.defer="produccion.fecha" required>
-                    </div>
+                    
                 </div>
 <!--#################################################################################################-->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
@@ -129,14 +139,14 @@
                                     <i class="fas fa-thumbtack"></i>
                                 </div>
                             </div>
-                            <select wire:model="grupoId" class="form-control" id="grupo">
-                                <option value="">Selecciona un grupo</option>
-                                @foreach($grupos as $id => $nombre)
-                                    <option value="{{ $id }}">{{ $nombre }}</option>
+                            <select wire:model="pasillo" class="form-control" id="pasillo">
+                                <option value=""></option>
+                                @foreach($pasillos as $pasillo)
+                                    <option value="{{ $pasillo->id }}">{{ $pasillo->n_pasillo}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="pasillo" class="mt-2" />
                     </div>
                     <!--Estante-->
                     <div class="p-1">
@@ -148,15 +158,15 @@
                                     <i class="fas fa-thumbtack"></i>
                                 </div>
                             </div>
-                            <select wire:model="grupoId" class="form-control" id="grupo">
-                                <option value="">Selecciona un grupo</option>
-                                @foreach($grupos as $id => $nombre)
-                                    <option value="{{ $id }}">{{ $nombre }}</option>
+                            <select wire:model="estante" class="form-control" id="estante">
+                                <option value=""></option>
+                                @foreach($estantes as $estante)
+                                    <option value="{{ $estante->id }}">{{ $estante->n_estante}}</option>
                                 @endforeach
                             </select>
                         </div>
                         
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="estante" class="mt-2" />
                     </div>
                     <!--Mesa -->
                     <div class="p-1">
@@ -168,20 +178,21 @@
                                     <i class="fas fa-thumbtack"></i>
                                 </div>
                             </div>
-                            <select wire:model="grupoId" class="form-control" id="grupo">
-                                <option value="">Selecciona un grupo</option>
-                                @foreach($grupos as $id => $nombre)
-                                    <option value="{{ $id }}">{{ $nombre }}</option>
+                            <select wire:model="mesa" class="form-control" id="mesa">
+                                <option value=""></option>
+                                @foreach($mesas as $mesa)
+                                    <option value="{{ $mesa->id }}">{{ $mesa->n_mesa}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        
+                        <x-jet-input-error for="mesa" class="mt-2" />
                     </div>
                     <!--Fecha Caducidad-->
                     <div  class="col-span-1 p-1">
                         <x-jet-label for="fecha" value="{{ __('Fecha Caducidad') }}" />
 
-                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model.defer="produccion.fecha" required>
+                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model.defer="fecha_caducidad" required>
                     </div>
 
                 </div>
@@ -199,13 +210,14 @@
                                     <i class="fas fa-box-open"></i>
                                 </div>
                             </div>
-                            <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                            <input id="cantidad" type="number" class="form-control phone-number" wire:model="cantidad" 
+                            wire:change="$emit('calcular')" required>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="cantidad" class="mt-2" />
                     </div>
                     <!--Valor de Inventario -->
                     <div class="p-1">
-                        <x-jet-label for="nombre_producto" value="{{ __('Valor de Artículo') }}" />
+                        <x-jet-label for="nombre_producto" value="{{ __('Valor de Artículo (Bs)') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -213,10 +225,12 @@
                                     <i class="fas fa-dollar-sign"></i>
                                 </div>
                             </div>
-                            <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
+                            <input id="valor_articulo" type="number" class="form-control phone-number" wire:model="valor_articulo"
+                             wire:change="$emit('calcular')"required>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="valor_articulo" class="mt-2" />
                     </div>
+
                     <!--Total -->
                     <div class="p-1">
                         <x-jet-label for="nombre_producto" value="{{ __('Total') }}" />
@@ -227,9 +241,9 @@
                                     <i class="fas fa-dollar-sign"></i>
                                 </div>
                             </div>
-                            <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" disabled>
+                            <input id="total" type="text" class="form-control phone-number" value="{{ $total }}"disabled>
                         </div>
-                        <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
+                        <x-jet-input-error for="total" class="mt-2" />
                     </div>
                     
                 </div>
@@ -246,9 +260,9 @@
                                 <i class="fas fa-users"></i>
                             </div>
                         </div>
-                        <input id="grupo" type="text" class="form-control" wire:model.defer="grupo.nombre_grupo" disabled>
+                        <input id="grupo" type="text" class="form-control" wire:model.defer="nombre_grupo" disabled>
                     </div>
-                    <x-jet-input-error for="grupo.nombre_grupo" class="mt-2" />
+                    <x-jet-input-error for="nombre_grupo" class="mt-2" />
                 </div>
 
                 <!--cuenta_a-->
@@ -260,13 +274,13 @@
                                 <i class="fas fa-list-ol"></i>
                             </div>
                         </div>
-                        <input id="grupo" type="text" class="form-control" wire:model.defer="grupo.nombre_grupo" disabled>
+                        <input id="grupo" type="text" class="form-control" wire:model.defer="nombre_cuenta" disabled>
                     </div>
                     <!--<x-jet-input id="cuenta_idCuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.cuenta_idCuenta" required />-->
-                    <x-jet-input-error for="producto.cuenta_idCuenta" class="mt-2" />
+                    <x-jet-input-error for="nombre_cuenta" class="mt-2" />
                 </div>
 
-                <!--entrada-->
+                <!--unidad-->
                 <div class="">
                     <x-jet-label for="unidad_idUnidad" value="{{ __('Unidad') }}" />
                     <div class="input-group">
@@ -275,9 +289,9 @@
                                 <i class="fas fa-building"></i>
                             </div>
                         </div>
-                        <input id="grupo" type="text" class="form-control" wire:model.defer="grupo.nombre_grupo" disabled>
+                        <input id="grupo" type="text" class="form-control" wire:model.defer="nombre_unidad" disabled>
                     </div>
-                    <x-jet-input-error for="producto.unidad_idUnidad" class="mt-2" />
+                    <x-jet-input-error for="nombre_unidad" class="mt-2" />
                 </div>
             </div>
 

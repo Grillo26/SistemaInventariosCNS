@@ -12,6 +12,7 @@ use App\Models\Baja;
 use App\Models\Proveedor;
 use App\Models\Dll;
 use App\Models\Comprobante;
+use App\Models\Producto;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -54,6 +55,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Proveedor::factory(50)->create();
         \App\Models\Dll::factory(50)->create();
         \App\Models\Comprobante::factory(50)->create();
+
+        \App\Models\Producto::factory(50)->create();
 
     
     }

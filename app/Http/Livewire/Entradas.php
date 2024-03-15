@@ -23,22 +23,40 @@ class Entradas extends Component
     public $open = false;
     public $verifiEdit = false;
 
-    public $codigo_producto, $nombre_producto;
+    public $codigo_producto, $nombre_producto, 
+    $nombre_proveedor, $descripcion, $pasillo, $estante, $mesa, 
+    $fecha_adquisicion, $fecha_caducidad,
+     $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
+    $cantidad=0, $valor_articulo=0, $total=0;
 
-    public $fecha_compra, $horac, $total, $ady, $proveedor_idProveedor, $id_entrada;
-    protected $listeners = [ "deleteItem" => "delete_item" ];
+    protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
+
     public function updatedCodigoProducto($value)
     {
         if ($value) {
             $producto = Producto::find($value);
             if ($producto) {
                 $this->nombre_producto = $producto->nombre_producto;
+                //Mediante el id accedemos a la tabla correspondiente y extraemos su nombre
+                $this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
+                $this->nombre_cuenta = Cuenta::find($producto->cuenta_idCuenta)->nombre_cuenta;
+                $this->nombre_unidad = Unidad::find($producto->unidad_idUnidad)->nombre_unidad;
             } else {
                 $this->nombre_producto = null;
+                $this->nombre_grupo = null;
+                $this->nombre_cuenta = null;
+                $this->nombre_unidad = null;
             }
         } else {
             $this->nombre_producto = null;
+            $this->nombre_grupo = null;
+            $this->nombre_cuenta = null;
+            $this->nombre_unidad = null;
         }
+    }
+    public function calcular()
+    {
+        $this->total = $this->valor_articulo * $this->cantidad;
     }
 
 
@@ -48,7 +66,7 @@ class Entradas extends Component
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
-        $this->proveedores = Proveedor::orderBy('id', 'asc')->get();   
+        $this->proveedors = Proveedor::orderBy('id', 'asc')->get();   
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
         $this->mesas = Mesa::orderBy('id', 'asc')->get();   
@@ -135,4 +153,5 @@ class Entradas extends Component
 
 
     }
+    
 }
