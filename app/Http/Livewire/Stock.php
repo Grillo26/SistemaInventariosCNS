@@ -13,7 +13,7 @@ use App\Models\Producto;
 
 use Livewire\Component;
 
-class Entradas extends Component
+class Stock extends Component
 {
     //Definicion de variables
     public $search="";
@@ -26,7 +26,7 @@ class Entradas extends Component
     public $codigo_producto, $nombre_producto, 
     $nombre_proveedor, $descripcion, 
     $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
-    $fecha_adquisicion, $fecha_caducidad,
+    $fecha_adquisicion, $fecha_caducidad, $proveedor_idProveedor,
      $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
     $cantidad, $cantidad_db, $valor_articulo, $total=0;
 
@@ -39,13 +39,15 @@ class Entradas extends Component
 
     public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
         if ($value) {
-            $producto = Producto::find($value);
+            $producto = CompraProducto::find($value);
             if ($producto) {
-                $this->nombre_producto = $producto->nombre_producto;
+                $this->nombre_producto = Producto::find($producto->producto_idProducto)->nombre_producto;
+                $this->cantidad = $producto->cantidad;
+                $this->fecha_caducidad = $producto->fecha_caducidad;
+                $this->proveedor_idProveedor = Proveedor::find($producto->proveedor_idProveedor)->nombre_proveedor;
                 //Mediante el id accedemos a la tabla correspondiente y extraemos su nombre
-                $this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
-                $this->nombre_cuenta = Cuenta::find($producto->cuenta_idCuenta)->nombre_cuenta;
-                $this->nombre_unidad = Unidad::find($producto->unidad_idUnidad)->nombre_unidad;
+                //$this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
+                
             } else {
                 $this->nombre_producto = null;
                 $this->nombre_grupo = null;
@@ -112,7 +114,7 @@ class Entradas extends Component
         ->orderBy($this->sort, $this->direction)
         ->get();
 
-        return view('livewire.entradas', compact ('entradas')); 
+        return view('livewire.stock', compact ('entradas')); 
     }
 
     public function order($sort){ //Metodo para ordenar

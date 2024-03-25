@@ -39,10 +39,17 @@
                                 </div>
                                 <select wire:model="codigo_producto" class="form-control select2" id="producto">
                                     <option value=" "> </option>
-                                    @foreach($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->codigo_producto}}</option>
+                                    @foreach($entradas as $entrada)
+                                        @foreach($productos as $producto)
+
+                                            @if($entrada->producto_idProducto == $producto->id)
+                                                <option value="{{ $entrada->id}}"> {{$producto->codigo_producto}}</option>
+                                            @endif
+
+                                        @endforeach
                                     @endforeach
                                 </select>
+                
                             </div>
                         </div>
                     </div>
@@ -54,6 +61,8 @@
                                 @this.set('codigo_producto', this.value); //Conecta con la variable en el controladors
                             });
                         });
+
+            
                     </script>
                     <!--Nombre--> 
                     <div class="col-span-2 p-1">
@@ -73,7 +82,7 @@
                     <div  class="col-span-1 p-1">
                         <x-jet-label for="fecha" value="{{ __('Fecha Salida') }}" />
 
-                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model="fecha_adquisicion" required>
+                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model="fecha_salida" required>
                     </div>
 
                 </div>
@@ -110,7 +119,7 @@
                                     <i class="fas fa-thumbtack"></i>
                                 </div>
                             </div>
-                            <input id="pasillo_idPasillo" type="text" class="form-control phone-number" wire:model="pasillo_idPasillo" disabled>
+                            <input id="pasillo_idPasillo" type="text" class="form-control phone-number" wire:model.defer="pasillo_idPasillo" disabled>
                            
                         </div>
                         <x-jet-input-error for="pasillo" class="mt-2" />
@@ -167,6 +176,38 @@
                         </div>
                         <x-jet-input-error for="cantidad" class="mt-2" />
                     </div>
+
+                    <!--Cantidad Stock Salida -->
+                    <div class="p-1">
+                        <x-jet-label for="cantidad_salida" value="{{ __('Cantidad de Salida') }}" />
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-arrow-left"></i>
+                                </div>
+                            </div>
+                            <input id="cantidad_salida" type="number" class="form-control phone-number" wire:model="cantidad_salida" 
+                            wire:change="$emit('calcular')" >
+                        </div>
+                        <x-jet-input-error for="cantidad_salida" class="mt-2" />
+                    </div>
+
+                    <!--Cantidad Stock disponible-->
+                    <div class="p-1">
+                        <x-jet-label for="cantidad_stockTotal" value="{{ __('Stock Total') }}" />
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                            </div>
+                            <input id="cantidad_stockTotal" type="number" class="form-control phone-number" wire:model="cantidad_stockTotal" 
+                            wire:change="$emit('calcular')" disabled>
+                        </div>
+                        <x-jet-input-error for="cantidad_stockTotal" class="mt-2" />
+                    </div>
                 
                 </div>
 
@@ -180,8 +221,8 @@
 		</x-jet-dialog-modal>
 
 
-		<x-notify-message on="saved" type="success" message="Comprobante creado correctamente!" />
-		<x-notify-message on="edit" type="success" message="Comprobante modificado correctamente!" />
+		<x-notify-message on="saved" type="success" message="Salida de artículo registrado" />
+		<x-notify-message on="edit" type="success" message="Salida de artículo modificado correctamente!" />
 
 		<!--Options-->
 		<div class="row mb-4">
@@ -200,7 +241,7 @@
 		</div>
 
 		<!--TABLE-->
-		@if($entradas->count())
+		@if($salidas->count())
 		<div class="row">
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped text-sm text-gray-600">
@@ -230,9 +271,9 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-                            <th class="cursor-pointer" wire:click="order('fecha_adquisicion')" >
-                                <a>Fecha Ingreso
-                                @if ($sort == 'fecha_adquisicion')
+                            <th class="cursor-pointer" wire:click="order('fecha_salida')" >
+                                <a>Fecha Salida
+                                @if ($sort == 'fecha_salida')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -242,9 +283,9 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-                            <th class="cursor-pointer" wire:click="order('fecha_caducidad')" >
-                                <a>Fecha Vencimiento
-                                @if ($sort == 'fecha_caducidad')
+                            <th class="cursor-pointer" wire:click="order('stock_disponible')" >
+                                <a>Stock Disponible
+                                @if ($sort == 'stock_disponible')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -254,27 +295,57 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-                            
+                            <th class="cursor-pointer" wire:click="order('cantidad_salida')" >
+                                <a>Cantidad de Salida
+                                @if ($sort == 'cantidad_salida')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-up"></i>
+                                    @else
+                                        <i class="fas fa-sort-down"></i>
+                                    @endif
+                                @else
+                                    <i class="text-muted fas fa-sort"></i>
+                                @endif
+                            </th>
+                            <th class="cursor-pointer" wire:click="order('cantidad_stockTotal')" >
+                                <a>Cantidad Total en Almacén
+                                @if ($sort == 'cantidad_stockTotal')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-up"></i>
+                                    @else
+                                        <i class="fas fa-sort-down"></i>
+                                    @endif
+                                @else
+                                    <i class="text-muted fas fa-sort"></i>
+                                @endif
+                            </th>
 
                         
-                        <th><a>Action</th>
+                        <th><a>Acciones</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    @foreach ($entradas as $entrada)
-                    <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
-                        <td>{{ $entrada->producto_idProducto }}</td>
+                    @foreach ($salidas as $salida)
+                    <tr x-data="window.__controller.dataTableController({{ $salida->id }})">
                         @foreach ($productos as $producto)
-                            @if($entrada->producto_idProducto == $producto->id)
+                            @if($salida->producto_idProducto == $producto->id)
+                                <td>{{ $producto-> codigo_producto }}</td>
+                            @endif
+                        @endforeach
+                        
+                        @foreach ($productos as $producto)
+                            @if($salida->producto_idProducto == $producto->id)
                                 <td>{{ $producto-> nombre_producto }}</td>
                             @endif
                         @endforeach
                         
-                        <td>{{ $entrada->fecha_adquisicion}}</td>
-                        <td>{{ $entrada->fecha_caducidad}}</td>
+                        <td>{{ $salida->fecha_salida}}</td>
+                        <td>{{ $salida->stock_disponible}}</td>
+                        <td>{{ $salida->cantidad_salida}}</td>
+                        <td>{{ $salida->cantidad_stockTotal}}</td>
                         <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$entrada->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
+                            <a wire:click="editar({{$salida->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
 								<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
 								</td>
 						</tr>

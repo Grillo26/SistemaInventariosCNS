@@ -298,7 +298,8 @@
 
 			</x-slot>
 			<x-slot name="footer">
-                <x-jet-secondary-button wire:click="limpiarCampos" class="justify-center"> Limpiar</x-jet-danger-button>
+                
+                <x-jet-secondary-button wire:click="limpiarCampos" class="justify-center p-2"> Limpiar</x-jet-danger-button>
 				<x-jet-button wire:click="guardar" class="justify-center"> Guardar</x-jet-button>
 				<x-jet-danger-button wire:click="closeModal" class="justify-center"> Cancelar</x-jet-danger-button>
 			</x-slot>
@@ -355,6 +356,18 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
+                            <th class="cursor-pointer" wire:click="order('cantidad_db')">
+								<a>Cantidad Ingresada
+                                @if ($sort == 'cantidad_db')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-up"></i>
+                                    @else
+                                        <i class="fas fa-sort-down"></i>
+                                    @endif
+                                @else
+                                    <i class="text-muted fas fa-sort"></i>
+                                @endif
+                            </th>
                             <th class="cursor-pointer" wire:click="order('fecha_adquisicion')" >
                                 <a>Fecha Ingreso
                                 @if ($sort == 'fecha_adquisicion')
@@ -382,20 +395,26 @@
                             
 
                         
-                        <th><a>Action</th>
+                        <th><a>Acciones</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     @foreach ($entradas as $entrada)
                     <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
-                        <td>{{ $entrada->producto_idProducto }}</td>
+                        @foreach ($productos as $producto)
+                            @if($entrada->producto_idProducto == $producto->id)
+                                <td>{{ $producto-> codigo_producto }}</td>
+                            @endif
+                        @endforeach
+
                         @foreach ($productos as $producto)
                             @if($entrada->producto_idProducto == $producto->id)
                                 <td>{{ $producto-> nombre_producto }}</td>
                             @endif
                         @endforeach
                         
+                        <td>{{ $entrada->cantidad_db}}</td>
                         <td>{{ $entrada->fecha_adquisicion}}</td>
                         <td>{{ $entrada->fecha_caducidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">

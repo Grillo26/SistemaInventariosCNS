@@ -13,6 +13,7 @@ $links = [
                 "section_text" => "Artículos",
                 "icon" => "fas fa-box",
                 "section_list" => [
+                    ["href" => "stock", "text" => "Verificar Stock"],
                     ["href" => "producto.new", "text" => "Nuevo Artículo"],
                     ["href" => "producto", "text" => "Gestionar Artículos"],
                     ["href" => "entradas", "text" => "Entrada de Artículos"],

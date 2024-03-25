@@ -23,7 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('estante_idEstante')->nullable();
             $table->unsignedBigInteger('mesa_idMesa')->nullable();
             $table->date('fecha_caducidad');
-            $table->decimal('cantidad',8,3);
+            $table->integer('cantidad');
+            $table->integer('cantidad_db');
             $table->decimal('valor_articulo',8,3);
             $table->decimal('total',8,3);
 

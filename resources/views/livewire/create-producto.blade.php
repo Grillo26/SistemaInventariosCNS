@@ -144,10 +144,6 @@
                     });
                 </script>
 
-                
-                {{$idGrupo}}
-                {{$idCuenta}}
-                {{$idUnidad}}
             </div>
 
         </x-slot>

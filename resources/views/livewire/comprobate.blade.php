@@ -97,7 +97,7 @@
                                 @endif</th>
 
                         
-                        <th><a>Action</th>
+                        <th><a>Acciones</th>
                     </tr>
                     </thead>
 

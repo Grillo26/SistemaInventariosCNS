@@ -345,16 +345,7 @@
                     </div>
                 </div>
 
-                <!--Ady-->
-                <div class="mb-2">
-                    <label>Ady</label>
-                    <select class="form-control"  wire:model.defer="unidadId">
-                        <option value="" selected>Ady</option>
-                        @foreach ( $comprobantes as $comprobante )
-                        <option  value="{{$comprobante->id}}">{{$comprobante->n_comprobante}}</option>
-                        @endforeach   
-                    </select>
-                </div>
+              
 
             </div>
   
@@ -432,7 +423,7 @@
                                 @else
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif</th> 
-                        <th><a>Action</th>
+                        <th><a>Acciones</th>
                     </tr>
                     </thead>
 

@@ -20,6 +20,7 @@ use App\Http\livewire\Cuentas;
 use App\Http\livewire\Salidas;
 use App\Http\livewire\Unidades;
 use App\Http\livewire\Entradas;
+use App\Http\livewire\Stock;
 use App\Http\livewire\Comprobate;
 use App\Http\livewire\Estad;
 use App\Http\livewire\Mesa;
@@ -45,9 +46,6 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('/user', [ UserController::class, "index_view" ])->name('user');
     Route::view('/user/new', "pages.user.user-new")->name('user.new');
     Route::view('/user/edit/{userId}', "pages.user.user-edit")->name('user.edit');
-
-    Route::get('productos', Productos::class)->name('productos');
-    Route::view('/productos/new', "pages.productos.productos-new")->name('productos.new');
 
     Route::get('/grupos', [ GrupoController::class, "index_view" ])->name('grupos');
     Route::view('/grupos/new', "pages.grupo.grupo-new")->name('grupos.new');
@@ -89,9 +87,13 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::view('/producto/new', "pages.producto.producto-new")->name('producto.new');
     Route::view('/producto/edit/{productoId}', "pages.producto.producto-edit")->name('producto.edit');
 
+
     Route::get('salidas', Salidas::class)->name('salidas');
 
     Route::get('entradas', Entradas::class)->name('entradas');
+
+    Route::get('stock', Stock::class)->name('stock');
+    
 
     Route::get('comprobantes', Comprobate::class)->name('comprobantes');
 

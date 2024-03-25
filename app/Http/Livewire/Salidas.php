@@ -10,6 +10,7 @@ use App\Models\Pasillo;
 use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
+use App\Models\Salida;
 
 use Livewire\Component;
 
@@ -24,61 +25,80 @@ class Salidas extends Component
     public $verifiEdit = false;
 
     public $codigo_producto, $nombre_producto, 
-    $nombre_proveedor, $descripcion, 
+    $descripcion, $fecha_salida,
     $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
-    $fecha_adquisicion, $fecha_caducidad,
-     $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
-    $cantidad, $valor_articulo, $total=0;
+    $cantidad, $cantidad_salida, $cantidad_stockTotal=0;
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
     public function closeModal(){
         $this->open = false;
         $this->limpiarCampos();
+
     }
 
     public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
         if ($value) {
-            $producto = Producto::find($value);
+            $producto = CompraProducto::find($value);
             if ($producto) {
-                $this->nombre_producto = $producto->nombre_producto;
+                $this->nombre_producto = Producto::find($producto->producto_idProducto)->nombre_producto;
+                $this->descripcion = $producto-> descripcion;
+                $this->pasillo_idPasillo = Pasillo::find($producto->pasillo_idPasillo)->n_pasillo;
+                $this->estante_idEstante = Estante::find($producto->estante_idEstante)->n_estante;
+                $this->mesa_idMesa = Mesa::find($producto->mesa_idMesa)->n_mesa;
+                $this->cantidad = $producto -> cantidad;
+                $this->cantidad = number_format($this->cantidad, 0);
                 //Mediante el id accedemos a la tabla correspondiente y extraemos su nombre
-                $this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
-                $this->nombre_cuenta = Cuenta::find($producto->cuenta_idCuenta)->nombre_cuenta;
-                $this->nombre_unidad = Unidad::find($producto->unidad_idUnidad)->nombre_unidad;
+                //$this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
+          
             } else {
                 $this->nombre_producto = null;
-                $this->nombre_grupo = null;
-                $this->nombre_cuenta = null;
-                $this->nombre_unidad = null;
+                $this->descripcion = null;
+                $this->pasillo_idPasillo = null;
+                $this->estante_idEstante = null;
+                $this->mesa_idMesa = null;
+                $this->cantidad = null;
             }
         } else {
             $this->nombre_producto = null;
-            $this->nombre_grupo = null;
-            $this->nombre_cuenta = null;
-            $this->nombre_unidad = null;
-        }
+            $this->descripcion = null;
+            $this->pasillo_idPasillo = null;
+            $this->estante_idEstante = null;
+            $this->mesa_idMesa = null;
+            $this->cantidad = null;
+        }  
     }
 
     public function calcular(){
-        $this->total = $this->valor_articulo * $this->cantidad;
+        $this->cantidad_stockTotal = $this->cantidad - $this->cantidad_salida;
 
     }
 
     public function guardar(){
-        CompraProducto::updateOrCreate(
+
+        if (!$this->codigo_producto) {
+            // Si el ID está vacío, no hagas nada
+            return;
+        }
+
+            // Encuentra el registro de CompraProducto por el ID seleccionado
+        $compraProducto = CompraProducto::find($this->codigo_producto);
+
+        // Realiza la lógica de actualización basada en el objeto $compraProducto
+        if ($compraProducto) {
+            $cantidad_update = $compraProducto->cantidad - $this->cantidad_salida;
+            $compraProducto->update([
+                'cantidad' => $cantidad_update
+            ]);
+        }
+
+        Salida::updateOrCreate(
         [
             'producto_idProducto' => $this->codigo_producto,
-            'proveedor_idProveedor' => $this->nombre_proveedor,
-            'descripcion' => $this->descripcion,
-            'fecha_adquisicion' => $this->fecha_adquisicion,
-            'pasillo_idPasillo' => $this->pasillo_idPasillo,
-            'estante_idEstante' => $this->estante_idEstante,
-            'mesa_idMesa' => $this->mesa_idMesa,
-            'fecha_caducidad' => $this->fecha_caducidad,
-            'cantidad' => $this->cantidad,
-            'valor_articulo' => $this->valor_articulo,
-            'total' => $this->total,
+            'fecha_salida' => $this->fecha_salida,
+            'stock_disponible' => $this->cantidad,
+            'cantidad_salida' => $this->cantidad_salida,
+            'cantidad_stockTotal' => $this->cantidad_stockTotal
         ]);
         $this->limpiarCampos();
         
@@ -94,7 +114,7 @@ class Salidas extends Component
 
 
     public function render(){
-        $this->productos = Producto::orderBy('id', 'asc')->get();
+        $this->productos = Producto::orderBy('id', 'asc')->get();   
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
@@ -102,15 +122,17 @@ class Salidas extends Component
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
         $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
+        $this->entradas = CompraProducto::orderBy('id', 'asc')->get(); 
         
-        $entradas = CompraProducto::where('producto_idProducto', 'like', '%' . $this->search . '%')
-        ->orwhere('proveedor_idProveedor', 'like', '%' . $this->search . '%')
-        ->orwhere('fecha_adquisicion', 'like', '%' . $this->search . '%')
-        ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')
+        $salidas = Salida::where('producto_idProducto', 'like', '%' . $this->search . '%')
+        ->orwhere('fecha_salida', 'like', '%' . $this->search . '%')
+        ->orwhere('stock_disponible', 'like', '%' . $this->search . '%')
+        ->orwhere('cantidad_salida', 'like', '%' . $this->search . '%')
+        ->orwhere('cantidad_stockTotal', 'like', '%' . $this->search . '%')
         ->orderBy($this->sort, $this->direction)
         ->get();
 
-        return view('livewire.salidas', compact ('entradas')); 
+        return view('livewire.salidas', compact ('salidas')); 
     }
 
     public function order($sort){ //Metodo para ordenar
@@ -131,18 +153,12 @@ class Salidas extends Component
     
 
     public function editar($id){
-        $entrada = CompraProducto::findOrFail($id);
-        $this->producto_idProducto = $entrada->producto_idProducto;
-        $this->proveedor_idProveedor = $entrada->proveedor_idProveedor;
-        $this->descripcion = $entrada->descripcion;
-        $this->fecha_adquisicion = $entrada->fecha_adquisicion;
-        $this->pasillo_idPasillo = $entrada->pasillo_idPasillo;
-        $this->estante_idEstante = $entrada->estante_idEstante;
-        $this->mesa_idMesa = $entrada->mesa_idMesa;
-        $this->fecha_caducidad = $entrada->fecha_caducidad;
-        $this->cantidad = $entrada->cantidad;
-        $this->valor_articulo = $entrada->valor_articulo;
-        $this->total = $entrada->total;
+        $salida = Salida::findOrFail($id);
+        $this->producto_idProducto = $salida->producto_idProducto;
+        $this->fecha_salida = $salida->fecha_salida;
+        $this->cantidad = $salida->stock_disponible;
+        $this->cantidad_salida = $salida->cantidad_salida;
+        $this->cantidad_stockTotal = $salida->cantidad_stockTotal;
         $this->open=true;
         $this->verifiEdit=true;
     }
@@ -151,12 +167,12 @@ class Salidas extends Component
 
     public function delete_item($id)
     {
-        $data = CompraProducto::find($id);
+        $data = Salida::find($id);
 
         if (!$data) {
             $this->emit("deleteResult", [
                 "status" => false,
-                "message" => "Error al eliminar datos" . $this->id_entrada
+                "message" => "Error al eliminar datos" . $this->id
             ]);
             return;
         }
@@ -164,25 +180,19 @@ class Salidas extends Component
         $data->delete();
         $this->emit("deleteResult", [
             "status" => true,
-            "message" => "Data " . $this->id_entrada . " Eliminado con éxito!"
+            "message" => "Data " . $this->id . " Eliminado con éxito!"
         ]);
     }
 
     public function limpiarCampos(){
-        $this->codigoProducto = '';
-        $this->nombreProducto = '';
-        $this->proveedor_idProveedor = '';
-        $this->descripcion = '';
-        $this->fecha_adquisicion = '';
-        $this->pasillo_idPasillo = '';
-        $this->estante_idEstante = '';
-        $this->mesa_idMesa = '';
-        $this->fecha_caducidad = '';
-        $this->cantidad = null;
-        $this->valor_articulo = null;
+        $this->codigo_producto= '';
+        $this->fecha_salida = '';
+        $this->cantidad = '';
+        $this->cantidad_salida = '';
+        $this->cantidad_stockTotal = '';
         $this->total = 0;
 
-
+        
     }
     
 }
