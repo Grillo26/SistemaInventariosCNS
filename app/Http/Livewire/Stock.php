@@ -11,6 +11,8 @@ use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
 
+use Carbon\Carbon;
+
 use Livewire\Component;
 
 class Stock extends Component
@@ -26,10 +28,10 @@ class Stock extends Component
     public $codigo_producto, $nombre_producto, 
     $nombre_proveedor, $descripcion, 
     $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
-    $fecha_adquisicion, $fecha_caducidad, $proveedor_idProveedor,
+    $fecha_adquisicion, $fecha_caducidad, $dias_restantes, $proveedor_idProveedor, $email, $id_proveedor,
      $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
     $cantidad, $cantidad_db, $valor_articulo, $total=0;
-
+    
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
     public function closeModal(){ 
@@ -44,9 +46,16 @@ class Stock extends Component
                 $this->nombre_producto = Producto::find($producto->producto_idProducto)->nombre_producto;
                 $this->cantidad = $producto->cantidad;
                 $this->fecha_caducidad = $producto->fecha_caducidad;
+                $this->descripcion = $producto->descripcion;
                 $this->proveedor_idProveedor = Proveedor::find($producto->proveedor_idProveedor)->nombre_proveedor;
+                $this->email = Proveedor::find($producto->proveedor_idProveedor)->email;
+                $this->id_proveedor = Proveedor::find($producto->proveedor_idProveedor)->id;
                 //Mediante el id accedemos a la tabla correspondiente y extraemos su nombre
                 //$this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
+                $this->fecha = Carbon::parse($this->fecha_caducidad);
+                $hoy = Carbon::now(); // Obtener la fecha actual
+                $this->dias_restantes = $hoy->diffInDays($this->fecha);
+
                 
             } else {
                 $this->nombre_producto = null;

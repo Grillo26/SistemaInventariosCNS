@@ -257,7 +257,7 @@
                                     @endif
                                 @else
                                     <i class="text-muted fas fa-sort"></i>
-                                @endif
+                                @endif 
                             </th>
                             <th class="cursor-pointer" wire:click="order('producto_idProducto')">
 								<a>Nombre Producto
