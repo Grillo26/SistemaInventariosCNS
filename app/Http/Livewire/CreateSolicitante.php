@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Solicitante;
-use App\Models\Unidad;
+use App\Models\Estado;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -15,7 +15,7 @@ class CreateSolicitante extends Component
     public $action;
     public $button;
 
-    public $nombre_producto, $codigo_producto;
+    public $nombre_producto, $codigo_producto, $estado_idEstado;
 
     public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
         if ($value) {
@@ -34,13 +34,14 @@ class CreateSolicitante extends Component
     protected function getRules()
     {
         $rules = ($this->action == "updateSolicitante" . $this->solicitanteId) ? [
-            'solicitante.nombre_u' => 'required',
-            'solicitante.codigo_u' => 'required',
-            'solicitante.codigo_u2' => 'required',
+            'solicitante.referencia' => 'required',
         ] : [
-            'solicitante.nombre_u' => 'required',
-            'solicitante.codigo_u' => 'required',
-            'solicitante.codigo_u2' => 'required',
+            'solicitante.referencia' => 'required',
+            'solicitante.detalle' => 'required',
+            'solicitante.cantidad' => 'required',
+            'solicitante.estado_idEstado' => 'required',
+            'solicitante.producto_idProducto' => 'required',
+            'solicitante.nombre_solicitante' => 'required',
     
         ];
 
@@ -68,9 +69,12 @@ class CreateSolicitante extends Component
         Solicitante::query()
             ->where('id', $this->solicitanteId)
             ->update([
-                "nombre_u" => $this->solicitante->nombre_u,
-                "codigo_u" => $this->solicitante->codigo_u,
-                "codigo_u2" => $this->solicitante->codigo_u2,
+                "referencia" => $this->solicitante->referencia,
+                "detalle" => $this->solicitante->detalle,
+                "cantidad" => $this->solicitante->cantidad,
+                "nombre_solicitante" => $this->solicitante->nombre_solicitante,
+                "producto_idProducto" => $this->solicitante->producto_idProducto,
+                "estado_idEstado" => $this->solicitante->estado_idEstado,
             ]);
 
         $this->emit('saved');
@@ -87,7 +91,7 @@ class CreateSolicitante extends Component
 
     public function render()
     {
-        $this->unidades = Unidad::orderBy('id', 'asc')->get();  
+        $this->estados = Estado::orderBy('id', 'asc')->get();  
         $this->productos = Producto::orderBy('id', 'asc')->get();  
         return view('livewire.create-solicitante');
     }

@@ -3,6 +3,10 @@ $user = auth()->user();
 $usersCount = \App\Models\User::count();
 $proveedores = \App\Models\Proveedor::count();
 $solicitantes = \App\Models\Solicitante::count();
+
+//solicitudes atendidas y no atendidas
+$solicitudesNoAtendidas = App\Models\Solicitante::where('estado_idEstado', 1)->count(); 
+
 $articulos = \App\Models\CompraProducto::count();
 $totalArticulos = App\Models\CompraProducto::sum('cantidad');
 $productos = App\Models\Producto::all();
@@ -79,7 +83,7 @@ $productos = App\Models\Producto::all();
 					<div class="flex-grow-1">
 						<p class="text-truncate font-size-14 mb-2">Solicitudes Nuevas</p>
 						<h4 class="mb-2">{{ $solicitantes}}</h4>
-						<p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>0</span> Solicitudes atendidas</p>
+						<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $solicitudesNoAtendidas}}</span> Solicitudes No Atendidas</p>
 					</div>
 						<div><span class="  text-success "><i class="fas fa-paperclip" style="font-size: 40px;"></i></span></div>
 				</div>

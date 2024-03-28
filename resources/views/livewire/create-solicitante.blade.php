@@ -65,7 +65,7 @@
                                 <i class="fas fa-box-open"></i>
                             </div>
                         </div>
-                        <input id="cantidad" type="text" class="form-control phone-number" wire:model.defer="solicitante.cantidad" required>
+                        <input id="cantidad" type="number" class="form-control phone-number" wire:model.defer="solicitante.cantidad" required>
                     </div>
                     <x-jet-input-error for="solicitante.cantidad" class="mt-2" />
                 </div>
@@ -79,15 +79,19 @@
                 <div class="col-span-2 p-1">
                     <x-jet-label for="nombre_producto" value="{{ __('Estado') }}" />
                     
-                    <div class="input-group">
+                    <div class="input-group" wire:ignore>
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="fas fa-text-height"></i>
                             </div>
                         </div>
-                        <input id="estado_idEstado" type="text" class="form-control phone-number" wire:model.defer="solicitante.estado_idEstado" required>
+                        <select wire:model="solicitante.estado_idEstado" class="form-control " id="estado">
+                            <option value="Seleccione Código"> </option>
+                            @foreach($estados as $estado)
+                                <option value="{{ $estado->id }}">{{ $estado->estado}}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <x-jet-input-error for="solicitante.estado_idEstado" class="mt-2" />
                 </div>
                 @endif
             </div>
@@ -103,7 +107,7 @@
                                 <i class="fas fa-lock"></i>
                             </div>
                         </div>
-                        <select wire:model="codigo_producto" class="form-control select2" id="producto">
+                        <select wire:model="solicitante.producto_idProducto" class="form-control select2" id="producto">
                             <option value="Seleccione Código"> </option>
                             @foreach($productos as $producto)
                                 <option value="{{ $producto->id }}">{{ $producto->codigo_producto}}</option>

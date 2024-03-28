@@ -200,7 +200,7 @@ trait WithDataTable {
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('solicitante.new'),
-                            'create_new_text' => 'Nuevo Solicitante',
+                            'create_new_text' => 'Nueva Solicitud',
                             'export' => '#',
                             'export_text' => 'Exportar'
                         ]

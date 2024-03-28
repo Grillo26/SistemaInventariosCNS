@@ -101,6 +101,23 @@ $links = [
         "is_multi" => false,
     ],
 
+    [
+        "href" => [
+            [
+                "section_text" => "Usuarios",
+                "icon" => "fas fa-user",
+                "section_list" => [
+                    ["href" => "user", "text" => "Usarios"],
+                    ["href" => "user.new", "text" => "Nuevo Usuario"],
+                    
+                ]
+    
+            ]
+        ],
+        "text" => "Administración de Usuarios",
+        "is_multi" => true,
+    ],
+
     
 ];
 $navigation_links = array_to_object($links);
