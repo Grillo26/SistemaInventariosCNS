@@ -18,6 +18,11 @@ class Estado extends Model
         return $this->hasMany('App\Models\Producto');
     }
 
+    //relacion uno a muchos
+    public function solicitantes(){
+        return $this->hasMany('App\Models\Solicitante');
+    }
+
 
     public static function search($query)
     {

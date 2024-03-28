@@ -3,15 +3,33 @@
 namespace App\Http\Livewire;
 
 use App\Models\Solicitante;
+use App\Models\Unidad;
+use App\Models\Producto;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class CreateSolicitante extends Component
 {
-    public $solicitante;
+    public $solicitante; 
     public $solicitanteId;
     public $action;
     public $button;
+
+    public $nombre_producto, $codigo_producto;
+
+    public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
+        if ($value) {
+            $producto = Producto::find($value);
+            if ($producto) {
+                $this->nombre_producto = $producto->nombre_producto;
+                //Mediante el id accedemos a la tabla correspondiente y extraemos su nombre
+            } else {
+                $this->nombre_producto = null;
+            }
+        } else {
+            $this->nombre_producto = null;
+        }
+    }
 
     protected function getRules()
     {
@@ -35,8 +53,10 @@ class CreateSolicitante extends Component
 
     public function createSolicitante ()
     {
-        
-        Solicitante::create($this->solicitante);
+        $data = $this->solicitante;
+        $data['estado_idEstado'] = 1;
+        $data['producto_idProducto'] = $this-> codigo_producto;
+        Solicitante::create($data);
 
         $this->emit('saved');
         $this->reset('solicitante');
@@ -67,6 +87,8 @@ class CreateSolicitante extends Component
 
     public function render()
     {
+        $this->unidades = Unidad::orderBy('id', 'asc')->get();  
+        $this->productos = Producto::orderBy('id', 'asc')->get();  
         return view('livewire.create-solicitante');
     }
 }

@@ -13,6 +13,7 @@ use App\Models\Proveedor;
 use App\Models\Dll;
 use App\Models\Comprobante;
 use App\Models\Producto;
+use App\Models\Estado;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -44,6 +45,14 @@ class DatabaseSeeder extends Seeder
         $user2->password =  bcrypt('kuynva26101997');
         $user2->remember_token = Str::random(10);
         $user2->save();
+
+        $estado1 = new Estado();
+        $estado1->estado = 'no respondido';
+        $estado1->save();
+
+        $estado2 = new Estado();
+        $estado2->estado = 'respondido';
+        $estado2->save();
 
         \App\Models\Unidad::factory(10)->create();
         \App\Models\Cuenta::factory(10)->create();

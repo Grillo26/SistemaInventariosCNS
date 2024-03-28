@@ -4,6 +4,8 @@ namespace App\Traits;
 use App\Models\Grupo;
 use App\Models\Unidad;
 use App\Models\Cuenta;
+use App\Models\Estado;
+use App\Models\Producto;
 
 
 trait WithDataTable {
@@ -187,10 +189,14 @@ trait WithDataTable {
                 $solicitantes = $this->model::search($this->search)
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
+                $estados = Estado::get(); //Extrayendo de otra tabl
+                $productos = Producto::get(); //Extrayendo de otra tabl
             
                 return [
                     "view" => 'livewire.table.solicitante',
                     "solicitantes" => $solicitantes,
+                    "productos" => $productos,
+                    "estados" => $estados,
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('solicitante.new'),
