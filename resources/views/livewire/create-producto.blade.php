@@ -73,8 +73,8 @@
                             @foreach($unidades as $unidad)
                                 <option value="{{ $unidad->id }}">{{ $unidad->nombre_unidad }}</option>
                             @endforeach
-    
                         </select>
+                        <x-jet-input-error for="unidad" class="mt-2" />
                     </div>                    
                 </div>
                 <script>

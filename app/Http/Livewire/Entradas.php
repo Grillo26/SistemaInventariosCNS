@@ -66,6 +66,7 @@ class Entradas extends Component
     }
 
     public function guardar(){
+        
         CompraProducto::updateOrCreate(
         [
             'producto_idProducto' => $this->codigo_producto,

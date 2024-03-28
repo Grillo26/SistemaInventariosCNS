@@ -1,5 +1,25 @@
 @php
 $user = auth()->user();
+$usersCount = \App\Models\User::count();
+$proveedores = \App\Models\Proveedor::count();
+$solicitantes = \App\Models\Solicitante::count();
+$articulos = \App\Models\CompraProducto::count();
+$totalArticulos = App\Models\CompraProducto::sum('cantidad');
+$productos = App\Models\Producto::all();
+
+	// Fecha actual
+    $fechaActual = now();
+
+    // Obtener la fecha actual más 10 días
+    $fechaLimite = $fechaActual->addDays(30);
+
+    // Contar cuántos artículos tienen fecha de caducidad dentro de los próximos 10 días
+    $articulosCaducanEn10Dias = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->count();
+
+	$articulosProximoCaducar = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->get();
+
+
+
 @endphp
 <!--<div class="col-12 p-2">
     <div class="hero text-white hero-bg-image hero-bg-parallax" style="background-image: url('{{ asset('img/almacen.png') }}');">
@@ -20,12 +40,13 @@ $user = auth()->user();
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<p class="text-truncate font-size-14 mb-2">Total Sales</p>
-						<h4 class="mb-2">1452</h4>
-						<p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>9.23%</span> from previous period</p>
+						<p class="text-truncate font-size-14 mb-2">Total Artículos en Almacén</p>
+						<h4 class="mb-2">{{ $totalArticulos}}</h4>
+						<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulosCaducanEn10Dias}}</span> Artículos están por caducar</p>
 					</div>
 						<div><span class="  text-success "><i class="fas fa-cart-plus" style="font-size: 40px;"></i></span></div>
 				</div>
+
 			</div>
 			<!-- end cardbody -->
 		</div>
@@ -38,9 +59,9 @@ $user = auth()->user();
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<p class="text-truncate font-size-14 mb-2">Total Sales</p>
-						<h4 class="mb-2">1452</h4>
-						<p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>9.23%</span> from previous period</p>
+						<p class="text-truncate font-size-14 mb-2">Total Usuarios</p>
+						<h4 class="mb-2">{{ $usersCount }}</h4>
+						<p class="text-muted mb-0"> Registrados en el sistema</p>
 					</div>
 						<div><span class="  text-success "><i class="fas fa-user" style="font-size: 40px;"></i></span></div>
 				</div>
@@ -56,9 +77,9 @@ $user = auth()->user();
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<p class="text-truncate font-size-14 mb-2">Total Sales</p>
-						<h4 class="mb-2">1452</h4>
-						<p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>9.23%</span> from previous period</p>
+						<p class="text-truncate font-size-14 mb-2">Solicitudes Nuevas</p>
+						<h4 class="mb-2">{{ $solicitantes}}</h4>
+						<p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>0</span> Solicitudes atendidas</p>
 					</div>
 						<div><span class="  text-success "><i class="fas fa-paperclip" style="font-size: 40px;"></i></span></div>
 				</div>
@@ -74,9 +95,9 @@ $user = auth()->user();
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<p class="text-truncate font-size-14 mb-2">Total Sales</p>
-						<h4 class="mb-2">1452</h4>
-						<p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>9.23%</span> from previous period</p>
+						<p class="text-truncate font-size-14 mb-2">Total de Proveedores</p>
+						<h4 class="mb-2">{{ $proveedores}}</h4>
+						<p class="text-muted mb-0"> Proveedores de artículos requeridos</p>
 					</div>
 						<div><span class="  text-success "><i class="fas fa-truck" style="font-size: 40px;"></i></span></div>
 				</div>
@@ -96,134 +117,41 @@ $user = auth()->user();
 		<div class="card">
 			<div class="card-body">
 			
-				<h4 class="card-title mb-4">Latest Transactions</h4>
+				<h4 class="card-title mb-4">Artículos Próximos a Caducar</h4>
 
 				<div class="table-responsive">
 					<table class="table table-centered mb-0 align-middle table-hover table-nowrap">
 						<thead class="table-light">
 							<tr>
-								<th>Name</th>
-								<th>Position</th>
-								<th>Status</th>
-								<th>Age</th>
-								<th>Start date</th>
-								<th style="width: 120px;">Salary</th>
+								<th>Código Artículo</th>
+								<th>Nombre Artículo</th>
+								<th>Fecha Caducidad</th>
+								<th>Cantidad</th>
+								
 							</tr>
 						</thead>
 						<!-- end thead -->
 						<tbody>
+							@foreach($articulosProximoCaducar as $articulo)
 							<tr>
-								<td>
-									<h6 class="mb-0">Charles Casey</h6></td>
-								<td>Web Developer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-								</td>
-								<td>
-									23
-								</td>
-								<td>
-									04 Apr, 2021
-								</td>
-								<td>$42,450</td>
+								@foreach ($productos as $producto)
+									@if($articulo->producto_idProducto == $producto->id)
+										<td><h6 class="mb-0">{{ $producto -> codigo_producto }}</h6></td>
+									@endif
+								@endforeach
+									
+
+
+								@foreach ($productos as $producto)
+									@if($articulo->producto_idProducto == $producto->id)
+										<td>{{ $producto -> nombre_producto }}</td>
+									@endif
+								@endforeach
+								<td>{{ $articulo -> fecha_caducidad}}</td>
+								<td>{{ $articulo -> cantidad }}</td>
+					
 							</tr>
-							<!-- end -->
-							<tr>
-								<td>
-									<h6 class="mb-0">Alex Adams</h6></td>
-								<td>Python Developer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-warning align-middle me-2"></i>Deactive</div>
-								</td>
-								<td>
-									28
-								</td>
-								<td>
-									01 Aug, 2021
-								</td>
-								<td>$25,060</td>
-							</tr>
-							<!-- end -->
-							<tr>
-								<td>
-									<h6 class="mb-0">Prezy Kelsey</h6></td>
-								<td>Senior Javascript Developer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-								</td>
-								<td>
-									35
-								</td>
-								<td>
-									15 Jun, 2021
-								</td>
-								<td>$59,350</td>
-							</tr>
-							<!-- end -->
-							<tr>
-								<td>
-									<h6 class="mb-0">Ruhi Fancher</h6></td>
-								<td>React Developer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-								</td>
-								<td>
-									25
-								</td>
-								<td>
-									01 March, 2021
-								</td>
-								<td>$23,700</td>
-							</tr>
-							<!-- end -->
-							<tr>
-								<td>
-									<h6 class="mb-0">Juliet Pineda</h6></td>
-								<td>Senior Web Designer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-								</td>
-								<td>
-									38
-								</td>
-								<td>
-									01 Jan, 2021
-								</td>
-								<td>$69,185</td>
-							</tr>
-							<!-- end -->
-							<tr>
-								<td>
-									<h6 class="mb-0">Den Simpson</h6></td>
-								<td>Web Designer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-warning align-middle me-2"></i>Deactive</div>
-								</td>
-								<td>
-									21
-								</td>
-								<td>
-									01 Sep, 2021
-								</td>
-								<td>$37,845</td>
-							</tr>
-							<!-- end -->
-							<tr>
-								<td>
-									<h6 class="mb-0">Mahek Torres</h6></td>
-								<td>Senior Laravel Developer</td>
-								<td>
-									<div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-								</td>
-								<td>
-									32
-								</td>
-								<td>
-									20 May, 2021
-								</td>
-								<td>$55,100</td>
-							</tr>
-							<!-- end -->
+							@endforeach
 						</tbody>
 						<!-- end tbody -->
 					</table>
@@ -262,8 +190,7 @@ $user = auth()->user();
                     </div>
                   </div>
                   <div class="article-details">
-                    <p>			Se rige por los principios de Universalidad, Solidaridad, Unidad de Gestión, Economía, Oportunidad y Eficacia en el otorgamiento de las prestaciones de salud, optimizando el uso de recursos y buscando ampliar el nivel de cobertura
-</p>
+                    Este sistema fue desarrollado a medida y con los requerimentos proporcionados por el personal del almacén de la Caja Nacional de Salud Distrital Yacuiba.</p> <br>
                     <div class="article-cta">
                       
 					<x-jet-button>

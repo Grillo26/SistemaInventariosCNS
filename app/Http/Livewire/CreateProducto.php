@@ -18,6 +18,9 @@ class CreateProducto extends Component
     public $idCuenta; //Conecta el id del select con el front
     public $idUnidad; //Conecta el id del select con el front
     public $grupos, $cuentas, $unidades;
+
+
+
     protected function getRules()
     {
         $rules = ($this->action == "updateProducto" . $this->productoId) ? [
@@ -25,9 +28,9 @@ class CreateProducto extends Component
         ] : [
             'producto.nombre_producto' => 'required|min:8|confirmed',
             'producto.codigo_producto' => 'required|min:8|confirmed',
-            'producto.unidad_idUnidad' => 'required|min:8|confirmed',
-            'producto.grupo_idGrupo' => 'required|min:8|confirmed',
-            'producto.cuenta_idCuenta' => 'required|min:8|confirmed',
+            'producto.unidad_idUnidad' => 'required',
+            'producto.grupo_idGrupo' => 'required',
+            'producto.cuenta_idCuenta' => 'required',
         ];
 
         return array_merge([
@@ -41,6 +44,21 @@ class CreateProducto extends Component
 
     public function createProducto ()
     {
+        /*Validaciones
+        $this->validate([
+            'producto.nombre_producto' => 'required',
+            'producto.codigo_producto' => 'required',
+            'producto.unidad_idUnidad' => 'required',
+            'producto.grupo_idGrupo' => 'required',
+            'producto.cuenta_idCuenta' => 'required'
+        ],[
+            'producto.nombre_producto.required' => 'Debe llenar con nombre',
+            'producto.codigo_producto.required' => 'Debe llenar con un código',
+            'producto.unidad_idUnidad.required' => 'Seleccione Unidad',
+            'producto.grupo_idGrupo.required' => 'Seleccione Grupo',
+            'producto.cuenta_idCuenta.required' => 'Seleccione Cuenta'        
+        ]);*/
+
         $data = $this->producto;
         $data['unidad_idUnidad'] = $this-> idUnidad;
         $data['grupo_idGrupo'] = $this-> idGrupo;

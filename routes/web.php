@@ -24,6 +24,7 @@ use App\Http\livewire\Stock;
 use App\Http\livewire\Comprobate;
 use App\Http\livewire\Estad;
 use App\Http\livewire\Mesa;
+use App\Http\livewire\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,9 @@ Route::get('/', function () {
 });
 
 Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
-    Route::view('/dashboard', "dashboard")->name('dashboard');
+    //Route::view('/dashboard', "dashboard")->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
 
     Route::get('/user', [ UserController::class, "index_view" ])->name('user');
     Route::view('/user/new', "pages.user.user-new")->name('user.new');
@@ -94,7 +97,6 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
 
     Route::get('stock', Stock::class)->name('stock');
     
-
     Route::get('comprobantes', Comprobate::class)->name('comprobantes');
 
     Route::get('estados', Estad::class)->name('estados');

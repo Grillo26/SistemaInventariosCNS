@@ -306,8 +306,8 @@
 		</x-jet-dialog-modal>
 
 
-		<x-notify-message on="saved" type="success" message="Comprobante creado correctamente!" />
-		<x-notify-message on="edit" type="success" message="Comprobante modificado correctamente!" />
+		<x-notify-message on="saved" type="success" message="Entrada creado correctamente!" />
+		<x-notify-message on="edit" type="success" message="Entrada modificado correctamente!" />
 
 		<!--Options-->
 		<div class="row mb-4">
