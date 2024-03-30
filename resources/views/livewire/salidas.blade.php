@@ -9,6 +9,7 @@
 		</div>
 	</x-slot>
 
+    @role('Admin')
 	<div class="p-8 pt-4 mt-2 bg-white">
 		<!--Butons-->
 		<div class="flex pb-4 -ml-3">
@@ -360,4 +361,7 @@
 		</div>
 		@endif
 	</div>
+    @else
+    <livewire:unauthorized-message />
+    @endrole
 </div>

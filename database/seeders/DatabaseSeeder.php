@@ -14,6 +14,7 @@ use App\Models\Dll;
 use App\Models\Comprobante;
 use App\Models\Producto;
 use App\Models\Estado;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $user = new User();
         $user->name = 'Carlos Enrique';
         $user->lastname = 'Mamani Torrez';
@@ -35,7 +37,7 @@ class DatabaseSeeder extends Seeder
         $user->password =  bcrypt('kuynva26101997');
         $user->remember_token = Str::random(10);
         $user->save();
-
+    
         $user2 = new User();
         $user2->name = 'Alejandra';
         $user2->lastname = 'Mamani Torrez';
@@ -53,6 +55,10 @@ class DatabaseSeeder extends Seeder
         $estado2 = new Estado();
         $estado2->estado = 'respondido';
         $estado2->save();
+
+        $this->call(RoleSeeder::class); //Agrega a la base de datos los roles
+        $this->call(UserSeeder::class);
+
 
         \App\Models\Unidad::factory(10)->create();
         \App\Models\Cuenta::factory(10)->create();

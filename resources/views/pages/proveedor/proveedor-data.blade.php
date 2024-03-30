@@ -10,6 +10,10 @@
     </x-slot>
 
     <div>
+        @role('Admin')
         <livewire:table.main name="proveedor" :model="$proveedor" />
+        @else
+        <livewire:unauthorized-message />
+        @endrole
     </div>
 </x-app-layout>

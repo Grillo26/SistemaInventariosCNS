@@ -18,10 +18,12 @@ return new class extends Migration
             $table->string('referencia');
             $table->string('detalle');
             $table->string('cantidad');
-            $table->string('nombre_solicitante');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('producto_idProducto')->nullable();
             $table->unsignedBigInteger('estado_idEstado')->nullable();
 
+            $table->foreign('user_id')
+            ->references('id')->on('users')->onDelete('set null');
             $table->foreign('estado_idEstado')
             ->references('id')->on('estados')->onDelete('set null');
             $table->foreign('producto_idProducto')

@@ -13,6 +13,10 @@
     </x-slot>
 
     <div>
+        @role('Admin')
         <livewire:create-pasillo action="updatePasillo" :pasilloId="request()->pasilloId" />
+        @else
+        <livewire:unauthorized-message />
+        @endrole
     </div>
 </x-app-layout>

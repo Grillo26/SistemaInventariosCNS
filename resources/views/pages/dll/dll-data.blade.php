@@ -10,6 +10,10 @@
     </x-slot>
 
     <div>
+        @role('Admin')
         <livewire:table.main name="dll" :model="$dll" />
+        @else
+        <livewire:unauthorized-message />
+        @endrole
     </div>
 </x-app-layout>

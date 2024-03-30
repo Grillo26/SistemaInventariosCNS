@@ -13,6 +13,10 @@
     </x-slot>
 
     <div>
+        @role('Admin')
         <livewire:create-mesa action="createMesa" />
+        @else
+        <livewire:unauthorized-message />
+        @endrole
     </div>
 </x-app-layout>

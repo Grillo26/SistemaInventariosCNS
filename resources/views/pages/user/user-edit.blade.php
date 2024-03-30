@@ -10,6 +10,10 @@
     </x-slot>
 
     <div>
+    @role('Admin')
         <livewire:create-user action="updateUser" :userId="request()->userId" />
+    @else
+        <livewire:unauthorized-message />
+    @endrole
     </div>
 </x-app-layout>

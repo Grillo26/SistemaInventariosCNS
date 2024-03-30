@@ -13,6 +13,10 @@
     </x-slot>
 
     <div>
+        @role('Admin')
         <livewire:create-producto action="createProducto" />
+        @else
+        <livewire:unauthorized-message />
+        @endrole
     </div>
 </x-app-layout>

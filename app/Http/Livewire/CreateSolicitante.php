@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Solicitante;
 use App\Models\Estado;
 use App\Models\Producto;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
@@ -57,6 +58,8 @@ class CreateSolicitante extends Component
         $data = $this->solicitante;
         $data['estado_idEstado'] = 1;
         $data['producto_idProducto'] = $this-> codigo_producto;
+        $data['user_id'] = auth()->id(); // Obtiene el ID del usuario autenticado
+
         Solicitante::create($data);
 
         $this->emit('saved');
@@ -93,6 +96,7 @@ class CreateSolicitante extends Component
     {
         $this->estados = Estado::orderBy('id', 'asc')->get();  
         $this->productos = Producto::orderBy('id', 'asc')->get();  
+        $this->users = User::orderBy('id', 'asc')->get();  
         return view('livewire.create-solicitante');
     }
 }

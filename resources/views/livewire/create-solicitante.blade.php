@@ -167,9 +167,11 @@
                                 <i class="fas fa-text-height"></i>
                             </div>
                         </div>
-                        <input id="solicitante.nombre_solicitante" type="text" class="form-control phone-number" wire:model.defer="solicitante.nombre_solicitante" require>
+                        <input id="solicitante.user_id" type="text" class="form-control phone-number" 
+                        
+                        value="{{ auth()->user()->name . ' ' . auth()->user()->lastname }}" disabled>
                     </div>
-                    <x-jet-input-error for="solicitante.nombre_solicitante" class="mt-2" />
+                    <x-jet-input-error for="solicitante.user_id" class="mt-2" />
                 </div>
             </div>
         </x-slot>

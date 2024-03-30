@@ -7,5 +7,9 @@
         </div>
     </x-slot>
 <div>
+    @role('Admin')
     <x-jet-welcome />
+    @else
+    dashboard user normal
+    @endrole
 </div>

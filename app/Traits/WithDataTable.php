@@ -6,6 +6,7 @@ use App\Models\Unidad;
 use App\Models\Cuenta;
 use App\Models\Estado;
 use App\Models\Producto;
+use App\Models\User;
 
 
 trait WithDataTable {
@@ -191,12 +192,14 @@ trait WithDataTable {
                     ->paginate($this->perPage);
                 $estados = Estado::get(); //Extrayendo de otra tabl
                 $productos = Producto::get(); //Extrayendo de otra tabl
+                $users = User::get(); //Extrayendo de otra tabl
             
                 return [
                     "view" => 'livewire.table.solicitante',
                     "solicitantes" => $solicitantes,
                     "productos" => $productos,
                     "estados" => $estados,
+                    "users" => $users,
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('solicitante.new'),

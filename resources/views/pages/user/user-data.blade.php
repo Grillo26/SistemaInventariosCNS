@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header_content">
         <h1>{{ __('Gestionar Usuarios') }}</h1>
@@ -10,6 +11,15 @@
     </x-slot>
 
     <div>
-        <livewire:table.main name="user" :model="$user" />
+
+        @role('Admin')
+            <livewire:table.main name="user" :model="$user" />
+        @else
+            <livewire:unauthorized-message />
+        @endrole
+        
     </div>
+
+    
 </x-app-layout>
+
