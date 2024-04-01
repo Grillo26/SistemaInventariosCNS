@@ -21,6 +21,7 @@ use App\Http\livewire\Salidas;
 use App\Http\livewire\Unidades;
 use App\Http\livewire\Entradas;
 use App\Http\livewire\Stock;
+use App\Http\livewire\Ubicacion;
 use App\Http\livewire\Comprobate;
 use App\Http\livewire\Estad;
 use App\Http\livewire\Mesa;
@@ -96,6 +97,8 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('entradas', Entradas::class)->name('entradas');
 
     Route::get('stock', Stock::class)->name('stock');
+
+    Route::get('ubicacion', Ubicacion::class)->name('ubicacion');
     
     Route::get('comprobantes', Comprobate::class)->name('comprobantes');
 

@@ -21,6 +21,7 @@ $links = [
                 "icon" => "fas fa-box",
                 "section_list" => [
                     ["href" => "stock", "text" => "Verificar Stock"],
+                    ["href" => "ubicacion", "text" => "Ubicación de Artículo"],
                     ["href" => "producto.new", "text" => "Nuevo Artículo"],
                     ["href" => "producto", "text" => "Gestionar Artículos"],
                     ["href" => "entradas", "text" => "Entrada de Artículos"],
@@ -140,9 +141,15 @@ $navigation_links = array_to_object($links);
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand p-3 mb-5">
+            @role('Admin')
             <a href="{{ route('dashboard') }}">
                 <img class="d-inline-block" width="300px"src="{{URL::asset('img/cnsAlmacen.png')}}" alt="">
             </a>
+            @else
+            <a href="{{ route('dashboard') }}">
+                <img class="d-inline-block" width="300px"src="{{URL::asset('img/cnsUser.png')}}" alt="">
+            </a>
+            @endrole
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('dashboard') }}">

@@ -159,8 +159,6 @@ $productos = App\Models\Producto::all();
 									@endif
 								@endforeach
 									
-
-
 								@foreach ($productos as $producto)
 									@if($articulo->producto_idProducto == $producto->id)
 										<td>{{ $producto -> nombre_producto }}</td>
