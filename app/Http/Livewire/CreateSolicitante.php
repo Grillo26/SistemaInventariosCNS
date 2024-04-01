@@ -75,17 +75,28 @@ class CreateSolicitante extends Component
 
     public function createSolicitante ()
     {
-        foreach ($this->solicitudes as $solicitud) {
+        if (count($this->solicitudes) > 0) {
+            foreach ($this->solicitudes as $solicitud) {
 
-            $solicitud['referencia'] = $this->referencia;
-            $solicitud['detalle'] = $this->detalle;
-            $solicitud['user_id'] = auth()->id(); // Obtener el ID del usuario autenticado
-            $solicitud['estado_idEstado'] = 1;
-            
-            Solicitante::create($solicitud);
+                $solicitud['referencia'] = $this->referencia;
+                $solicitud['detalle'] = $this->detalle;
+                $solicitud['user_id'] = auth()->id(); // Obtener el ID del usuario autenticado
+                $solicitud['estado_idEstado'] = 1;
+                
+                Solicitante::create($solicitud);
 
+            }
         }
-        
+        elseif (count($this->solicitudes) === 0) {
+            $data = $this->solicitante;
+            $data['referencia'] = $this->referencia;
+            $data['detalle'] = $this->detalle;
+            $data['cantidad'] = $this->cantidad;
+            $data['user_id'] = auth()->id(); // Obtiene el ID del usuario autenticado
+            $data['producto_idProducto'] = $this->codigo_producto;
+            $data['estado_idEstado'] = 1;
+            Solicitante::create($data);
+        }
 
 
         $this->emit('saved');
