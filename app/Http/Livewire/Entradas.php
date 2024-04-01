@@ -106,9 +106,15 @@ class Entradas extends Component
         $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
         
         $entradas = CompraProducto::where('producto_idProducto', 'like', '%' . $this->search . '%')
-        ->orwhere('proveedor_idProveedor', 'like', '%' . $this->search . '%')
+
+        ->orWhereHas('productos', function($query) { //Realiza la búsqueda con la llave foránea en otra tabla
+            $query->where('codigo_producto', 'like', '%' . $this->search . '%');
+        })
+        ->orWhereHas('productos', function($query) {
+            $query->where('nombre_producto', 'like', '%' . $this->search . '%');
+        })
         ->orwhere('cantidad_db', 'like', '%' . $this->search . '%')
-        ->orwhere('fecha_adquisicion', 'like', '%' . $this->search . '%')
+        ->orwhere('fecha_adquisicion', 'like', '%' . $this->search . '%')   
         ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')
         ->orderBy($this->sort, $this->direction)
         ->get();

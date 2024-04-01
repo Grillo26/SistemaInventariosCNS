@@ -12,16 +12,26 @@ $totalArticulos = App\Models\CompraProducto::sum('cantidad');
 $productos = App\Models\Producto::all();
 
 	// Fecha actual
-    $fechaActual = now();
+	$fechaActual = now();
 
-    // Obtener la fecha actual más 10 días
-    $fechaLimite = $fechaActual->addDays(30);
+	// Obtener la fecha actual más 10 días
+	$fechaLimite = $fechaActual->addDays(10);
 
-    // Contar cuántos artículos tienen fecha de caducidad dentro de los próximos 10 días
-    $articulosCaducanEn10Dias = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->count();
+	// Contar cuántos artículos tienen fecha de caducidad dentro de los próximos 10 días
+	$articulosCaducanEn10Dias = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->count();
+
+	// Verificar si hay algún artículo vencido
+	$articulosVencidos = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaActual)->count();
+
+	// Si hay artículos vencidos, almacenar el conteo en la variable $articulos_vencidos
+	if ($articulosVencidos > 0) {
+		$articulos_vencidos = $articulosVencidos;
+	} else {
+		// Si no hay artículos vencidos, mantener la variable $articulos_vencidos como estaba
+		$articulos_vencidos = $articulosCaducanEn10Dias;
+	}
 
 	$articulosProximoCaducar = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->get();
-
 
 
 @endphp
@@ -46,7 +56,11 @@ $productos = App\Models\Producto::all();
 					<div class="flex-grow-1">
 						<p class="text-truncate font-size-14 mb-2">Total Artículos en Almacén</p>
 						<h4 class="mb-2">{{ $totalArticulos}}</h4>
-						<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulosCaducanEn10Dias}}</span> Artículos están por caducar</p>
+						@if($articulos_vencidos > 0)
+							<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulos_vencidos}}</span> Artículos vencidos o por vencer</p>
+						@else
+							<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulosCaducanEn10Dias}}</span> Artículos están por caducar</p>
+						@endif
 					</div>
 						<div><span class="  text-success "><i class="fas fa-cart-plus" style="font-size: 40px;"></i></span></div>
 				</div>
@@ -130,6 +144,7 @@ $productos = App\Models\Producto::all();
 								<th>Código Artículo</th>
 								<th>Nombre Artículo</th>
 								<th>Fecha Caducidad</th>
+								<th>Vence en</th>
 								<th>Cantidad</th>
 								
 							</tr>
@@ -150,8 +165,22 @@ $productos = App\Models\Producto::all();
 									@if($articulo->producto_idProducto == $producto->id)
 										<td>{{ $producto -> nombre_producto }}</td>
 									@endif
-								@endforeach
+								@endforeach				
+
 								<td>{{ $articulo -> fecha_caducidad}}</td>
+								<td>
+									@php
+										$fechaCaducidad = \Carbon\Carbon::parse($articulo->fecha_caducidad);
+										$hoy = \Carbon\Carbon::now();
+										$diasRestantes = $hoy->diffInDays($fechaCaducidad, false); // false para contar solo días futuros
+									@endphp
+
+									@if ($diasRestantes < 0)
+										<span class="text-danger">Artículo vencido</span>
+									@else
+										{{ $diasRestantes }} días
+									@endif
+								</td>
 								<td>{{ $articulo -> cantidad }}</td>
 					
 							</tr>

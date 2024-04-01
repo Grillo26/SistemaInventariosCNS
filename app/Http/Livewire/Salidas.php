@@ -125,13 +125,19 @@ class Salidas extends Component
         $this->entradas = CompraProducto::orderBy('id', 'asc')->get(); 
         
         $salidas = Salida::where('producto_idProducto', 'like', '%' . $this->search . '%')
+        ->orWhereHas('productos', function($query) { //Realiza la búsqueda con la llave foránea en otra tabla
+            $query->where('codigo_producto', 'like', '%' . $this->search . '%');
+        })
+        ->orWhereHas('productos', function($query) {
+            $query->where('nombre_producto', 'like', '%' . $this->search . '%');
+        })
         ->orwhere('fecha_salida', 'like', '%' . $this->search . '%')
         ->orwhere('stock_disponible', 'like', '%' . $this->search . '%')
         ->orwhere('cantidad_salida', 'like', '%' . $this->search . '%')
         ->orwhere('cantidad_stockTotal', 'like', '%' . $this->search . '%')
         ->orderBy($this->sort, $this->direction)
         ->get();
-
+ 
         return view('livewire.salidas', compact ('salidas')); 
     }
 

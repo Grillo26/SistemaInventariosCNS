@@ -87,9 +87,16 @@
 							<div class="flex-grow-1">
 								<p class="text-truncate font-size-14 mb-2">Fecha de Caducidad</p>
 								<h1 style="font-size: 24px; color: #333;" class="mb-2">{{ $fecha_caducidad}}</h1>
+								
+								@if($vencida == true)
+								<p class="text-muted mb-0">El artículo lleva: 
+                                <span class="text-danger text-danger fw-bold font-size-12 me-2">
+                                <i class="ion-ios-cart"></i>{{$dias_vencidos}}</span> días vencidos</p>
+								@else
 								<p class="text-muted mb-0">Quedan: 
-                                <span class="{{ $dias_restantes < 10 ? 'text-danger' : 'text-success' }} fw-bold font-size-12 me-2">
-                                <i class="ion-ios-cart"></i>{{$dias_restantes}}</span> días para que el artículo se venza</p>
+                                <span class="text-danger text-danger fw-bold font-size-12 me-2">
+								<i class="ion-ios-cart"></i>{{$dias_restantes}}</span> días para que el artículo se venza</p>
+								@endif
 
 							</div>
 							<div><span class="  text-success "><i class="fas fa-calendar-check" style="font-size: 40px;"></i></span></div>
