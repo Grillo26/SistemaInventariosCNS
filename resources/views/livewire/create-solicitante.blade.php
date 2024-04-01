@@ -9,6 +9,33 @@
             @if ($action == "createSolicitante")
             {{ __('Complete los siguientes datos para registrar una nueva Solicitud. Nota: lea correctamente los campos y verifique  si están escritos de
                 manera adecuada dentro del formulario.') }} 
+
+
+				<h4 class="card-title mb-4 mt-4">Lista de Artículos</h4>
+
+				<div class="table-responsive">
+					<table class="table table-centered mb-0 align-middle table-hover table-nowrap">
+						<thead class="table-light">
+							<tr>
+								<th>Código Artículo</th>
+								<th>Nombre Artículo</th>
+								<th>Cantidad</th>
+								
+							</tr>
+						</thead>
+						<!-- end thead -->
+						<tbody>
+                            @foreach ($solicitudes as $solicitud)
+                                <tr>
+                                    <td><h6 class="mb-0">{{ $solicitud['producto_idProducto'] }}</td>
+                                    <td><h6 class="mb-0">{{ $solicitud['nombre_producto'] }}</td>
+                                    <td><h6 class="mb-0">{{ $solicitud['cantidad'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
             
             @endif
 
@@ -33,7 +60,7 @@
                                 <i class="fas fa-text-height"></i>
                             </div>
                         </div>
-                        <input id="referencia" type="text" class="form-control phone-number" wire:model.defer="solicitante.referencia" required>
+                        <input id="referencia" type="text" class="form-control phone-number" wire:model.defer="referencia" required>
                     </div>
                     <x-jet-input-error for="solicitante.referencia" class="mt-2" />
                 </div>
@@ -50,25 +77,12 @@
                                 <i class="fas fa-text-width"></i>
                             </div>
                         </div>
-                        <input id="detalle" type="text" class="form-control phone-number" wire:model.defer="solicitante.detalle" required>
+                        <input id="detalle" type="text" class="form-control phone-number" wire:model.defer="detalle" required>
                     </div>
                     <x-jet-input-error for="solicitante.detalle" class="mt-2" />
                 </div>
 
-                <!--Cantidad-->
-                <div class="col-span-1 p-1">
-                    <x-jet-label for="nombre_producto" value="{{ __('Cantidad') }}" />
-                    
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-box-open"></i>
-                            </div>
-                        </div>
-                        <input id="cantidad" type="number" class="form-control phone-number" wire:model.defer="solicitante.cantidad" required>
-                    </div>
-                    <x-jet-input-error for="solicitante.cantidad" class="mt-2" />
-                </div>
+                
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
@@ -139,21 +153,21 @@
                     </div>
                     <x-jet-input-error for="nombre_producto" class="mt-2" />
                 </div>
-
-                <!--Disponible-->
+                <!--Cantidad-->
                 <div class="col-span-1 p-1">
-                    <x-jet-label for="nombre_producto" value="{{ __('Disponible') }}" />
+                    <x-jet-label for="nombre_producto" value="{{ __('Cantidad') }}" />
                     
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fas fa-question"></i>
+                                <i class="fas fa-box-open"></i>
                             </div>
                         </div>
-                        <input id="disponible" type="text" class="form-control phone-number" wire:model.defer="solicitante.disponible" disabled>
+                        <input id="cantidad" type="number" class="form-control phone-number" wire:model.defer="cantidad" required>
                     </div>
-                    <x-jet-input-error for="solicitante.disponible" class="mt-2" />
+                    <x-jet-input-error for="solicitante.cantidad" class="mt-2" />
                 </div>
+
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
@@ -174,12 +188,17 @@
                     <x-jet-input-error for="solicitante.user_id" class="mt-2" />
                 </div>
             </div>
+
+
         </x-slot>
+
 
         <x-slot name="actions">
             <x-jet-action-message class="mr-3" on="saved">
                 {{ __($button['submit_response']) }}
             </x-jet-action-message>
+
+            <x-jet-secondary-button wire:click="agregarSolicitud" class="justify-center p-2"> Añadir</x-jet-danger-button>
 
             <x-jet-button>
                 {{ __($button['submit_text']) }}

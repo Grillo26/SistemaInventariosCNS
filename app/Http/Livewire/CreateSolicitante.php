@@ -16,7 +16,9 @@ class CreateSolicitante extends Component
     public $action;
     public $button;
 
-    public $nombre_producto, $codigo_producto, $estado_idEstado;
+    public $nombre_producto, $codigo_producto, $estado_idEstado, $cantidad;
+    public $referencia, $detalle;
+    public $solicitudes = [];
 
     public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
         if ($value) {
@@ -30,6 +32,24 @@ class CreateSolicitante extends Component
         } else {
             $this->nombre_producto = null;
         }
+    }
+
+    public function agregarSolicitud()
+    {
+        // Agregar la solicitud actual a la colección de solicitudes
+        $this->solicitudes[] = [
+            
+            'cantidad' => $this->cantidad,
+            'producto_idProducto' => $this->codigo_producto,
+            'nombre_producto' => $this->nombre_producto,
+         
+            // Agregar aquí los campos que necesites
+        ];
+
+        $this->reset(['codigo_producto', 'nombre_producto','cantidad']);
+        $this->emit('resetSelect2');
+
+        
     }
 
     protected function getRules()
@@ -55,15 +75,21 @@ class CreateSolicitante extends Component
 
     public function createSolicitante ()
     {
-        $data = $this->solicitante;
-        $data['estado_idEstado'] = 1;
-        $data['producto_idProducto'] = $this-> codigo_producto;
-        $data['user_id'] = auth()->id(); // Obtiene el ID del usuario autenticado
+        foreach ($this->solicitudes as $solicitud) {
 
-        Solicitante::create($data);
+            $solicitud['referencia'] = $this->referencia;
+            $solicitud['detalle'] = $this->detalle;
+            $solicitud['user_id'] = auth()->id(); // Obtener el ID del usuario autenticado
+            $solicitud['estado_idEstado'] = 1;
+            
+            Solicitante::create($solicitud);
+
+        }
+        
+
 
         $this->emit('saved');
-        $this->reset('solicitante');
+        $this->reset(['solicitudes', 'solicitante']);
     }
 
     public function updateSolicitante()
@@ -98,5 +124,15 @@ class CreateSolicitante extends Component
         $this->productos = Producto::orderBy('id', 'asc')->get();  
         $this->users = User::orderBy('id', 'asc')->get();  
         return view('livewire.create-solicitante');
+    }
+
+    public function limpiarCampos(){
+        $this->codigo_producto= '';
+        $this->fecha_salida = '';
+        $this->cantidad = '';
+        $this->cantidad_salida = '';
+        $this->cantidad_stockTotal = '';
+        $this->total = 0;
+    
     }
 }
