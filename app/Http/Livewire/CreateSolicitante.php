@@ -45,9 +45,9 @@ class CreateSolicitante extends Component
          
             // Agregar aquí los campos que necesites
         ];
+        $this->emit('limpiarCampos');
+        $this->cantidad = '';
 
-        $this->reset(['codigo_producto', 'nombre_producto','cantidad']);
-        $this->emit('resetSelect2');
 
         
     }
@@ -100,7 +100,10 @@ class CreateSolicitante extends Component
 
 
         $this->emit('saved');
+        $this->emit('limpiarCampos');
         $this->reset(['solicitudes', 'solicitante']);
+        $this-> limpiarCampos();
+
     }
 
     public function updateSolicitante()
@@ -109,11 +112,6 @@ class CreateSolicitante extends Component
         Solicitante::query()
             ->where('id', $this->solicitanteId)
             ->update([
-                "referencia" => $this->solicitante->referencia,
-                "detalle" => $this->solicitante->detalle,
-                "cantidad" => $this->solicitante->cantidad,
-                "nombre_solicitante" => $this->solicitante->nombre_solicitante,
-                "producto_idProducto" => $this->solicitante->producto_idProducto,
                 "estado_idEstado" => $this->solicitante->estado_idEstado,
             ]);
 
@@ -126,7 +124,7 @@ class CreateSolicitante extends Component
             $this->solicitante = Solicitante::find($this->solicitanteId);
         }
 
-        $this->button = create_button($this->action, "Solicitante");
+        $this->button = create_button($this->action, "Solicitud");
     }
 
     public function render()
@@ -139,10 +137,10 @@ class CreateSolicitante extends Component
 
     public function limpiarCampos(){
         $this->codigo_producto= '';
-        $this->fecha_salida = '';
+        $this->referencia = '';
+        $this->detalle = '';
+        $this->nombre_producto = '';
         $this->cantidad = '';
-        $this->cantidad_salida = '';
-        $this->cantidad_stockTotal = '';
         $this->total = 0;
     
     }

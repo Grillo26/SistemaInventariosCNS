@@ -20,4 +20,8 @@ class Dashboard extends Component
 
         return view('livewire.dashboard');
     }
+
+    public function renderuser(){
+        return viwe('livewire.dashuser');
+    }
 }

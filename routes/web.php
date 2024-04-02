@@ -12,6 +12,7 @@ use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\ReporteController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -90,6 +91,11 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('/producto', [ ProductoController::class, "index_view" ])->name('producto');
     Route::view('/producto/new', "pages.producto.producto-new")->name('producto.new');
     Route::view('/producto/edit/{productoId}', "pages.producto.producto-edit")->name('producto.edit');
+
+    Route::get('/reporte', [ ReporteController::class, "index_view" ])->name('reporte');
+    Route::view('/reporte/new', "pages.reporte.reporte-new")->name('reporte.new');
+    Route::view('/reporte/edit/{reporteId}', "pages.reporte.reporte-edit")->name('reporte.edit');
+
 
 
     Route::get('salidas', Salidas::class)->name('salidas');
