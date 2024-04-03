@@ -65,7 +65,7 @@
                                 <i class="fas fa-text-height"></i>
                             </div>
                         </div>
-                        <input id="referencia" type="text" class="form-control phone-number" wire:model.defer="referencia" disabled>
+                        <input id="referencia" type="text" class="form-control phone-number" wire:model.defer="referencia" >
 
                     </div>
                     <x-jet-input-error for="solicitante.referencia" class="mt-2" />
@@ -83,7 +83,7 @@
                                 <i class="fas fa-text-width"></i>
                             </div>
                         </div>
-                        <input id="detalle" type="text" class="form-control phone-number" wire:model.defer="detalle" disabled>
+                        <input id="detalle" type="text" class="form-control phone-number" wire:model.defer="detalle" >
                     </div>
                     <x-jet-input-error for="solicitante.detalle" class="mt-2" />
                 </div>
@@ -179,7 +179,7 @@
                                 <i class="fas fa-box-open"></i>
                             </div>
                         </div>
-                        <input id="cantidad" type="number" class="form-control phone-number" wire:model.defer="cantidad" disabled>
+                        <input id="cantidad" type="number" class="form-control phone-number" wire:model.defer="cantidad" >
                     </div>
                     <x-jet-input-error for="solicitante.cantidad" class="mt-2" />
                 </div>
