@@ -12,7 +12,6 @@ use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\EstadoController;
-use App\Http\Controllers\ReporteController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +26,7 @@ use App\Http\livewire\Comprobate;
 use App\Http\livewire\Estad;
 use App\Http\livewire\Mesa;
 use App\Http\livewire\Dashboard;
+use App\Http\livewire\Reporte;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,12 +92,6 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::view('/producto/new', "pages.producto.producto-new")->name('producto.new');
     Route::view('/producto/edit/{productoId}', "pages.producto.producto-edit")->name('producto.edit');
 
-    Route::get('/reporte', [ ReporteController::class, "index_view" ])->name('reporte');
-    Route::view('/reporte/new', "pages.reporte.reporte-new")->name('reporte.new');
-    Route::view('/reporte/edit/{reporteId}', "pages.reporte.reporte-edit")->name('reporte.edit');
-
-
-
     Route::get('salidas', Salidas::class)->name('salidas');
 
     Route::get('entradas', Entradas::class)->name('entradas');
@@ -109,4 +103,9 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('comprobantes', Comprobate::class)->name('comprobantes');
 
     Route::get('estados', Estad::class)->name('estados');
+
+    Route::get('reporte', Reporte::class)->name('reporte');
+    Route::get('reporte/vencimiento', [Reporte::class, 'vencimiento'])->name('reporte.vencimiento');
+    Route::get('reporte/stock', [Reporte::class, 'stock'])->name('reporte.stock');
+
 });

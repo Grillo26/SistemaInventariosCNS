@@ -108,7 +108,7 @@ $links = [
     ],
 
     [
-    "href" => "solicitante",
+    "href" => "reporte",
         "text" => "Reportes",
         "icon" => "fas fa-file-pdf",
         "is_multi" => false,
