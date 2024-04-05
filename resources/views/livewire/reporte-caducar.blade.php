@@ -19,6 +19,7 @@
 
 			<div class="col form-inline">
 				
+				
 			</div>
 
 			<div class="col">
@@ -27,6 +28,7 @@
 		</div>
 
 		<!--TABLE-->
+
 		@if($articulosCaducar->count())
 		<div class="row">
 			<div class="table-responsive">

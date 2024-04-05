@@ -28,6 +28,14 @@ $links = [
                     ["href" => "salidas", "text" => "Salida de Artículos"],
                 ]
     
+            ],
+            [
+                "section_text" => "Inventario",
+                "icon" => "fas fa-box-open",
+                "section_list" => [
+                    ["href" => "producto", "text" => "Inventario"]                
+                ]
+    
             ]
         ],
         "text" => "Inventario",

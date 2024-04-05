@@ -24,7 +24,7 @@
 
 									<a href="{{ route('reporte.vencimiento') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
 										<div class="wizard-step-icon">
-											<i class="fas fa-print"></i>
+											<i class="fas fa-calendar"></i>
 										</div>
 										<div class="wizard-step-label">
 											Artículos vencidos o próximos a vencer
@@ -37,6 +37,24 @@
 										</div>
 										<div class="wizard-step-label">
 											Cantidad Stock
+										</div>
+									</a><!--End cart-->
+
+									<a href="{{ route('reporte.stock') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
+										<div class="wizard-step-icon">
+											<i class="fas fa-sign-out-alt"></i>
+										</div>
+										<div class="wizard-step-label">
+											Artículos sin salida
+										</div>
+									</a><!--End cart-->
+
+									<a href="{{ route('reporte.stock') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
+										<div class="wizard-step-icon">
+											<i class="fas fa-store"></i>
+										</div>
+										<div class="wizard-step-label">
+											Artículos que no están en almacén
 										</div>
 									</a><!--End cart-->
 									
