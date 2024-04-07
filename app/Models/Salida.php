@@ -5,6 +5,7 @@ use App\Models\Pasillo;
 use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
+use App\Models\Inventario;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,5 +36,10 @@ class Salida extends Model
     }
     public function mesas(){
         return $this->belongsTo(Mesa::class, 'mesa_idMesa');
+    }
+    
+    public function inventario()
+    {
+        return $this->belongsTo(Inventario::class);
     }
 }

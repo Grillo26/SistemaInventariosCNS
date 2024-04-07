@@ -12,6 +12,7 @@ use App\Http\Controllers\SolicitanteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\KardexController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -91,6 +92,8 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('/producto', [ ProductoController::class, "index_view" ])->name('producto');
     Route::view('/producto/new', "pages.producto.producto-new")->name('producto.new');
     Route::view('/producto/edit/{productoId}', "pages.producto.producto-edit")->name('producto.edit');
+
+    Route::get('/kardex', [ KardexController::class, "index_view" ])->name('kardex');
 
     Route::get('salidas', Salidas::class)->name('salidas');
 

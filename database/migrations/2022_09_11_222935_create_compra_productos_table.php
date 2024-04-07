@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('producto_idProducto')->nullable();
             $table->unsignedBigInteger('proveedor_idProveedor')->nullable();
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->date('fecha_adquisicion');
             $table->unsignedBigInteger('pasillo_idPasillo')->nullable();
             $table->unsignedBigInteger('estante_idEstante')->nullable();

@@ -33,7 +33,8 @@ $links = [
                 "section_text" => "Inventario",
                 "icon" => "fas fa-box-open",
                 "section_list" => [
-                    ["href" => "producto", "text" => "Inventario"]                
+                    ["href" => "kardex", "text" => "Kardex"],              
+                    ["href" => "reporte.vencimiento", "text" => "Vencimiento"]              
                 ]
     
             ]

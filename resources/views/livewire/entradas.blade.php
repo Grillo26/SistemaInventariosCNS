@@ -114,7 +114,7 @@
                 
                     <!--Descripción-->
                     <div class="col-span-2 p-1">
-                        <x-jet-label for="descripcion" value="{{ __('Descripción Artículo') }}" />
+                        <x-jet-label for="descripcion" value="{{ __('Observación') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">

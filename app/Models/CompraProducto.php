@@ -9,6 +9,7 @@ use App\Models\Unidad;
 use App\Models\Cuenta;
 use App\Models\Grupo;
 use App\Models\Producto;
+use App\Models\Inventario;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,5 +58,10 @@ class CompraProducto extends Model
     }
     public function grupos(){
         return $this->belongsTo(Grupo::class, 'grupo_idGrupo');
+    }
+
+    public function inventario()
+    {
+        return $this->belongsTo(Inventario::class);
     }
 }

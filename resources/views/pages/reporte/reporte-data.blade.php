@@ -3,7 +3,7 @@
         <div class="section-header-back">
             <a href="{{ route('reporte') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-		<h1>{{ __('Reportes') }}</h1>
+		<h1>{{ __('Artículos Próximos a Vencer') }}</h1>
 
 		<div class="section-header-breadcrumb">
 			<div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Sistema</a></div>
