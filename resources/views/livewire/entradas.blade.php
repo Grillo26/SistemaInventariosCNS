@@ -12,6 +12,17 @@
     @role('Admin')
 	<div class="p-8 pt-4 mt-2 bg-white">
 		<!--Butons-->
+        <div class="">
+            <form action="{{ route('entradas.fecha') }}" method="post">
+                @csrf
+                <label>Reportes por rango de fecha</label>
+                <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control form-control-border"
+                    placeholder="Seleccione un rango de fechas">
+                <button class="btn btn-primary" type="submit">Generar Pdf</button>
+            </form>
+        </div>
+        <hr>
+        <br>
 		<div class="flex pb-4 -ml-3">
 			<a wire:click="$set('open', true)" class="-ml- btn btn-primary shadow-none">
                 Ingresar Artículo
@@ -438,4 +449,15 @@
     @else
     <livewire:unauthorized-message />
     @endrole
+    
 </div>
+<link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
+<script src="{{ asset('js/flatpickr.js') }}"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script>
+        flatpickr("#fecha_ingreso", {
+            mode: "range",
+            dateFormat: "Y-m-d"
+        });
+    </script>
+

@@ -13,7 +13,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\KardexController;
-
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\livewire\Productos;
@@ -110,5 +110,8 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('reporte', Reporte::class)->name('reporte');
     Route::get('reporte/vencimiento', [Reporte::class, 'vencimiento'])->name('reporte.vencimiento');
     Route::get('reporte/stock', [Reporte::class, 'stock'])->name('reporte.stock');
+
+    Route::post('entradas/reporteFecha', [PDFController::class, 'generarPDFfechaEntrada'])->name('entradas.fecha');
+    Route::post('salidas/reporteFecha', [PDFController::class, 'generarPDFfechaSalida'])->name('salidas.fecha');
 
 });
