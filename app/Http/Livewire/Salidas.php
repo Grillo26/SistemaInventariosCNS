@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
-use App\Models\CompraProducto;
+use App\Models\Entrada;
 use App\Models\Grupo;
 use App\Models\Cuenta;
 use App\Models\Unidad;
@@ -10,6 +10,7 @@ use App\Models\Pasillo;
 use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
+use App\Models\Inventario;
 use App\Models\Salida;
 
 use Livewire\Component;
@@ -25,9 +26,10 @@ class Salidas extends Component
     public $verifiEdit = false;
 
     public $codigo_producto, $nombre_producto, 
-    $descripcion, $fecha_salida,
+    $descripcion, $fecha_salida, $obs,
     $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
-    $cantidad, $cantidad_salida, $cantidad_stockTotal=0;
+    $cantidad, $cantidad_salida, $cantidad_stockTotal=0, $nombre_proveedor;
+
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
@@ -39,15 +41,17 @@ class Salidas extends Component
 
     public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
         if ($value) {
-            $producto = CompraProducto::find($value);
+            $producto = Producto::find($value);
             if ($producto) {
-                $this->nombre_producto = Producto::find($producto->producto_idProducto)->nombre_producto;
-                $this->descripcion = $producto-> descripcion;
+                $this->nombre_producto = $producto->nombre_producto;
                 $this->pasillo_idPasillo = Pasillo::find($producto->pasillo_idPasillo)->n_pasillo;
                 $this->estante_idEstante = Estante::find($producto->estante_idEstante)->n_estante;
                 $this->mesa_idMesa = Mesa::find($producto->mesa_idMesa)->n_mesa;
-                $this->cantidad = $producto -> cantidad;
-                $this->cantidad = number_format($this->cantidad, 0);
+
+                $cantidadEntradas = Inventario::where('producto_id', $value)->sum('cantidad_entrada');
+                $cantidadSalidas = Inventario::where('producto_id', $value)->sum('cantidad_salida');
+                $this->cantidad= $cantidadEntradas - $cantidadSalidas;
+
                 //Mediante el id accedemos a la tabla correspondiente y extraemos su nombre
                 //$this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
           
@@ -76,30 +80,29 @@ class Salidas extends Component
 
     public function guardar(){
 
-        if (!$this->codigo_producto) {
-            // Si el ID está vacío, no hagas nada
-            return;
-        }
-
-            // Encuentra el registro de CompraProducto por el ID seleccionado
-        $compraProducto = CompraProducto::find($this->codigo_producto);
-
-        // Realiza la lógica de actualización basada en el objeto $compraProducto
-        if ($compraProducto) {
-            $cantidad_update = $compraProducto->cantidad - $this->cantidad_salida;
-            $compraProducto->update([
-                'cantidad' => $cantidad_update
-            ]);
-        }
-
         Salida::updateOrCreate(
         [
             'producto_idProducto' => $this->codigo_producto,
             'fecha_salida' => $this->fecha_salida,
-            'stock_disponible' => $this->cantidad,
-            'cantidad_salida' => $this->cantidad_salida,
-            'cantidad_stockTotal' => $this->cantidad_stockTotal
+            'cantidad' => $this->cantidad_salida,
+            'obs' => $this->obs,
         ]);
+
+        // Crear un registro en la tabla 'inventarios' o actualizar si ya existe
+        Inventario::updateOrCreate(
+            [
+                'producto_id' => $this->codigo_producto,
+                'fecha' => now()->toDateString(),
+                'hora' => now()->toTimeString(),
+            ],
+            [
+                'cantidad' => $this->cantidad,
+                'cantidad_entrada' => 0,
+                'cantidad_salida' => $this->cantidad_salida,
+                'proveedor_idProveedor' => $this->nombre_proveedor,
+                'obs' => $this->obs,
+            ]
+        );
         $this->limpiarCampos();
         
         $this->open=false;
@@ -114,16 +117,23 @@ class Salidas extends Component
 
 
     public function render(){
-        $this->productos = Producto::orderBy('id', 'asc')->get();   
-        $this->grupos = Grupo::orderBy('id', 'asc')->get();   
-        $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
-        $this->unidades = Unidad::orderBy('id', 'asc')->get();   
-        $this->proveedors = Proveedor::orderBy('id', 'asc')->get();   
+        
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
         $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
-        $this->entradas = CompraProducto::orderBy('id', 'asc')->get(); 
+        $this->proveedors = Proveedor::orderBy('id', 'asc')->get();
+
+        $this->proveedores = Inventario::select('proveedor_idProveedor')
+        ->groupBy('proveedor_idProveedor')
+        ->get();
+
         
+        $this->productos = Producto::join('entradas', 'productos.id', '=', 'entradas.producto_idProducto')
+        ->orderBy('productos.id', 'asc')
+        ->select('productos.*')
+        ->distinct()
+        ->get();
+
         $salidas = Salida::where('producto_idProducto', 'like', '%' . $this->search . '%')
         ->orWhereHas('productos', function($query) { //Realiza la búsqueda con la llave foránea en otra tabla
             $query->where('codigo_producto', 'like', '%' . $this->search . '%');
@@ -132,9 +142,7 @@ class Salidas extends Component
             $query->where('nombre_producto', 'like', '%' . $this->search . '%');
         })
         ->orwhere('fecha_salida', 'like', '%' . $this->search . '%')
-        ->orwhere('stock_disponible', 'like', '%' . $this->search . '%')
-        ->orwhere('cantidad_salida', 'like', '%' . $this->search . '%')
-        ->orwhere('cantidad_stockTotal', 'like', '%' . $this->search . '%')
+        ->orwhere('cantidad', 'like', '%' . $this->search . '%')
         ->orderBy($this->sort, $this->direction)
         ->get();
  

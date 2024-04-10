@@ -21,11 +21,15 @@ return new class extends Migration
             $table->integer('cantidad')->default(0); //Este campo será el que se editará y cambiará
             $table->integer('cantidad_entrada')->default(0);
             $table->integer('cantidad_salida')->default(0);
+            $table->unsignedBigInteger('proveedor_idProveedor')->nullable();
+            $table->string('obs')->nullable();
             
             $table->timestamps();
 
             // Llave foránea para relación con la tabla productos
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+
+            $table->foreign('proveedor_idProveedor')->references('id')->on('proveedors')->onDelete('set null');
         });
     }
 

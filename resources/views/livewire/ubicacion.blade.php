@@ -25,15 +25,9 @@
 						</div>
 						<select wire:model="codigo_producto" class="form-control select2" id="producto" >
 								<option value=" ">Buscar Artículo</option>
-								@foreach($entradas as $entrada)
-									@foreach($productos as $producto)
-
-										@if($entrada->producto_idProducto == $producto->id)
-											<option value="{{ $entrada->id}}"> {{$producto->codigo_producto}}</option>
-										@endif
-
+									@foreach($productos as $producto)				
+										<option value="{{ $producto->id}}"> {{$producto->codigo_producto}}</option>
 									@endforeach
-								@endforeach
 						</select>
 					</div>
 				</div>
@@ -50,9 +44,7 @@
 				<div class="">
 					<!--Nombre--> 
 					<h1 style="padding-top: 30px; padding-left: 20px; font-size: 24px; color: #333;">{{ $nombre_producto}}</h1>
-					<p class="pl-4"> {{$descripcion}}</p>
 
-			
 				</div>
 			</div>
 

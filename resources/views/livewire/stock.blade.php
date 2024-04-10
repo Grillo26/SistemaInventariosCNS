@@ -23,14 +23,8 @@
 					</div>
 					<select wire:model="codigo_producto" class="form-control select2" id="producto" >
                             <option value=" ">Buscar Artículo</option>
-                            @foreach($entradas as $entrada)
-                                @foreach($productos as $producto)
-
-                                    @if($entrada->producto_idProducto == $producto->id)
-                                        <option value="{{ $entrada->id}}"> {{$producto->codigo_producto}}</option>
-                                    @endif
-
-                                @endforeach
+                            @foreach($productos as $producto)
+                                <option value="{{ $producto->id}}"> {{$producto->codigo_producto}}</option>
                             @endforeach
                     </select>
 				</div>
@@ -47,20 +41,16 @@
 
             <div class="">
                 <!--Nombre--> 
-                <h1 style="padding-top: 30px; padding-left: 20px; font-size: 24px; color: #333;">{{ $nombre_producto}}</h1>
-                <p class="pl-4"> {{$descripcion}}</p>
-
-        
+                <h1 style="padding-top: 30px; padding-left: 20px; font-size: 24px; color: #333;">{{ $nombre_producto}}</h1>        
             </div>
 		</div>
-
 
 		<x-jet-section-border />
 
 		<div class="row">
 
 			<!--Stock Disponible Cantidad-->
-			<div class="col-xl-4 col-md-6">
+			<div class="col-xl-6 col-md-6">
 				<div class="card">
 					<div class="card-body">
 						<div class="d-flex">
@@ -79,8 +69,8 @@
 			<!-- end col -->
 
 
-			<!--Fecha Caducidad-->
-			<div class="col-xl-4 col-md-6">
+			<!--Fecha Caducidad
+			<div class="col-xl-6 col-md-6">
 				<div class="card">
 					<div class="card-body">
 						<div class="d-flex">
@@ -102,32 +92,10 @@
 							<div><span class="  text-success "><i class="fas fa-calendar-check" style="font-size: 40px;"></i></span></div>
 						</div>
 					</div>
-					<!-- end cardbody -->
+			
 				</div>
-				<!-- end card -->
-			</div>
-			<!-- end col -->
-
-			<!--Proveedor-->
-			<div class="col-xl-4 col-md-6">
-				<div class="card">
-					<div class="card-body">
-						<div class="d-flex">
-							<div class="flex-grow-1">
-								<p class="text-truncate font-size-14 mb-2">Proveedor</p>
-								<h1 style="font-size: 24px; color: #333;" class="mb-2">{{ $proveedor_idProveedor}}</h1>
-								<p class="text-muted mb-0">Correo: </span> {{$email}}</p>
-							</div>
-							<div><span class="  text-success "><i class="fas fa-truck" style="font-size: 40px;"></i></span></div>
-						</div>
-					</div>
-					<!-- end cardbody -->
-				</div>
-				<!-- end card -->
-			</div>
-			<!-- end col -->
-
-
+			
+			</div>-->
 
 		</div>
 

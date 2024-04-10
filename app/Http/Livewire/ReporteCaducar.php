@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
-use App\Models\CompraProducto;
+use App\Models\Entrada;
 use App\Models\Producto;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -21,7 +21,7 @@ class ReporteCaducar extends Component
     public function render()
     {
        // Obtener artículos próximos a caducar
-       $articulosCaducar = CompraProducto::whereDate('fecha_caducidad', '<', Carbon::now())
+       $articulosCaducar = Entrada::whereDate('fecha_caducidad', '<', Carbon::now())
         ->orWhereHas('productos', function($query) { 
             $query->where('codigo_producto', 'like', '%' . $this->search . '%');
         })

@@ -4,6 +4,9 @@ namespace App\Models;
 use App\Models\Unidad;
 use App\Models\Cuenta;
 use App\Models\Grupo;
+use App\Models\Pasillo;
+use App\Models\Estante;
+use App\Models\Mesa;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +22,10 @@ class Producto extends Model
         'nombre_producto',
         'unidad_idUnidad',
         'grupo_idGrupo',
-        'cuenta_idCuenta'
+        'cuenta_idCuenta',
+        'pasillo_idPasillo',
+        'estante_idEstante',
+        'mesa_idMesa'
     ];
 
     //relación muchos a uno
@@ -42,8 +48,8 @@ class Producto extends Model
         return $this->belongsTo('App\Models\Pasillos');
     }
     //relacion uno a muchos
-    public function compra_productos(){
-        return $this->hasMany('App\Models\CompraProducto');
+    public function entradas(){
+        return $this->hasMany('App\Models\Entrada');
     }
 
     public static function search($query)

@@ -15,7 +15,7 @@ use App\Models\Inventario;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompraProducto extends Model
+class Entrada extends Model
 {
     use HasFactory;
     protected $fillable=[
@@ -24,14 +24,9 @@ class CompraProducto extends Model
         'proveedor_idProveedor',
         'descripcion',
         'fecha_adquisicion',
-        'pasillo_idPasillo',
-        'estante_idEstante',
-        'mesa_idMesa',
         'fecha_caducidad',
         'cantidad',
-        'cantidad_db',
         'valor_articulo',
-        'total'
     ];
 
     //relación muchos a uno
@@ -40,15 +35,6 @@ class CompraProducto extends Model
     }
     public function proveedors(){
         return $this->belongsTo(Proveedor::class, 'proveedor_idProveedor');
-    }
-    public function pasillos(){
-        return $this->belongsTo(Pasillo::class, 'pasillo_idPasillo');
-    }
-    public function estantes(){
-        return $this->belongsTo(Estante::class, 'estante_idEstante');
-    }
-    public function mesas(){
-        return $this->belongsTo(Mesa::class, 'mesa_idMesa');
     }
     public function unidads(){
         return $this->belongsTo(Unidad::class, 'unidad_idUnidad');

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
-use App\Models\CompraProducto;
+use App\Models\Entrada;
 use App\Models\Grupo;
 use App\Models\Cuenta;
 use App\Models\Unidad;
@@ -10,6 +10,7 @@ use App\Models\Pasillo;
 use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
+use App\Models\Inventario;
 
 use Livewire\Component;
 
@@ -25,10 +26,9 @@ class Entradas extends Component
 
     public $codigo_producto, $nombre_producto, 
     $nombre_proveedor, $descripcion, 
-    $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
     $fecha_adquisicion, $fecha_caducidad,
      $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
-    $cantidad, $cantidad_db, $valor_articulo, $total=0;
+    $cantidad, $valor_articulo, $total=0;
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
@@ -67,21 +67,33 @@ class Entradas extends Component
 
     public function guardar(){
         
-        CompraProducto::updateOrCreate(
+        Entrada::updateOrCreate(
         [
             'producto_idProducto' => $this->codigo_producto,
             'proveedor_idProveedor' => $this->nombre_proveedor,
             'descripcion' => $this->descripcion,
             'fecha_adquisicion' => $this->fecha_adquisicion,
-            'pasillo_idPasillo' => $this->pasillo_idPasillo,
-            'estante_idEstante' => $this->estante_idEstante,
-            'mesa_idMesa' => $this->mesa_idMesa,
             'fecha_caducidad' => $this->fecha_caducidad,
             'cantidad' => $this->cantidad, //Esta cantidad es editable
-            'cantidad_db' => $this->cantidad, //Esta candidad es el registro de ingreso
             'valor_articulo' => $this->valor_articulo,
-            'total' => $this->total,
         ]);
+
+        // Crear un registro en la tabla 'inventarios' o actualizar si ya existe
+        Inventario::updateOrCreate(
+            [
+                'producto_id' => $this->codigo_producto,
+                'fecha' => now()->toDateString(),
+                'hora' => now()->toTimeString(),
+            ],
+            [
+                'cantidad' => $this->cantidad,
+                'cantidad_entrada' => $this->cantidad,
+                'cantidad_salida' => 0,
+                'proveedor_idProveedor' => $this->nombre_proveedor,
+                'obs' => $this->descripcion,
+            ]
+        );
+
         $this->limpiarCampos();
         
         $this->open=false;
@@ -105,7 +117,7 @@ class Entradas extends Component
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
         $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
         
-        $entradas = CompraProducto::where('producto_idProducto', 'like', '%' . $this->search . '%')
+        $entradas = Entrada::where('producto_idProducto', 'like', '%' . $this->search . '%')
 
         ->orWhereHas('productos', function($query) { //Realiza la búsqueda con la llave foránea en otra tabla
             $query->where('codigo_producto', 'like', '%' . $this->search . '%');
@@ -113,7 +125,6 @@ class Entradas extends Component
         ->orWhereHas('productos', function($query) {
             $query->where('nombre_producto', 'like', '%' . $this->search . '%');
         })
-        ->orwhere('cantidad_db', 'like', '%' . $this->search . '%')
         ->orwhere('fecha_adquisicion', 'like', '%' . $this->search . '%')   
         ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')
         ->orderBy($this->sort, $this->direction)
@@ -140,7 +151,7 @@ class Entradas extends Component
     
 
     public function editar($id){
-        $entrada = CompraProducto::findOrFail($id);
+        $entrada = Entrada::findOrFail($id);
         $this->producto_idProducto = $entrada->producto_idProducto;
         $this->proveedor_idProveedor = $entrada->proveedor_idProveedor;
         $this->descripcion = $entrada->descripcion;
@@ -160,7 +171,7 @@ class Entradas extends Component
 
     public function delete_item($id)
     {
-        $data = CompraProducto::find($id);
+        $data = Entrada::find($id);
 
         if (!$data) {
             $this->emit("deleteResult", [

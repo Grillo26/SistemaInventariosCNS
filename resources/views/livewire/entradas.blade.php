@@ -108,6 +108,7 @@
                                     <option value="{{ $proveedor->id }}">{{ $proveedor->nombre_proveedor}}</option>
                                 @endforeach
                             </select>
+
                         </div>
                     </div>
 
@@ -140,78 +141,9 @@
                     </div>
                     
                 </div>
-<!--#################################################################################################-->
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
-                    <!--Pasillo -->
-                    <div class="p-1">
-                        <x-jet-label for="pasillo" value="{{ __('Pasillo') }}" />
-                        
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-thumbtack"></i>
-                                </div>
-                            </div>
-                            <select wire:model="pasillo_idPasillo" class="form-control" id="pasillo">
-                                <option value=""></option>
-                                @foreach($pasillos as $pasillo)
-                                    <option value="{{ $pasillo->id }}">{{ $pasillo->n_pasillo}}</option>
-                                @endforeach
-                            </select>
-                           
-                        </div>
-                        <x-jet-input-error for="pasillo" class="mt-2" />
-                    </div>
-                    <!--Estante-->
-                    <div class="p-1">
-                        <x-jet-label for="estante" value="{{ __('Estante') }}" />
-                        
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-thumbtack"></i>
-                                </div>
-                            </div>
-                            <select wire:model="estante_idEstante" class="form-control" id="estante">
-                                <option value=""></option>
-                                @foreach($estantes as $estante)
-                                    <option value="{{ $estante->id }}">{{ $estante->n_estante}}</option>
-                                @endforeach
-                            </select>
-                        </div>                        
-                        <x-jet-input-error for="estante" class="mt-2" />
-                    </div>
-                    <!--Mesa -->
-                    <div class="p-1">
-                        <x-jet-label for="mesa" value="{{ __('Mesa') }}" />
-                        
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-thumbtack"></i>
-                                </div>
-                            </div>
-                            <select wire:model="mesa_idMesa" class="form-control" id="mesa">
-                                <option value=""></option>
-                                @foreach($mesas as $mesa)
-                                    <option value="{{ $mesa->id }}">{{ $mesa->n_mesa}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <x-jet-input-error for="mesa" class="mt-2" />
-                    </div>
-                    <!--Fecha Caducidad-->
-                    <div  class="col-span-1 p-1">
-                        <x-jet-label for="fecha" value="{{ __('Fecha Caducidad') }}" />
-
-                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model="fecha_caducidad" required>
-                    </div>
-
-                </div>
-
 
 <!--#################################################################################################-->
-                <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class=" grid grid-cols-1 gap-4 sm:grid-cols-4">
                     <!--Cantidad Stock -->
                     <div class="p-1">
                         <x-jet-label for="nombre_producto" value="{{ __('Cantidad Stock') }}" />
@@ -257,7 +189,13 @@
                         </div>
                         <x-jet-input-error for="total" class="mt-2" />
                     </div>
-                    
+
+                     <!--Fecha Caducidad-->
+                     <div  class="col-span-1 p-1">
+                        <x-jet-label for="fecha" value="{{ __('Fecha Caducidad') }}" />
+
+                        <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model="fecha_caducidad" required>
+                    </div>
                 </div>
 
 <!--#################################################################################################-->
@@ -368,9 +306,9 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-                            <th class="cursor-pointer" wire:click="order('cantidad_db')">
+                            <th class="cursor-pointer" wire:click="order('cantidad')">
 								<a>Cantidad Ingresada
-                                @if ($sort == 'cantidad_db')
+                                @if ($sort == 'cantidad')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -426,7 +364,7 @@
                             @endif
                         @endforeach
                         
-                        <td>{{ $entrada->cantidad_db}}</td>
+                        <td>{{ $entrada->cantidad}}</td>
                         <td>{{ $entrada->fecha_adquisicion}}</td>
                         <td>{{ $entrada->fecha_caducidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">

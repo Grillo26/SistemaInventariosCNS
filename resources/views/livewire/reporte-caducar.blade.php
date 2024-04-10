@@ -59,7 +59,18 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-							<th><a>Vence en</th>
+							<th class="cursor-pointer" wire:click="order('fecha_caducidad')" >
+                                <a>Vence en
+                                @if ($sort == 'fecha_caducidad')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-up"></i>
+                                    @else
+                                        <i class="fas fa-sort-down"></i>
+                                    @endif
+                                @else
+                                    <i class="text-muted fas fa-sort"></i>
+                                @endif
+                            </th>
 
                             <th class="cursor-pointer" wire:click="order('fecha_caducidad')" >
                                 <a>Fecha Caducidad
@@ -99,6 +110,7 @@
 								{{ $diasRestantes }} días
 							@endif
 							</td>
+							
                         <td>{{ $articulo->fecha_caducidad}}</td>
                      
                         <td class="whitespace-no-wrap row-action--icon">

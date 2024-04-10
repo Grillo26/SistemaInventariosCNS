@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Estante::factory(10)->create();
         \App\Models\Grupo::factory(10)->create();
         \App\Models\Mesa::factory(10)->create();
-        \App\Models\Pasillo::factory(20)->create();
+        \App\Models\Pasillo::factory(10)->create();
         \App\Models\Baja::factory(20)->create();
         \App\Models\Proveedor::factory(50)->create();
         \App\Models\Dll::factory(50)->create();

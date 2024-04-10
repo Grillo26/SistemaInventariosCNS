@@ -17,9 +17,9 @@ class CreateSalidasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('producto_idProducto')->nullable();
             $table->date('fecha_salida');
-            $table->integer('stock_disponible');
-            $table->integer('cantidad_salida');
-            $table->integer('cantidad_stockTotal');
+            $table->integer('cantidad');
+            $table->string('obs');
+
 
             $table->foreign('producto_idProducto')
             ->references('id')->on('productos')->onDelete('set null');

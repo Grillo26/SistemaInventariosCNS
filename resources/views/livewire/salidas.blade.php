@@ -51,14 +51,8 @@
                                 </div>
                                 <select wire:model="codigo_producto" class="form-control select2" id="producto">
                                     <option value=" "> </option>
-                                    @foreach($entradas as $entrada)
-                                        @foreach($productos as $producto)
-
-                                            @if($entrada->producto_idProducto == $producto->id)
-                                                <option value="{{ $entrada->id}}"> {{$producto->codigo_producto}}</option>
-                                            @endif
-
-                                        @endforeach
+                                    @foreach($productos as $producto)
+                                        <option value="{{ $producto->id}}"> {{$producto->codigo_producto}}</option>
                                     @endforeach
                                 </select>
                 
@@ -101,9 +95,9 @@
 <!--#################################################################################################-->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
                     
-                    <!--Descripción-->
+                    <!--Observacion-->
                     <div class="col-span-2 p-1">
-                        <x-jet-label for="descripcion" value="{{ __('Descripción Artículo') }}" />
+                        <x-jet-label for="obs" value="{{ __('OBservación de Salida') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -111,12 +105,43 @@
                                     <i class="fas fa-text-width"></i>
                                 </div>
                             </div>
-                            <input id="descripcion" type="text" class="form-control phone-number" wire:model.defer="descripcion" disabled>
+                            <input id="obs" type="text" class="form-control phone-number" wire:model.defer="obs">
                         </div>
                         
-                        <x-jet-input-error for="descripcion" class="mt-2" />
+                        <x-jet-input-error for="obs" class="mt-2" />
                     </div>
-                    
+
+                    <!--Proveedor -->
+                    <div class="col-span-2 p-1">
+                        <x-jet-label for="codigo_producto" value="{{ __('Seleccione Proveedor') }}" />
+                        
+                        <div class="input-group" wire:ignore >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <select wire:model="nombre_proveedor" class="form-control select2" id="proveedor">
+                                    <option value=""> </option>
+                                    @foreach($proveedores as $proveedor)
+                                        @foreach($proveedors as $prov)
+                                            @if($proveedor->proveedor_idProveedor == $prov->id)
+                                                <option value="{{ $proveedor->proveedor_idProveedor }}">{{ $prov->nombre_proveedor}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <script>
+                            document.addEventListener('livewire:load', function(){
+                                $('.proveedor').select2(); // Inicializar Select2 después de que Livewire haya completado las actualizaciones
+                                $('#proveedor').on('change', function(){
+                                    @this.set('nombre_proveedor', this.value); //Conecta con la variable en el controlador
+                                });
+                            });
+                    </script>
                 </div>
 
 <!--#################################################################################################-->
@@ -295,33 +320,10 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-                            <th class="cursor-pointer" wire:click="order('stock_disponible')" >
-                                <a>Stock Disponible
-                                @if ($sort == 'stock_disponible')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif
-                            </th>
-                            <th class="cursor-pointer" wire:click="order('cantidad_salida')" >
+
+                            <th class="cursor-pointer" wire:click="order('cantidad')" >
                                 <a>Cantidad de Salida
-                                @if ($sort == 'cantidad_salida')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif
-                            </th>
-                            <th class="cursor-pointer" wire:click="order('cantidad_stockTotal')" >
-                                <a>Cantidad Total en Almacén
-                                @if ($sort == 'cantidad_stockTotal')
+                                @if ($sort == 'cantidad')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -353,9 +355,7 @@
                         @endforeach
                         
                         <td>{{ $salida->fecha_salida}}</td>
-                        <td>{{ $salida->stock_disponible}}</td>
-                        <td>{{ $salida->cantidad_salida}}</td>
-                        <td>{{ $salida->cantidad_stockTotal}}</td>
+                        <td>{{ $salida->cantidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">
                             <a wire:click="editar({{$salida->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
 								<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>

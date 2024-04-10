@@ -20,6 +20,9 @@ return new class extends Migration
             $table->unsignedBigInteger('unidad_idUnidad')->nullable();
             $table->unsignedBigInteger('grupo_idGrupo')->nullable();
             $table->unsignedBigInteger('cuenta_idCuenta')->nullable();
+            $table->unsignedBigInteger('pasillo_idPasillo')->nullable();
+            $table->unsignedBigInteger('estante_idEstante')->nullable();
+            $table->unsignedBigInteger('mesa_idMesa')->nullable();
 
             $table->foreign('unidad_idUnidad')
             ->references('id')->on('unidads')->onDelete('set null');
@@ -27,6 +30,12 @@ return new class extends Migration
             ->references('id')->on('grupos')->onDelete('set null');
             $table->foreign('cuenta_idCuenta')
             ->references('id')->on('cuentas')->onDelete('set null');
+            $table->foreign('pasillo_idPasillo')
+            ->references('id')->on('pasillos')->onDelete('set null');
+            $table->foreign('estante_idEstante')
+            ->references('id')->on('estantes')->onDelete('set null');
+            $table->foreign('mesa_idMesa')
+            ->references('id')->on('mesas')->onDelete('set null');
 
             $table->timestamps();
         });

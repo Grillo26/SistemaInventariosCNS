@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use App\Models\Inventario; 
 use App\Models\Producto; 
+use App\Models\Proveedor; 
 
 
 use Livewire\Component;
@@ -12,6 +13,7 @@ class Kardex extends Component
     public $productoId;
     public $kardex;
     public $nombre_producto=" ";
+    public $proveedores;
 
     public function render()
     {
@@ -29,6 +31,7 @@ class Kardex extends Component
 
     public function mostrarKardex()
     {
+        $this->proveedores = Proveedor::orderBy('id', 'asc')->get();   
         $producto = Producto::find($this->productoId);
         $this->nombre_producto = Producto::find($this->productoId)->nombre_producto;
         

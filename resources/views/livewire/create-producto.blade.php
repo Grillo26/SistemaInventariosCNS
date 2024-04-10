@@ -56,7 +56,70 @@
             </div>
 
             <x-jet-section-border />
+            <!--UBICACION-->
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-3">
+                <!--Pasillo -->
+                <div class="p-1">
+                    <x-jet-label for="pasillo" value="{{ __('Pasillo') }}" />
 
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        </div>
+                        <select wire:model="pasillo_idPasillo" class="form-control" id="pasillo">
+                                            <option value=""></option>
+                                            @foreach($pasillos as $pasillo)
+                                                <option value="{{ $pasillo->id }}">{{ $pasillo->n_pasillo}}</option>
+                                            @endforeach
+                                        </select>
+
+                    </div>
+                    <x-jet-input-error for="pasillo" class="mt-2" />
+                </div>
+                <!--Estante-->
+                <div class="p-1">
+                    <x-jet-label for="estante" value="{{ __('Estante') }}" />
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        </div>
+                        <select wire:model="estante_idEstante" class="form-control" id="estante">
+                                            <option value=""></option>
+                                            @foreach($estantes as $estante)
+                                                <option value="{{ $estante->id }}">{{ $estante->n_estante}}</option>
+                                            @endforeach
+                                        </select>
+                    </div>
+                    <x-jet-input-error for="estante" class="mt-2" />
+                </div>
+                <!--Mesa -->
+                <div class="p-1">
+                    <x-jet-label for="mesa" value="{{ __('Mesa') }}" />
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        </div>
+                        <select wire:model="mesa_idMesa" class="form-control" id="mesa">
+                                            <option value=""></option>
+                                            @foreach($mesas as $mesa)
+                                                <option value="{{ $mesa->id }}">{{ $mesa->n_mesa}}</option>
+                                            @endforeach
+                                        </select>
+                    </div>
+                    <x-jet-input-error for="mesa" class="mt-2" />
+                </div>
+
+            </div>
+            
+            <x-jet-section-border />
             <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <!--unidad-->
                 <div class="">
@@ -145,6 +208,7 @@
                 </script>
 
             </div>
+
 
         </x-slot>
 

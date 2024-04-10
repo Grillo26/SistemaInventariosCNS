@@ -6,6 +6,9 @@ use App\Models\Producto;
 use App\Models\Grupo;
 use App\Models\Cuenta;
 use App\Models\Unidad;
+use App\Models\Pasillo;
+use App\Models\Mesa;
+use App\Models\Estante;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 class CreateProducto extends Component
@@ -18,6 +21,7 @@ class CreateProducto extends Component
     public $idCuenta; //Conecta el id del select con el front
     public $idUnidad; //Conecta el id del select con el front
     public $grupos, $cuentas, $unidades;
+    public $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa;
 
 
 
@@ -63,6 +67,9 @@ class CreateProducto extends Component
         $data['unidad_idUnidad'] = $this-> idUnidad;
         $data['grupo_idGrupo'] = $this-> idGrupo;
         $data['cuenta_idCuenta'] = $this-> idCuenta;
+        $data['pasillo_idPasillo'] = $this-> pasillo_idPasillo;
+        $data['estante_idEstante'] = $this-> estante_idEstante;
+        $data['mesa_idMesa'] = $this-> mesa_idMesa;
         Producto::create($data);
 
         $this->emit('saved');
@@ -120,6 +127,9 @@ class CreateProducto extends Component
 
     public function render()
     {
+        $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
+        $this->estantes = Estante::orderBy('id', 'asc')->get();   
+        $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   

@@ -4,6 +4,9 @@ namespace Database\Factories;
 use App\Models\Grupo;
 use App\Models\Cuenta;
 use App\Models\Unidad;
+use App\Models\Mesa;
+use App\Models\Pasillo;
+use App\Models\Estante;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductoFactory extends Factory
@@ -26,6 +29,15 @@ class ProductoFactory extends Factory
         },
         'cuenta_idCuenta' => function () {
             return Cuenta::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
+        },
+        'pasillo_idPasillo' => function () {
+            return Pasillo::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
+        },
+        'estante_idEstante' => function () {
+            return Estante::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
+        },
+        'mesa_idMesa' => function () {
+            return Mesa::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
         },
             
 

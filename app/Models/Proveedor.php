@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use App\Models\Inventario;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +16,11 @@ class Proveedor extends Model
         'nombre_proveedor',
         'email'
     ];
+
+    public function inventarios()
+    {
+        return $this->hasMany(Inventario::class);
+    }
 
     public static function search($query)
     {

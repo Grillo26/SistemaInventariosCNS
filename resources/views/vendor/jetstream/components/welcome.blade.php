@@ -7,8 +7,12 @@ $solicitantes = \App\Models\Solicitante::count();
 //solicitudes atendidas y no atendidas
 $solicitudesNoAtendidas = App\Models\Solicitante::where('estado_idEstado', 1)->count(); 
 
-$articulos = \App\Models\CompraProducto::count();
-$totalArticulos = App\Models\CompraProducto::sum('cantidad');
+$articulos = \App\Models\Entrada::count();
+$totalArticulos = App\Models\Inventario::selectRaw('SUM(cantidad_entrada) - SUM(cantidad_salida) as total')
+        ->groupBy('producto_id')
+        ->pluck('total')
+        ->sum();
+	
 $productos = App\Models\Producto::all();
 
 	// Fecha actual
@@ -18,10 +22,10 @@ $productos = App\Models\Producto::all();
 	$fechaLimite = $fechaActual->addDays(10);
 
 	// Contar cuántos artículos tienen fecha de caducidad dentro de los próximos 10 días
-	$articulosCaducanEn10Dias = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->count();
+	$articulosCaducanEn10Dias = App\Models\Entrada::whereDate('fecha_caducidad', '<=', $fechaLimite)->count();
 
 	// Verificar si hay algún artículo vencido
-	$articulosVencidos = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaActual)->count();
+	$articulosVencidos = App\Models\Entrada::whereDate('fecha_caducidad', '<=', $fechaActual)->count();
 
 	// Si hay artículos vencidos, almacenar el conteo en la variable $articulos_vencidos
 	if ($articulosVencidos > 0) {
@@ -31,7 +35,7 @@ $productos = App\Models\Producto::all();
 		$articulos_vencidos = $articulosCaducanEn10Dias;
 	}
 
-	$articulosProximoCaducar = App\Models\CompraProducto::whereDate('fecha_caducidad', '<=', $fechaLimite)->get();
+	$articulosProximoCaducar = App\Models\Entrada::whereDate('fecha_caducidad', '<=', $fechaLimite)->get();
 
 
 @endphp
@@ -145,7 +149,6 @@ $productos = App\Models\Producto::all();
 								<th>Nombre Artículo</th>
 								<th>Fecha Caducidad</th>
 								<th>Vence en</th>
-								<th>Cantidad</th>
 								
 							</tr>
 						</thead>
@@ -179,7 +182,6 @@ $productos = App\Models\Producto::all();
 										{{ $diasRestantes }} días
 									@endif
 								</td>
-								<td>{{ $articulo -> cantidad }}</td>
 					
 							</tr>
 							@endforeach

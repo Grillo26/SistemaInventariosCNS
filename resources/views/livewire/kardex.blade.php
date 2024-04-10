@@ -51,7 +51,9 @@
             </script>
 		</div>
 
-		
+		@php
+			$saldoAcumulado = 0;
+		@endphp
 
 		@if ($kardex)
 			<h4 class="card-title mb-4">Nombre del Artículo: {{$nombre_producto}}</h4>
@@ -76,11 +78,20 @@
 								<tr>
 									<td>{{ $registro->fecha }}</td>
 									<td>{{ $registro->hora }}</td>
-									<td>{{ $registro->created_at }}</td>
+									@foreach($proveedores as $proveedor)
+										@if($registro->proveedor_idProveedor == $proveedor->id)
+										<td>{{ $proveedor->nombre_proveedor }}</td>
+										@endif
+									@endforeach
+									
 									<td>{{ $registro->cantidad_entrada }}</td>
 									<td>{{ $registro->cantidad_salida }}</td>
-									<td>{{ $registro->cantidad }}</td>
-									<td>{{ $registro->cantidad }}</td>
+									<td>@php	
+											$saldoAcumulado += $registro->cantidad_entrada - $registro->cantidad_salida;
+											echo $saldoAcumulado;
+										@endphp
+									</td>
+									<td>{{ $registro->obs }}</td>
 								</tr>
 							@endforeach
 						</tbody>

@@ -18,9 +18,8 @@ class Salida extends Model
         'id',
         'producto_idProducto',
         'fecha_salida',
-        'stock_disponible',
-        'cantidad_salida',
-        'cantidad_stockTotal'
+        'cantidad',
+        'obs',
     ];
 
     //relación muchos a uno
