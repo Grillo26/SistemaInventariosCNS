@@ -35,7 +35,7 @@
 				<input wire:model="search" class="form-control" type="text" placeholder="Buscar...">
 			</div>
 		</div>
-sahldfkshflks
+
 		<!--TABLE-->
 		@if($stock->count())
 		<div class="row">

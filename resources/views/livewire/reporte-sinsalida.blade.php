@@ -22,7 +22,7 @@
 				</a>
 			</div>
 		</div>
-
+<!--
         <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control form-control-border" placeholder="Seleccione un rango de fechas" autocomplete="off">
         <br>
         <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
@@ -38,7 +38,8 @@
                 @this.set('fechaFin', selectedDates[1].toISOString().split('T')[0]);
                 @this.call('filtrarSalidas');}
             });
-        </script>
+        </script>-->
+
 
 		<!--TABLE-->
 		@if($salidas->count())
@@ -72,9 +73,9 @@
                                 @endif
                             </th>
 
-                            <th class="cursor-pointer" wire:click="order('fecha_salida')">
-								<a>Fecha Salida
-                                @if ($sort == 'fecha_salida')
+                            <th class="cursor-pointer" wire:click="order('proveedor_idProveedor')">
+								<a>Proveedor
+                                @if ($sort == 'proveedor_idProveedor')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -106,15 +107,20 @@
                     @foreach ($salidas as $salida)
                     <tr x-data="window.__controller.dataTableController({{ $salida->id }})">
                         @foreach ($productos as $producto)
-                            @if($salida->producto_idProducto == $producto->id)
+                            @if($salida->producto_id == $producto->id)
                                 <td>{{ $producto-> codigo_producto }}</td>
 								<td>{{ $producto-> nombre_producto }}</td>
                             @endif
                         @endforeach
                         
-                        <td>{{ $salida->fecha_salida}}</td>
-                        <td>{{ $salida->cantidad}}</td>
-                     
+                        @foreach($proveedores as $proveedor)
+                            @if( $salida->proveedor_idProveedor == $proveedor->id)
+                                <td>{{ $proveedor->nombre_proveedor }}</td>
+                            @endif
+                        @endforeach
+
+                        <td>{{ $salida->cantidad_total}}</td>
+                        
                         <td class="whitespace-no-wrap row-action--icon">
                             <a wire:click="editar({{$salida->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a>
 						</td>
