@@ -3,18 +3,18 @@
         <div class="section-header-back">
             <a href="{{ route('reporte') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-		<h1>{{ __('Reportes de Stock en Almacén') }}</h1>
+		<h1>{{ __('Artículo que no hay en almacén') }}</h1>
 
 		<div class="section-header-breadcrumb">
 			<div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Sistema</a></div>
-			<div class="breadcrumb-item"><a href="#">Información</a></div>
-			<div class="breadcrumb-item"><a href="{{ route('reporte') }}">Reportes Stock</a></div>
+			<div class="breadcrumb-item"><a href="#">Reporte</a></div>
+			<div class="breadcrumb-item"><a href="{{ route('reporte') }}">Almacén</a></div>
 		</div>
 	</x-slot>
 
     <div>
         @role('Admin')
-        <livewire:reporte-stock/>
+        <livewire:reporte-almacen/>
         @else
         <livewire:unauthorized-message />
         @endrole

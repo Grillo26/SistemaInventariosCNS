@@ -18,14 +18,24 @@
 			</div>
 
 			<div class="col form-inline">
-				
+            <div class="">
+            <form action="{{ route('entradas.fecha') }}" method="post">
+                @csrf
+                <label>Reportes por rango de fecha</label>
+                <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control form-control-border"
+                    placeholder="Seleccione un rango de fechas">
+                <button class="btn btn-primary" type="submit">Generar Pdf</button>
+            </form>
+        </div>hola
+        <hr>
+        <br>
 			</div>
 
 			<div class="col">
 				<input wire:model="search" class="form-control" type="text" placeholder="Buscar...">
 			</div>
 		</div>
-
+sahldfkshflks
 		<!--TABLE-->
 		@if($stock->count())
 		<div class="row">
@@ -33,9 +43,9 @@
 				<table class="table table-bordered table-striped text-sm text-gray-600">
 					<thead>
 						<tr>
-							<th class="cursor-pointer" wire:click="order('producto_id')">
+							<th class="cursor-pointer" wire:click="order('producto_idProducto')">
 								<a>Código Producto
-                                @if ($sort == 'producto_id')
+                                @if ($sort == 'producto_idProducto')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -45,22 +55,9 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif 
                             </th>
-                            <th class="cursor-pointer" wire:click="order('producto_id')">
+                            <th class="cursor-pointer" wire:click="order('producto_idProducto')">
 								<a>Nombre Producto
-                                @if ($sort == 'producto_id')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif
-                            </th>
-
-                            <th class="cursor-pointer" wire:click="order('proveedor_idProveedor')" >
-                                <a>Proveedor
-                                @if ($sort == 'proveedor_idProveedor')
+                                @if ($sort == 'producto_idProducto')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -89,28 +86,22 @@
                     </thead>
 
                     <tbody>
-                    @foreach($stock as $item)
-                        <tr>
-                            @foreach($productos as $producto)
-                                @if($item->producto_id == $producto->id)
-                                    <td>{{ $producto->codigo_producto }}</td>
-                                    <td>{{ $producto->nombre_producto }}</td>
-                                @endif
-                            @endforeach
-
-                            @foreach($proveedores as $proveedor)
-                                @if($item->proveedor_idProveedor == $proveedor->id)
-                                    <td>{{ $proveedor->nombre_proveedor }}</td>
-                                @endif
-                            @endforeach
-                            <td>{{ $item->cantidad }}</td>
-                            <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$item->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a></td>
-                        </tr>
-                    @endforeach
-
-
-
+                    @foreach ($stock as $entrada)
+                    <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
+                        @foreach ($productos as $producto)
+                            @if($entrada->producto_idProducto == $producto->id)
+                                <td>{{ $producto-> codigo_producto }}</td>
+								<td>{{ $producto-> nombre_producto }}</td>
+                            @endif
+                        @endforeach
+                        
+                        <td>{{ $entrada->cantidad_actual}}</td>
+                     
+                        <td class="whitespace-no-wrap row-action--icon">
+                            <a wire:click="editar({{$producto->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a>
+						</td>
+					</tr>
+					@endforeach
 					</tbody>
 				</table>
 			</div>

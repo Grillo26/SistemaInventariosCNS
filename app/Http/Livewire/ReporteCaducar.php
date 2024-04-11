@@ -27,8 +27,10 @@ class ReporteCaducar extends Component
         })
         ->orWhereHas('productos', function($query) {
             $query->where('nombre_producto', 'like', '%' . $this->search . '%');
-        })   
-        ->orderBy('fecha_caducidad') // Eliminado el uso de '%'
+        })  
+        ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')    
+         // Eliminado el uso de '%'
+        ->orderBy($this->sort, $this->direction)
         ->get();
 
     return view('livewire.reporte-caducar', ['articulosCaducar' => $articulosCaducar]);

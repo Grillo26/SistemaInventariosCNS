@@ -110,6 +110,9 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('reporte', Reporte::class)->name('reporte');
     Route::get('reporte/vencimiento', [Reporte::class, 'vencimiento'])->name('reporte.vencimiento');
     Route::get('reporte/stock', [Reporte::class, 'stock'])->name('reporte.stock');
+    Route::get('reporte/sinsalida', [Reporte::class, 'sinsalida'])->name('reporte.sinsalida');
+    Route::get('reporte/almacen', [Reporte::class, 'almacen'])->name('reporte.almacen');
+    Route::get('reporte/entradas', [Reporte::class, 'entradas'])->name('reporte.entradas');
 
     Route::post('entradas/reporteFecha', [PDFController::class, 'generarPDFfechaEntrada'])->name('entradas.fecha');
     Route::post('salidas/reporteFecha', [PDFController::class, 'generarPDFfechaSalida'])->name('salidas.fecha');

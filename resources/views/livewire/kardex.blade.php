@@ -56,7 +56,8 @@
 		@endphp
 
 		@if ($kardex)
-			<h4 class="card-title mb-4">Nombre del Artículo: {{$nombre_producto}}</h4>
+			<h4 >Nombre del Artículo:</h4> <p> {{$nombre_producto}},</p> 
+			<h4 >Total Cantidad en Stock:</h4> <p>{{$cantidad}}</p>
 
 			<div class="row">
 				<div class="table-responsive">

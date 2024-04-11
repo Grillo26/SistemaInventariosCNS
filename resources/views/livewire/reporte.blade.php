@@ -40,7 +40,7 @@
 										</div>
 									</a><!--End cart-->
 
-									<a href="{{ route('reporte.stock') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
+									<a href="{{ route('reporte.sinsalida') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
 										<div class="wizard-step-icon">
 											<i class="fas fa-sign-out-alt"></i>
 										</div>
@@ -49,7 +49,7 @@
 										</div>
 									</a><!--End cart-->
 
-									<a href="{{ route('reporte.stock') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
+									<a href="{{ route('reporte.almacen') }}" class="wizard-step wizard-step-success" style="text-decoration: none;">
 										<div class="wizard-step-icon">
 											<i class="fas fa-store"></i>
 										</div>

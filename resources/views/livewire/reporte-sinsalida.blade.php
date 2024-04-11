@@ -12,30 +12,44 @@
 					<span class="fas fa-plus"></span> 
 				</a>-->
 				<a href="#" class="ml-2 btn btn-success shadow-none">
-					Exportar
+					Exportar PDF
+					<span class="fas fa-file-export"></span> 
+				</a>
+
+                <a href="#" class="ml-2 btn btn-success shadow-none">
+					Exportar Excel
 					<span class="fas fa-file-export"></span> 
 				</a>
 			</div>
-
-			<div class="col form-inline">
-				
-			</div>
-
-			<div class="col">
-				<input wire:model="search" class="form-control" type="text" placeholder="Buscar...">
-			</div>
 		</div>
 
+        <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control form-control-border" placeholder="Seleccione un rango de fechas" autocomplete="off">
+        <br>
+        <link rel="stylesheet" href="{{ asset('css/flatpickr.min.css') }}">
+        <script src="{{ asset('js/flatpickr.js') }}"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script>
+            flatpickr("#fecha_ingreso", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                // Actualiza las fechas y filtra las salidas
+                @this.set('fechaInicio', selectedDates[0].toISOString().split('T')[0]);
+                @this.set('fechaFin', selectedDates[1].toISOString().split('T')[0]);
+                @this.call('filtrarSalidas');}
+            });
+        </script>
+
 		<!--TABLE-->
-		@if($stock->count())
+		@if($salidas->count())
 		<div class="row">
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped text-sm text-gray-600">
 					<thead>
 						<tr>
-							<th class="cursor-pointer" wire:click="order('producto_id')">
+							<th class="cursor-pointer" wire:click="order('producto_idProducto')">
 								<a>Código Producto
-                                @if ($sort == 'producto_id')
+                                @if ($sort == 'producto_idProducto')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -45,9 +59,9 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif 
                             </th>
-                            <th class="cursor-pointer" wire:click="order('producto_id')">
+                            <th class="cursor-pointer" wire:click="order('producto_idProducto')">
 								<a>Nombre Producto
-                                @if ($sort == 'producto_id')
+                                @if ($sort == 'producto_idProducto')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -58,9 +72,9 @@
                                 @endif
                             </th>
 
-                            <th class="cursor-pointer" wire:click="order('proveedor_idProveedor')" >
-                                <a>Proveedor
-                                @if ($sort == 'proveedor_idProveedor')
+                            <th class="cursor-pointer" wire:click="order('fecha_salida')">
+								<a>Fecha Salida
+                                @if ($sort == 'fecha_salida')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -70,9 +84,9 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
-
+       
                             <th class="cursor-pointer" wire:click="order('cantidad')" >
-                                <a>Stock Disponible
+                                <a>Cantidad
                                 @if ($sort == 'cantidad')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
@@ -89,28 +103,23 @@
                     </thead>
 
                     <tbody>
-                    @foreach($stock as $item)
-                        <tr>
-                            @foreach($productos as $producto)
-                                @if($item->producto_id == $producto->id)
-                                    <td>{{ $producto->codigo_producto }}</td>
-                                    <td>{{ $producto->nombre_producto }}</td>
-                                @endif
-                            @endforeach
-
-                            @foreach($proveedores as $proveedor)
-                                @if($item->proveedor_idProveedor == $proveedor->id)
-                                    <td>{{ $proveedor->nombre_proveedor }}</td>
-                                @endif
-                            @endforeach
-                            <td>{{ $item->cantidad }}</td>
-                            <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$item->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a></td>
-                        </tr>
-                    @endforeach
-
-
-
+                    @foreach ($salidas as $salida)
+                    <tr x-data="window.__controller.dataTableController({{ $salida->id }})">
+                        @foreach ($productos as $producto)
+                            @if($salida->producto_idProducto == $producto->id)
+                                <td>{{ $producto-> codigo_producto }}</td>
+								<td>{{ $producto-> nombre_producto }}</td>
+                            @endif
+                        @endforeach
+                        
+                        <td>{{ $salida->fecha_salida}}</td>
+                        <td>{{ $salida->cantidad}}</td>
+                     
+                        <td class="whitespace-no-wrap row-action--icon">
+                            <a wire:click="editar({{$salida->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a>
+						</td>
+					</tr>
+					@endforeach
 					</tbody>
 				</table>
 			</div>

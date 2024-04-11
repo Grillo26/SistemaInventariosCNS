@@ -12,23 +12,13 @@
     @role('Admin')
 	<div class="p-8 pt-4 mt-2 bg-white">
 		<!--Butons-->
-        <div class="">
-            <form action="{{ route('entradas.fecha') }}" method="post">
-                @csrf
-                <label>Reportes por rango de fecha</label>
-                <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="form-control form-control-border"
-                    placeholder="Seleccione un rango de fechas">
-                <button class="btn btn-primary" type="submit">Generar Pdf</button>
-            </form>
-        </div>
-        <hr>
-        <br>
+
 		<div class="flex pb-4 -ml-3">
 			<a wire:click="$set('open', true)" class="-ml- btn btn-primary shadow-none">
                 Ingresar Artículo
                 <span class="fas fa-plus"></span> 
             </a>
-			<a href="#" class="ml-2 btn btn-success shadow-none">
+			<a href="{{ route('reporte.entradas')}}" class="ml-2 btn btn-success shadow-none">
                 Exportar
                 <span class="fas fa-file-export"></span> 
             </a>

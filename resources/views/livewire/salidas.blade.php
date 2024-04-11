@@ -93,11 +93,11 @@
 
                 </div>
 <!--#################################################################################################-->
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-6 mb-3">
                     
                     <!--Observacion-->
-                    <div class="col-span-2 p-1">
-                        <x-jet-label for="obs" value="{{ __('OBservación de Salida') }}" />
+                    <div class="col-span-4 p-1">
+                        <x-jet-label for="obs" value="{{ __('Observación de Salida') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
