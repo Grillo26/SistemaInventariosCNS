@@ -26,86 +26,34 @@
 			</div>
 		</div>
 
-		<!--TABLE-->
-		@if($stock->count())
-		<div class="row">
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped text-sm text-gray-600">
-					<thead>
-						<tr>
-							<th class="cursor-pointer" wire:click="order('producto_idProducto')">
-								<a>Código Producto
-                                @if ($sort == 'producto_idProducto')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif 
-                            </th>
-                            <th class="cursor-pointer" wire:click="order('producto_idProducto')">
-								<a>Nombre Producto
-                                @if ($sort == 'producto_idProducto')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif
-                            </th>
+	
 
-                            <th class="cursor-pointer" wire:click="order('cantidad')" >
-                                <a>Stock Disponible
-                                @if ($sort == 'cantidad')
-                                    @if ($direction == 'asc')
-                                        <i class="fas fa-sort-up"></i>
-                                    @else
-                                        <i class="fas fa-sort-down"></i>
-                                    @endif
-                                @else
-                                    <i class="text-muted fas fa-sort"></i>
-                                @endif
-                            </th>
-                        
-                        <th><a>Acciones</th>
-                    </tr>
-                    </thead>
+        <div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Producto</th>
+                <th>Nombre Producto</th>
+                <th>Stock</th>
+                <!-- Agrega otras columnas según sea necesario -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($productos as $producto)
+                <tr>
+                    <td>{{ $producto['id'] }}</td>
+                    <td>{{ $producto['nombre'] }}</td>
+                    <td>{{ $producto['stock'] }}</td>
+                    <!-- Agrega otras columnas según sea necesario -->
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
-                    <tbody>
-                    @foreach ($stock as $entrada)
-                    <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
-                        @foreach ($productos as $producto)
-                            @if($entrada->producto_idProducto == $producto->id)
-                                <td>{{ $producto-> codigo_producto }}</td>
-								<td>{{ $producto-> nombre_producto }}</td>
-                            @endif
-                        @endforeach
-                        
-                        <td>{{ $entrada->cantidad_actual}}</td>
-                     
-                        <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$producto->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a>
-						</td>
-					</tr>
-					@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-		@else
-		<div class="px-6 py-4">
-			No se encontro ningún registro
-		</div>
-		@endif
-	</div>
+</div>
 
-	</div>
-	<!--End Admin vista-->
-
+<!--End Admin vista-->
 	@else
 	@endrole
 

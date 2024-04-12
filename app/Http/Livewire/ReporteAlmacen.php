@@ -17,17 +17,38 @@ class ReporteAlmacen extends Component
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
     public function mount(){
-        $this->productos = Producto::all();
+        // Productos sin registro en la tabla 'inventario'
+        $productosSinInventario = Producto::whereNotIn('id', Inventario::pluck('producto_id'))->get();
+
+        // Productos con registro en la tabla 'inventario' pero con stock cero
+        $productosConStockCero = Inventario::select('producto_id')
+            ->selectRaw('SUM(cantidad_entrada) - SUM(cantidad_salida) as stock')
+            ->groupBy('producto_id')
+            ->havingRaw('stock = 0')
+            ->get();
+
+        // Crear una matriz de productos y sus detalles
+        $this->productos = [];
+        foreach ($productosSinInventario as $producto) {
+            $this->productos[] = [
+                'id' => $producto->id,
+                'nombre' => $producto->nombre_producto,
+                'stock' => 0, // No hay stock porque no hay registro en inventario
+            ];
+        }
+        foreach ($productosConStockCero as $producto) {
+            $this->productos[] = [
+                'id' => $producto->producto_id,
+                'nombre' => Producto::find($producto->producto_id)->nombre_producto,
+                'stock' => 0, // Stock cero
+            ];
+        }
     }
 
     public function render()
     {
-        $stock = Inventario::select('producto_id')
-        ->selectRaw('SUM(cantidad_entrada) - SUM(cantidad_salida) as cantidad_actual')
-        ->groupBy('producto_id')
-        ->get();
-
-        return view('livewire.reporte-almacen',  compact ('stock'));
+        
+        return view('livewire.reporte-almacen');
     }
 
     public function order($sort){ //Metodo para ordenar
