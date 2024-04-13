@@ -14,6 +14,8 @@ use App\Models\Dll;
 use App\Models\Comprobante;
 use App\Models\Producto;
 use App\Models\Estado;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -56,8 +58,22 @@ class DatabaseSeeder extends Seeder
         $estado2->estado = 'respondido';
         $estado2->save();
 
+        $categoria1 = new Categoria();
+        $categoria1->nombre_categoria ='Medicamento';
+        $categoria1->save();
+
+        $categoria2 = new Categoria();
+        $categoria2->nombre_categoria ='Material de Escritorio';
+        $categoria2->save();
+
+        $categoria3 = new Categoria();
+        $categoria3->nombre_categoria ='Artículo de Limpieza';
+        $categoria3->save();
+
         $this->call(RoleSeeder::class); //Agrega a la base de datos los roles
         $this->call(UserSeeder::class);
+        $this->call(SubcategoriaSeeder::class);
+    
 
 
         \App\Models\Unidad::factory(10)->create();
@@ -71,7 +87,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Dll::factory(50)->create();
         \App\Models\Comprobante::factory(50)->create();
 
-        \App\Models\Producto::factory(50)->create();
+        \App\Models\Producto::factory(10)->create();
 
     
     }

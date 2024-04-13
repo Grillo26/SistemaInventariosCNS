@@ -17,8 +17,8 @@
                 Registrar Salida
                 <span class="fas fa-plus"></span> 
             </a>
-			<a href="#" class="ml-2 btn btn-success shadow-none">
-                Exportar
+			<a href="{{ route('reporte.salidas')}}" class="ml-2 btn btn-success shadow-none">
+                Generar Reporte
                 <span class="fas fa-file-export"></span> 
             </a>
 		</div>

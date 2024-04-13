@@ -28,6 +28,8 @@ use App\Http\livewire\Estad;
 use App\Http\livewire\Mesa;
 use App\Http\livewire\Dashboard;
 use App\Http\livewire\Reporte;
+use App\Http\livewire\ReporteAlmacen;
+use App\Http\livewire\ReporteEntradas;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,8 +115,18 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('reporte/sinsalida', [Reporte::class, 'sinsalida'])->name('reporte.sinsalida');
     Route::get('reporte/almacen', [Reporte::class, 'almacen'])->name('reporte.almacen');
     Route::get('reporte/entradas', [Reporte::class, 'entradas'])->name('reporte.entradas');
+    Route::get('reporte/salidas', [Reporte::class, 'salidas'])->name('reporte.salidas');
+    Route::get('reporte/proveedores', [Reporte::class, 'proveedores'])->name('reporte.proveedores');
 
     Route::post('entradas/reporteFecha', [PDFController::class, 'generarPDFfechaEntrada'])->name('entradas.fecha');
     Route::post('salidas/reporteFecha', [PDFController::class, 'generarPDFfechaSalida'])->name('salidas.fecha');
+
+    Route::get('/reporte/almacen/pdf', [ ReporteAlmacen::class, 'pdf' ])->name('almacen.pdf');
+    Route::get('/reporte/almacen/word', [ ReporteAlmacen::class, 'word' ])->name('almacen.word');
+    Route::get('/reporte/almacen/excel', [ ReporteAlmacen::class, 'excel' ])->name('almacen.excel');
+
+    Route::get('/reporte/articulos/pdf', [ Reporte::class, 'articulopdf' ])->name('articulos.pdf');
+
+    Route::get('/reporte/entradas/pdf/', [ ReporteEntradas::class, 'pdf' ])->name('entradas.pdf');
 
 });

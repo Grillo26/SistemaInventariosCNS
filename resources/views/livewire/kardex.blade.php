@@ -6,23 +6,24 @@
 
 			<!--Butons-->
 			<div class="flex pb-4 pt-2 pl-2 -ml-3">
+			
 				<a href="#" class="ml-2 btn btn-success shadow-none">
-					Exportar
+					Exportar PDF
 					<span class="fas fa-file-export"></span> 
 				</a>
 				<a href="#" class="ml-2 btn btn-danger shadow-none">
-					Exportar
+					Exportar EXCEL
 					<span class="fas fa-file-excel"></span> 
 				</a>
-			</div>
 
-			<div class="col form-inline">
-				
-				
-			</div>
-
-			<div class="col">
-			</div>
+				<a href="#" class="ml-2 btn btn-primary shadow-none">
+					Exportar WORD
+					<span class="fas fa-file-word"></span> 
+				</a>
+                <!--<div class="col">
+                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar...">
+                </div>-->
+			</div> 
 		</div>
 
 		<div class="row mb-4">

@@ -55,6 +55,47 @@
                 </div>
             </div>
 
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-3">
+
+                <!--Categoria -->
+                <div class="col-span-1 p-1">
+                    <x-jet-label for="codigo_producto" value="{{ __('Categoría') }}" />
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                        </div>
+                        <select wire:model ="categoria_select" class="form-control">
+                            <option value="">Seleccione Categoria</option>
+                            @foreach($categorias as $categoria)
+                            <option value="{{$categoria->id }}">{{ $categoria->nombre_categoria}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <!--SUBCATEGORIA-->
+                @if(!is_null($subcategorias))
+                    <div class="col-span-1 p-1">
+                    <x-jet-label for="codigo_producto" value="{{ __('Subcategoría') }}" />
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-question"></i>
+                            </div>
+                        </div>
+                        <select wire:model ="subcategoria_select" class="form-control">
+                            <option value="">Seleccione Subcategoria</option>
+                            @foreach($subcategorias as $sub)
+                            <option value="{{$sub->id }}">{{ $sub->nombre_subcategoria}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                @endif
+            </div>
+
             <x-jet-section-border />
             <!--UBICACION-->
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-3">

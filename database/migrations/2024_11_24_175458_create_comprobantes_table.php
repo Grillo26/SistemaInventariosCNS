@@ -17,6 +17,11 @@ class CreateComprobantesTable extends Migration
             $table->id();
             $table->string('n_comprobante');
             $table->string('detalle');
+            $table->unsignedBigInteger('entrada_idEntrada')->nullable();
+            $table->unsignedBigInteger('salida_idSalida')->nullable();
+
+            $table->foreign('entrada_idEntrada')->references('id')->on('entradas')->onDelete('set null'); 
+            $table->foreign('salida_idSalida')->references('id')->on('salidas')->onDelete('set null'); 
             $table->timestamps();
         });
     }

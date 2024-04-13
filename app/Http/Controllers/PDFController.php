@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompraProducto;
+use App\Models\Entrada;
 use App\Models\Producto;
 use App\Models\Salida;
 use App\Models\User;
@@ -23,7 +23,7 @@ class PDFController extends Controller
             $inicio = date('Y-m-d', strtotime($fechas[0]));
             $fin = date('Y-m-d', strtotime($fechas[1]));
 
-            $registros = CompraProducto::whereBetween('fecha_adquisicion', [$inicio, $fin])->get();
+            $registros = Entrada::whereBetween('fecha_adquisicion', [$inicio, $fin])->get();
             $pdf = PDF::loadView('view_pdf.entrada_rango_fecha', compact('registros', 'usuarios', 'articulos'));
 
             return $pdf->download('entrada_rango_fecha.pdf');

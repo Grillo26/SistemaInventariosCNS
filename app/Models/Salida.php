@@ -6,6 +6,7 @@ use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
 use App\Models\Inventario;
+use App\Models\Comprobante;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,5 +41,10 @@ class Salida extends Model
     public function inventario()
     {
         return $this->belongsTo(Inventario::class);
+    }
+
+    public function comprobante()
+    {
+        return $this->hasOne(Comprobante::class, 'id');
     }
 }

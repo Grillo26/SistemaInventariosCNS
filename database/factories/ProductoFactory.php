@@ -7,6 +7,8 @@ use App\Models\Unidad;
 use App\Models\Mesa;
 use App\Models\Pasillo;
 use App\Models\Estante;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductoFactory extends Factory
@@ -18,6 +20,7 @@ class ProductoFactory extends Factory
      */
     public function definition()
     {
+        
         return [
             'codigo_producto'=> $this->faker->randomNumber(4),
             'nombre_producto'=> $this->faker->name(),
@@ -38,6 +41,12 @@ class ProductoFactory extends Factory
         },
         'mesa_idMesa' => function () {
             return Mesa::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
+        },
+        'categoria_idCategoria' => function () {
+            return Categoria::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
+        },
+        'subcategoria_idSubcategoria' => function () {
+            return Subcategoria::inRandomOrder()->first()->id; // Obtiene una cuenta aleatoria de la tabla de cuentas
         },
             
 

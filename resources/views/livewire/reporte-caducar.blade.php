@@ -7,20 +7,24 @@
 
 			<!--Butons-->
 			<div class="flex pb-4 pt-2 pl-2 -ml-3">
-				<!--<a wire:click="$set('open', true)" class="-ml- btn btn-primary shadow-none">
-					Registrar Salida
-					<span class="fas fa-plus"></span> 
-				</a>-->
+			
 				<a href="#" class="ml-2 btn btn-success shadow-none">
-					Exportar
+					Exportar PDF
 					<span class="fas fa-file-export"></span> 
 				</a>
-			</div>
+				<a href="#" class="ml-2 btn btn-danger shadow-none">
+					Exportar EXCEL
+					<span class="fas fa-file-excel"></span> 
+				</a>
 
-			<div class="col form-inline">
-				
-				
-			</div>
+				<a href="#" class="ml-2 btn btn-primary shadow-none">
+					Exportar WORD
+					<span class="fas fa-file-word"></span> 
+				</a>
+                <!--<div class="col">
+                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar...">
+                </div>-->
+			</div> 
 
 			<div class="col">
 				<input wire:model="search" class="form-control" type="text" placeholder="Buscar...">

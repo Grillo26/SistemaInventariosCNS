@@ -1,5 +1,5 @@
 <div>
-    <x-data-table :data="$data" :model="$productos, $unidades, $cuentas">
+    <x-data-table :data="$data" :model="$productos, $unidades, $cuentas, $categorias, $subcategorias">
         <x-slot name="head">
             <tr>
                
@@ -11,6 +11,16 @@
                 <th><a wire:click.prevent="sortBy('nombre_producto')" role="button" href="#">
                     Nombre del Producto
                     @include('components.sort-icon', ['field' => 'nombre_producto'])
+                </a></th>
+
+                <th><a wire:click.prevent="sortBy('categoria_idCategoria')" role="button" href="#">
+                    Categoría
+                    @include('components.sort-icon', ['field' => 'categoria_idCategoria'])
+                </a></th>
+
+                <th><a wire:click.prevent="sortBy('subcategoria_idSubcategoria')" role="button" href="#">
+                    SubCategoría
+                    @include('components.sort-icon', ['field' => 'subcategoria_idSubcategoria'])
                 </a></th>
 
                 <th><a wire:click.prevent="sortBy('unidad_idUnidad')" role="button" href="#">
@@ -36,6 +46,19 @@
                 <tr x-data="window.__controller.dataTableController({{ $producto->id }})">
                     <td>{{ $producto->codigo_producto }}</td>
                     <td>{{ $producto->nombre_producto }}</td>
+
+                    @foreach ($categorias as $categoria )
+                        @if(  $producto->categoria_idCategoria == $categoria->id)
+                        <td>{{ $categoria->nombre_categoria}}</td>
+                        @endif
+                    @endforeach
+
+                    @foreach ($subcategorias as $subcategoria )
+                        @if(  $producto->subcategoria_idSubcategoria == $subcategoria->id)
+                        <td>{{ $subcategoria->nombre_subcategoria}}</td>
+                        @endif
+                    @endforeach
+
                     @foreach ($unidades as $unidad )
                         @if(  $producto->unidad_idUnidad == $unidad->id)
                         <td>{{ $unidad->nombre_unidad}}</td>

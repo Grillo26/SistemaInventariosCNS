@@ -9,6 +9,8 @@ use App\Models\Unidad;
 use App\Models\Pasillo;
 use App\Models\Mesa;
 use App\Models\Estante;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 class CreateProducto extends Component
@@ -22,6 +24,8 @@ class CreateProducto extends Component
     public $idUnidad; //Conecta el id del select con el front
     public $grupos, $cuentas, $unidades;
     public $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa;
+    public $categorias, $subcategorias;
+    public $categoria_select = null , $subcategoria_select = null;
 
 
 
@@ -70,6 +74,8 @@ class CreateProducto extends Component
         $data['pasillo_idPasillo'] = $this-> pasillo_idPasillo;
         $data['estante_idEstante'] = $this-> estante_idEstante;
         $data['mesa_idMesa'] = $this-> mesa_idMesa;
+        $data['categoria_idCategoria'] = $this-> categoria_select;
+        $data['subcategoria_idSubcategoria'] = $this-> subcategoria_select;
         Producto::create($data);
 
         $this->emit('saved');
@@ -125,6 +131,15 @@ class CreateProducto extends Component
         $this->grupos = [];
     }
 
+    public function updatedCategoriaSelect($value)
+    {
+        if (!empty($value)) {
+            $this->subcategorias = Subcategoria::where('categoria_idCategoria', $value)->get();
+        } else {
+            $this->subcategorias = null;
+        }
+    }
+
     public function render()
     {
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
@@ -133,6 +148,9 @@ class CreateProducto extends Component
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
+        $this->categorias = Categoria::orderBy('id', 'asc')->get();   
+        $this->subcategorias = Subcategoria::orderBy('id', 'asc')->get();   
         return view('livewire.create-producto');
     }
+
 }

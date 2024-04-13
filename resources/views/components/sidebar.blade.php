@@ -34,7 +34,8 @@ $links = [
                 "icon" => "fas fa-box-open",
                 "section_list" => [
                     ["href" => "kardex", "text" => "Kardex"],              
-                    ["href" => "reporte.vencimiento", "text" => "Vencimiento"]              
+                    ["href" => "reporte.vencimiento", "text" => "Vencimiento"],            
+                    ["href" => "reporte.stock", "text" => "Inventario / Stock"]            
                 ]
     
             ]

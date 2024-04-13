@@ -10,7 +10,7 @@
 	</x-slot>
 
     @role('Admin')
-	<div class="p-8 pt-4 mt-2 bg-white">
+	<div class="p-8 pt-4 mt-2 bg-white bg-gray-100 text-gray-900 tracking-wider leading-normal">
 		<!--Butons-->
 
 		<div class="flex pb-4 -ml-3">
@@ -19,7 +19,7 @@
                 <span class="fas fa-plus"></span> 
             </a>
 			<a href="{{ route('reporte.entradas')}}" class="ml-2 btn btn-success shadow-none">
-                Exportar
+                Generar Reporte
                 <span class="fas fa-file-export"></span> 
             </a>
 		</div>
@@ -151,7 +151,7 @@
                     </div>
                     <!--Valor de Inventario -->
                     <div class="p-1">
-                        <x-jet-label for="nombre_producto" value="{{ __('Valor de Artículo (Bs)') }}" />
+                        <x-jet-label for="nombre_producto" value="{{ __('Valor (Bs)') }}" />
                         
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -359,8 +359,9 @@
                         <td>{{ $entrada->fecha_caducidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">
                             <a wire:click="editar({{$entrada->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
-								<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
-								</td>
+                            <a wire:click="editar({{$entrada->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-file-pdf"></i></a>
+							<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
+						</td>
 						</tr>
 						@endforeach
 						</tbody>

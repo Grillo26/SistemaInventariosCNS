@@ -7,6 +7,9 @@ use App\Models\Cuenta;
 use App\Models\Estado;
 use App\Models\Producto;
 use App\Models\User;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
+
 
 
 trait WithDataTable {
@@ -27,7 +30,7 @@ trait WithDataTable {
                             'create_new' => route('user.new'),
                             'create_new_text' => 'Nuevo Usuario',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -46,7 +49,7 @@ trait WithDataTable {
                             'create_new' => route('grupos.new'),
                             'create_new_text' => 'Nuevo Grupo',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -65,7 +68,7 @@ trait WithDataTable {
                             'create_new' => route('cuentas.new'),
                             'create_new_text' => 'Nueva cuenta',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -85,7 +88,7 @@ trait WithDataTable {
                             'create_new' => route('unidades.new'),
                             'create_new_text' => 'Nueva Unidad',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -104,7 +107,7 @@ trait WithDataTable {
                             'create_new' => route('mesas.new'),
                             'create_new_text' => 'Nueva Mesa',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -123,7 +126,7 @@ trait WithDataTable {
                             'create_new' => route('pasillos.new'),
                             'create_new_text' => 'Nuevo Pasillo',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -142,7 +145,7 @@ trait WithDataTable {
                             'create_new' => route('estantes.new'),
                             'create_new_text' => 'Nuevo Estante',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -160,8 +163,8 @@ trait WithDataTable {
                         'href' => [
                             'create_new' => route('proveedor.new'),
                             'create_new_text' => 'Nuevo Proveedor',
-                            'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export' => route('reporte.proveedores'),
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -180,7 +183,7 @@ trait WithDataTable {
                             'create_new' => route('dll.new'),
                             'create_new_text' => 'Nuevo Dll',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                             ]
                         ])
                     ];
@@ -205,7 +208,7 @@ trait WithDataTable {
                             'create_new' => route('solicitante.new'),
                             'create_new_text' => 'Nueva Solicitud',
                             'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];
@@ -218,6 +221,9 @@ trait WithDataTable {
                 $grupos = Grupo::get(); //Extrayendo de otra tabl
                 $unidades = Unidad::get(); //Extrayendo de otra tabl
                 $cuentas = Cuenta::get(); //Extrayendo de otra tabl
+                $categorias = Categoria::get(); //Extrayendo de otra tabl
+                $subcategorias = Subcategoria::get(); //Extrayendo de otra tabl
+
                 
                 return [
                     "view" => 'livewire.table.producto',
@@ -225,12 +231,14 @@ trait WithDataTable {
                     "grupos" => $grupos,
                     "unidades" => $unidades,
                     "cuentas" => $cuentas,
+                    "categorias" => $categorias,
+                    "subcategorias" => $subcategorias,
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('producto.new'),
                             'create_new_text' => 'Nuevo Artículo',
-                            'export' => '#',
-                            'export_text' => 'Exportar'
+                            'export' => route('articulos.pdf'),
+                            'export_text' => 'Generar Reporte'
                         ]
                     ])
                 ];

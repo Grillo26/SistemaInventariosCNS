@@ -23,6 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('pasillo_idPasillo')->nullable();
             $table->unsignedBigInteger('estante_idEstante')->nullable();
             $table->unsignedBigInteger('mesa_idMesa')->nullable();
+            $table->unsignedBigInteger('categoria_idCategoria')->nullable();
+            $table->unsignedBigInteger('subcategoria_idSubcategoria')->nullable();
 
             $table->foreign('unidad_idUnidad')
             ->references('id')->on('unidads')->onDelete('set null');
@@ -36,6 +38,10 @@ return new class extends Migration
             ->references('id')->on('estantes')->onDelete('set null');
             $table->foreign('mesa_idMesa')
             ->references('id')->on('mesas')->onDelete('set null');
+            $table->foreign('categoria_idCategoria')
+            ->references('id')->on('categorias')->onDelete('set null');
+            $table->foreign('subcategoria_idSubcategoria')
+            ->references('id')->on('subcategorias')->onDelete('set null');
 
             $table->timestamps();
         });

@@ -9,6 +9,7 @@ use App\Models\Unidad;
 use App\Models\Cuenta;
 use App\Models\Grupo;
 use App\Models\Producto;
+use App\Models\Comprobante;
 use App\Models\Inventario;
 
 
@@ -49,5 +50,10 @@ class Entrada extends Model
     public function inventario()
     {
         return $this->belongsTo(Inventario::class);
+    }
+
+    public function comprobante()
+    {
+        return $this->hasOne(Comprobante::class, 'id');
     }
 }

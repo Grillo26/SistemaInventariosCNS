@@ -80,7 +80,7 @@ class Salidas extends Component
 
     public function guardar(){
 
-        Salida::updateOrCreate(
+        $salida = Salida::updateOrCreate(
         [
             'producto_idProducto' => $this->codigo_producto,
             'fecha_salida' => $this->fecha_salida,
@@ -102,6 +102,15 @@ class Salidas extends Component
                 'proveedor_idProveedor' => $this->nombre_proveedor,
                 'obs' => $this->obs,
             ]
+        );
+
+        // Crear un registro en la tabla 'comprobantes'
+        $comprobante = Comprobante::updateOrCreate(
+            [
+                'n_comprobante' => $this->faker->randomNumber(5),
+                'detalle' => $this->obs,
+                'salida_idSalida' => $salida->id,
+            ],
         );
         $this->limpiarCampos();
         

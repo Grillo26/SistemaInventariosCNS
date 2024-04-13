@@ -1,9 +1,21 @@
 <?php
 
 namespace App\Http\Livewire;
+use App\Models\Grupo;
+use App\Models\Cuenta;
+use App\Models\Unidad;
+use App\Models\Pasillo;
+use App\Models\Mesa;
+use App\Models\Estante;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
+use App\Models\Producto;
 use App\Models\Entrada;
+
 use Carbon\Carbon;
 use Livewire\Component;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class Reporte extends Component
 {
@@ -37,6 +49,30 @@ class Reporte extends Component
 
     public function entradas(){
         return view('pages.reporte.reporte-entradas');
+    }
+
+    public function salidas(){
+        return view('pages.reporte.reporte-salidas');
+    }
+
+    public function proveedores(){
+        return view('pages.reporte.reporte-proveedores');
+    }
+
+    public function articulopdf(){ //Reporte de los articulos en pdf
+        $pasillos = Pasillo::orderBy('id', 'asc')->get();   
+        $estantes = Estante::orderBy('id', 'asc')->get();   
+        $mesas = Mesa::orderBy('id', 'asc')->get(); 
+        $grupos = Grupo::orderBy('id', 'asc')->get();   
+        $cuentas = Cuenta::orderBy('id', 'asc')->get();   
+        $unidades = Unidad::orderBy('id', 'asc')->get();   
+        $categorias = Categoria::orderBy('id', 'asc')->get();   
+        $subcategorias = Subcategoria::orderBy('id', 'asc')->get();  
+
+        // Obtener todos los productos
+        $productos = Producto::all();
+        $pdf = Pdf::loadView('pages.pdf.articulo', compact('productos','categorias','subcategorias','pasillos','estantes','mesas','grupos','cuentas','unidades'));
+        return $pdf->setPaper('A4')->stream('productos.pdf');
     }
 
 }

@@ -7,6 +7,8 @@ use App\Models\Grupo;
 use App\Models\Pasillo;
 use App\Models\Estante;
 use App\Models\Mesa;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +27,9 @@ class Producto extends Model
         'cuenta_idCuenta',
         'pasillo_idPasillo',
         'estante_idEstante',
-        'mesa_idMesa'
+        'mesa_idMesa',
+        'categoria_idCategoria',
+        'subcategoria_idSubcategoria'
     ];
 
     //relación muchos a uno
@@ -52,11 +56,29 @@ class Producto extends Model
         return $this->hasMany('App\Models\Entrada');
     }
 
+    public function categorias()
+    {
+        return $this->belongsTo(Categoria::class, 'categoria_idCategoria');
+    }
+
+    public function subcategorias()
+    {
+        return $this->belongsTo(Subcategoria::class, 'subcategoria_idSubcategoria');
+    }
+
     public static function search($query)
     {
         return empty($query) ? static::query()
             : static::where('nombre_producto', 'like', '%'.$query.'%')
             ->orWhere('codigo_producto', 'like', '%'.$query.'%')
+
+            ->orWhereHas('categorias', function($q) use ($query) { //Para Realizar busqueda usando las llaves foraneas
+                $q->where('nombre_categoria', 'like', '%'.$query.'%');
+            })
+
+            ->orWhereHas('subcategorias', function($q) use ($query) { //Para Realizar busqueda usando las llaves foraneas
+                $q->where('nombre_subcategoria', 'like', '%'.$query.'%');
+            })
             
             ->orWhereHas('grupos', function($q) use ($query) { //Para Realizar busqueda usando las llaves foraneas
                 $q->where('nombre_grupo', 'like', '%'.$query.'%');

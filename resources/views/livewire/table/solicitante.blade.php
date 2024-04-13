@@ -84,6 +84,9 @@
                             <a role="button" x-on:click.prevent="deleteItem" href="#">
                                 <i class="fa fa-16px fa-trash text-red-500"></i>
                             </a>
+                            <a role="button" href="/solicitante/edit/{{ $solicitante->id }}" class="mr-3">
+                                <i class="fa fa-16px fa-file-pdf pl-3"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

@@ -1,4 +1,4 @@
-<div class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
+<div class="">
     <div class="p-8 pt-4 mt-2 bg-white" x-data="window.__controller.dataTableMainController()" x-init="setCallback();">
         <div class="flex pb-4 -ml-3">
             <a href="{{ $data->href->create_new }}"  class="-ml- btn btn-primary shadow-none">

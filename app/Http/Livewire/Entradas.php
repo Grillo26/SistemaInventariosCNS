@@ -11,11 +11,15 @@ use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
 use App\Models\Inventario;
+use App\Models\Comprobante;
 
 use Livewire\Component;
+use Livewire\WithPagination;
+use App\Traits\WithDataTable;
 
 class Entradas extends Component
 {
+    use WithPagination, WithDataTable;
     //Definicion de variables
     public $search="";
     public $sort='id'; 
@@ -67,7 +71,7 @@ class Entradas extends Component
 
     public function guardar(){
         
-        Entrada::updateOrCreate(
+        $entrada = Entrada::updateOrCreate(
         [
             'producto_idProducto' => $this->codigo_producto,
             'proveedor_idProveedor' => $this->nombre_proveedor,
@@ -92,6 +96,15 @@ class Entradas extends Component
                 'proveedor_idProveedor' => $this->nombre_proveedor,
                 'obs' => $this->descripcion,
             ]
+        );
+
+        // Crear un registro en la tabla 'comprobantes'
+        $comprobante = Comprobante::updateOrCreate(
+            [
+                'n_comprobante' => $this->faker->randomNumber(5),
+                'detalle' => $this->descripcion,
+                'entrada_idEntrada' => $entrada->id,
+            ],
         );
 
         $this->limpiarCampos();
@@ -129,6 +142,7 @@ class Entradas extends Component
         ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')
         ->orderBy($this->sort, $this->direction)
         ->get();
+
 
         return view('livewire.entradas', compact ('entradas')); 
     }
