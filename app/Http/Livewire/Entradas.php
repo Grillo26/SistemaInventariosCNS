@@ -32,13 +32,27 @@ class Entradas extends Component
     $nombre_proveedor, $descripcion, 
     $fecha_adquisicion, $fecha_caducidad,
      $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
-    $cantidad, $valor_articulo, $total=0;
+    $cantidad, $valor_articulo, $total=0, $n_lote, $ultimoNumeroLote;
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
     public function closeModal(){ 
         $this->open = false;
         $this->limpiarCampos();
+    }
+
+    public function mount(){
+        // Obtener el último número de lote almacenado en la base de datos
+        $ultimoNumeroLote = Entrada::max('n_lote');
+        if($ultimoNumeroLote == null){
+            $ultimoNumeroLote = 1000;
+            $this->n_lote = $ultimoNumeroLote;
+        }
+        else{
+            $nuevoNumeroLote = $ultimoNumeroLote ? $ultimoNumeroLote + 1 : 1001;
+            $this->n_lote = $nuevoNumeroLote;
+        }
+
     }
 
     public function updatedCodigoProducto($value){ //Funcion para seleccionar id y mostrar en inputs disableds
@@ -66,10 +80,13 @@ class Entradas extends Component
 
     public function calcular(){
         $this->total = $this->valor_articulo * $this->cantidad;
+    
 
     }
 
     public function guardar(){
+
+        
         
         $entrada = Entrada::updateOrCreate(
         [
@@ -80,6 +97,7 @@ class Entradas extends Component
             'fecha_caducidad' => $this->fecha_caducidad,
             'cantidad' => $this->cantidad, //Esta cantidad es editable
             'valor_articulo' => $this->valor_articulo,
+            'n_lote' => $this->n_lote,
         ]);
 
         // Crear un registro en la tabla 'inventarios' o actualizar si ya existe
@@ -101,7 +119,7 @@ class Entradas extends Component
         // Crear un registro en la tabla 'comprobantes'
         $comprobante = Comprobante::updateOrCreate(
             [
-                'n_comprobante' => $this->faker->randomNumber(5),
+                'n_comprobante' => $this->n_lote,
                 'detalle' => $this->descripcion,
                 'entrada_idEntrada' => $entrada->id,
             ],

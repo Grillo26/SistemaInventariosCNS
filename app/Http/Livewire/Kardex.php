@@ -5,6 +5,13 @@ use App\Models\Inventario;
 use App\Models\Producto; 
 use App\Models\Proveedor; 
 
+use Illuminate\Support\Facades\File;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
+
 
 use Livewire\Component;
 
@@ -52,4 +59,22 @@ class Kardex extends Component
             $this->mostrarKardex();
         }
     }
-}
+
+    public function pdf($productoId){
+
+        $proveedores = Proveedor::orderBy('id', 'asc')->get();   
+        $nombreProducto = Producto::find($productoId)->nombre_producto;
+        // Obtener el kardex para el producto seleccionado
+        $kardex = Inventario::where('producto_id', $productoId)
+        ->orderBy('created_at')
+        ->get();
+        $cantidad = Inventario::where('producto_id', $productoId)
+                ->sum('cantidad_entrada') - Inventario::where('producto_id', $productoId)
+                ->sum('cantidad_salida');
+
+        
+        $pdf = Pdf::loadView('pages.pdf.kardex', compact('nombreProducto','kardex','cantidad','proveedores'));
+        return $pdf->setPaper('A4')->stream('kardex.pdf');
+
+    }
+} 

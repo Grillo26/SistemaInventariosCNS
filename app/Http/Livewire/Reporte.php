@@ -59,6 +59,10 @@ class Reporte extends Component
         return view('pages.reporte.reporte-proveedores');
     }
 
+    public function solicitudes(){
+        return view('pages.reporte.reporte-solicitudes');
+    }
+
     public function articulopdf(){ //Reporte de los articulos en pdf
         $pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $estantes = Estante::orderBy('id', 'asc')->get();   

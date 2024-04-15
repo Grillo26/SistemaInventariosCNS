@@ -207,7 +207,7 @@ trait WithDataTable {
                         'href' => [
                             'create_new' => route('solicitante.new'),
                             'create_new_text' => 'Nueva Solicitud',
-                            'export' => '#',
+                            'export' => route('reporte.solicitudes'),
                             'export_text' => 'Generar Reporte'
                         ]
                     ])

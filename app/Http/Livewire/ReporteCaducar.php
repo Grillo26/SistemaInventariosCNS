@@ -6,6 +6,13 @@ use App\Models\Producto;
 use Carbon\Carbon;
 use Livewire\Component;
 
+use Illuminate\Support\Facades\File;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
+
 class ReporteCaducar extends Component
 {
 
@@ -50,6 +57,25 @@ class ReporteCaducar extends Component
             $this->sort = $sort;
             $this->direction = 'asc';
         }
+    }
+
+    public function pdf(){
+        $productos = Producto::all();
+        // Obtener artículos próximos a caducar
+       $articulosCaducar = Entrada::whereDate('fecha_caducidad', '<', Carbon::now())
+       ->orWhereHas('productos', function($query) { 
+           $query->where('codigo_producto', 'like', '%' . $this->search . '%');
+       })
+       ->orWhereHas('productos', function($query) {
+           $query->where('nombre_producto', 'like', '%' . $this->search . '%');
+       })  
+       ->orwhere('fecha_caducidad', 'like', '%' . $this->search . '%')    
+        // Eliminado el uso de '%'
+       ->orderBy($this->sort, $this->direction)
+       ->get();
+       
+        $pdf = Pdf::loadView('pages.pdf.caducar', compact('articulosCaducar','productos'));
+        return $pdf->setPaper('A4')->stream('caducar.pdf');
     }
 
 }

@@ -22,6 +22,7 @@ class ReporteAlmacen extends Component
     public $search="";
     public $sort='id'; 
     public $direction ='desc';
+    public $productos;
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
@@ -89,8 +90,34 @@ class ReporteAlmacen extends Component
     public function pdf (){
 
         //$this->imagePath = public_path('img/logo.png');
+        // Productos sin registro en la tabla 'inventario'
+        $productosSinInventario = Producto::whereNotIn('id', Inventario::pluck('producto_id'))->get();
 
-        $pdf = Pdf::loadView('pages.pdf.almacen');
+        // Productos con registro en la tabla 'inventario' pero con stock cero
+        $productosConStockCero = Inventario::select('producto_id')
+            ->selectRaw('SUM(cantidad_entrada) - SUM(cantidad_salida) as stock')
+            ->groupBy('producto_id')
+            ->havingRaw('stock = 0')
+            ->get();
+
+        // Crear una matriz de productos y sus detalles
+        $productos = [];
+        foreach ($productosSinInventario as $producto) {
+            $productos[] = [
+                'id' => $producto->codigo_producto,
+                'nombre' => $producto->nombre_producto,
+                'stock' => 0, // No hay stock porque no hay registro en inventario
+            ];
+        }
+        foreach ($productosConStockCero as $producto) {
+            $productos[] = [
+                'id' => Producto::find($producto->producto_id)->codigo_producto,
+                'nombre' => Producto::find($producto->producto_id)->nombre_producto,
+                'stock' => 0, // Stock cero
+            ];
+        }
+
+        $pdf = Pdf::loadView('pages.pdf.almacen',compact('productos'));
         return $pdf->setPaper('A4')->stream('almacen.pdf');
 
     }

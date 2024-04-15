@@ -41,44 +41,55 @@
 <body>
     <div class="header">
         
-        <h1>"REPORTE DE ENTRADAS AL ALMACÉN"</h1>
-    </div>
-	<!--TABLE-->
-	@if($entradas->count())
+        <h1>"ARTÍCULOS POR VENCER"</h1>
+    </div>    
+	@if($articulosCaducar->count())
 		<div class="row">
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped text-sm text-gray-600">
 					<thead>
 						<tr>
-							<th class="cursor-pointer" wire:click="order('producto_idProducto')">
+							<th class="cursor-pointer">
 								<a>Código Producto
                             </th>
-                            <th class="cursor-pointer" wire:click="order('producto_idProducto')">
+                            <th class="cursor-pointer">
 								<a>Nombre Producto
                             </th>
-
-                            <th class="cursor-pointer" wire:click="order('fecha_salida')">
-								<a>Fecha de Ingreso
+							<th class="cursor-pointer"  >
+                                <a>Vence en
                             </th>
 
-                            <th class="cursor-pointer" wire:click="order('cantidad')" >
-                                <a>Cantidad
+                            <th class="cursor-pointer">
+                                <a>Fecha Caducidad
                             </th>
+
                     </tr>
                     </thead>
 
                     <tbody>
-                    @foreach ($entradas as $entrada)
-                    <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
+                    @foreach ($articulosCaducar as $articulo)
+                    <tr x-data="window.__controller.dataTableController({{ $articulo->id }})">
                         @foreach ($productos as $producto)
-                            @if($entrada->producto_idProducto == $producto->id)
+                            @if($articulo->producto_idProducto == $producto->id)
                                 <td>{{ $producto-> codigo_producto }}</td>
 								<td>{{ $producto-> nombre_producto }}</td>
                             @endif
                         @endforeach
+                        <td>
+							@php
+								$fechaCaducidad = \Carbon\Carbon::parse($articulo->fecha_caducidad);
+								$hoy = \Carbon\Carbon::now();
+								$diasRestantes = $hoy->diffInDays($fechaCaducidad, false); // false para contar solo días futuros
+							@endphp
 
-                        <td>{{ $entrada->fecha_adquisicion}}</td>
-                        <td>{{ $entrada->cantidad}}</td>
+							@if ($diasRestantes < 0)
+								<span class="text-danger">Artículo vencido</span>
+							@else
+								{{ $diasRestantes }} días
+							@endif
+							</td>
+							
+                        <td>{{ $articulo->fecha_caducidad}}</td>
 					</tr>
 					@endforeach
 					</tbody>
@@ -89,8 +100,7 @@
 		<div class="px-6 py-4">
 			No se encontro ningún registro
 		</div>
-		@endif  
-	
+		@endif
 </div>
 </body>
 </html>

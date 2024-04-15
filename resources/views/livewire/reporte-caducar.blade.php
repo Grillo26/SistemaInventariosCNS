@@ -8,7 +8,7 @@
 			<!--Butons-->
 			<div class="flex pb-4 pt-2 pl-2 -ml-3">
 			
-				<a href="#" class="ml-2 btn btn-success shadow-none">
+				<a href="{{ route('caducar.pdf') }}" class="ml-2 btn btn-success shadow-none">
 					Exportar PDF
 					<span class="fas fa-file-export"></span> 
 				</a>

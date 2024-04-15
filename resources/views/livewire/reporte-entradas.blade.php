@@ -8,7 +8,7 @@
 			<!--Butons-->
 			<div class="flex pb-4 pt-2 pl-2 -ml-3">
 			
-				<a href="{{ route('entradas.pdf')}}"  class="ml-2 btn btn-success shadow-none">
+				<a href="{{ route('entradas.pdf', ['fechaInicio' => $fechaInicio, 'fechaFin' => $fechaFin])}}"  class="ml-2 btn btn-success shadow-none">
 					Exportar PDF
 					<span class="fas fa-file-export"></span> 
 				</a>
@@ -46,12 +46,9 @@
                 @this.set('fechaInicio', selectedDates[0].toISOString().split('T')[0]);
                 @this.set('fechaFin', selectedDates[1].toISOString().split('T')[0]);
                 @this.call('filtrarEntradas');
-                @this.call('pdf');
             }
             });
         </script>
-
-{{$fechaInicio}}
 		<!--TABLE-->
 		@if($entradas->count())
 		<div class="row">
@@ -67,7 +64,7 @@
                                     @else
                                         <i class="fas fa-sort-down"></i>
                                     @endif
-                                @else
+                                @else 
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif 
                             </th>

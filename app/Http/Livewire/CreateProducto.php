@@ -148,8 +148,7 @@ class CreateProducto extends Component
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
-        $this->categorias = Categoria::orderBy('id', 'asc')->get();   
-        $this->subcategorias = Subcategoria::orderBy('id', 'asc')->get();   
+        $this->categorias = Categoria::orderBy('id', 'asc')->get();     
         return view('livewire.create-producto');
     }
 

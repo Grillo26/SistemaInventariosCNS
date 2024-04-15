@@ -8,7 +8,6 @@ use App\Models\Estante;
 use App\Models\Grupo;
 use App\Models\Mesa;
 use App\Models\Pasillo;
-use App\Models\Baja;
 use App\Models\Proveedor;
 use App\Models\Dll;
 use App\Models\Comprobante;
@@ -82,7 +81,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Grupo::factory(10)->create();
         \App\Models\Mesa::factory(10)->create();
         \App\Models\Pasillo::factory(10)->create();
-        \App\Models\Baja::factory(20)->create();
         \App\Models\Proveedor::factory(50)->create();
         \App\Models\Dll::factory(50)->create();
         \App\Models\Comprobante::factory(50)->create();

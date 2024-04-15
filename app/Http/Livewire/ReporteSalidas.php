@@ -8,6 +8,15 @@ use App\Models\Producto;
 use Carbon\Carbon;
 use Livewire\Component;
 
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\File;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
+
 class ReporteSalidas extends Component
 {
     //Definicion de variables
@@ -54,6 +63,15 @@ class ReporteSalidas extends Component
             $this->sort = $sort;
             $this->direction = 'asc';
         }
+    }
+
+    public function pdf(Request $request, $fechaInicio, $fechaFin){
+        $productos = Producto::all();
+        $salidas = Salida::whereBetween('fecha_salida', [$fechaInicio, $fechaFin])->get();
+        // Filtra las salidas del almacén según el rango de fechas seleccionado
+        $pdf = Pdf::loadView('pages.pdf.salidas', compact('salidas','productos'));
+        return $pdf->setPaper('A4')->stream('salidas.pdf');
+
     }
 
 }

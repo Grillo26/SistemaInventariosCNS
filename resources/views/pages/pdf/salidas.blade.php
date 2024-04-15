@@ -41,44 +41,44 @@
 <body>
     <div class="header">
         
-        <h1>"REPORTE DE ENTRADAS AL ALMACÉN"</h1>
+        <h1>"REPORTE DE SALIDAS AL ALMACÉN"</h1>
     </div>
 	<!--TABLE-->
-	@if($entradas->count())
+    @if($salidas->count())
 		<div class="row">
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped text-sm text-gray-600">
 					<thead>
 						<tr>
-							<th class="cursor-pointer" wire:click="order('producto_idProducto')">
+							<th class="cursor-pointer">
 								<a>Código Producto
                             </th>
-                            <th class="cursor-pointer" wire:click="order('producto_idProducto')">
+                            <th class="cursor-pointer">
 								<a>Nombre Producto
                             </th>
+                            <th class="cursor-pointer">
+								<a>Fecha Salida
 
-                            <th class="cursor-pointer" wire:click="order('fecha_salida')">
-								<a>Fecha de Ingreso
                             </th>
-
-                            <th class="cursor-pointer" wire:click="order('cantidad')" >
+                            <th class="cursor-pointer" >
                                 <a>Cantidad
                             </th>
+
                     </tr>
                     </thead>
 
                     <tbody>
-                    @foreach ($entradas as $entrada)
-                    <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
+                    @foreach ($salidas as $salida)
+                    <tr x-data="window.__controller.dataTableController({{ $salida->id }})">
                         @foreach ($productos as $producto)
-                            @if($entrada->producto_idProducto == $producto->id)
+                            @if($salida->producto_idProducto == $producto->id)
                                 <td>{{ $producto-> codigo_producto }}</td>
 								<td>{{ $producto-> nombre_producto }}</td>
                             @endif
                         @endforeach
 
-                        <td>{{ $entrada->fecha_adquisicion}}</td>
-                        <td>{{ $entrada->cantidad}}</td>
+                        <td>{{ $salida->fecha_salida}}</td>
+                        <td>{{ $salida->cantidad}}</td>
 					</tr>
 					@endforeach
 					</tbody>
@@ -89,7 +89,7 @@
 		<div class="px-6 py-4">
 			No se encontro ningún registro
 		</div>
-		@endif  
+		@endif
 	
 </div>
 </body>

@@ -134,7 +134,7 @@
                 </div>
 
 <!--#################################################################################################-->
-                <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class=" grid grid-cols-1 gap-4 sm:grid-cols-4">
                     <!--Pasillo -->
                     <div class="p-1">
                         <x-jet-label for="pasillo" value="{{ __('Pasillo') }}" />
@@ -180,6 +180,12 @@
 
                         </div>
                         <x-jet-input-error for="mesa" class="mt-2" />
+                    </div>
+
+                    <!-- Campo de entrada para mostrar el número de lote -->
+                    <div class="form-group col-span-1 p-1">
+                        <label for="n_lote">N° Comprobante</label>
+                        <input type="text" id="n_lote" name="n_lote" class="form-control" wire:model="n_lote" disabled>
                     </div>
                     
                 </div>

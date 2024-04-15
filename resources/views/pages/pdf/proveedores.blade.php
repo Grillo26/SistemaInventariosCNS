@@ -41,34 +41,46 @@
 <body>
     <div class="header">
         
-        <h1>"ARTÍCULOS POR VENCER"</h1>
+        <h1>"REPORTE DE PROVEEDORES"</h1>
     </div>    
+	<!--TABLE-->
+    @if($proveedores->count())
 		<div class="row">
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped text-sm text-gray-600">
-                <table class="table table-bordered table-striped text-sm text-gray-600">
 					<thead>
-						<tr>
-                        <th>Código del Artículo</th>
-                        <th>Nombre del Artículo</th>
-                        <th>Stock</th>
-                        <!-- Agrega otras columnas según sea necesario -->
-                    </tr>
-                </thead>
+                        <tr>
+                            <th class="cursor-pointer" wire:click="order('id')">
+                                    <a>Id Proveedor
+                                </th>
+                                <th class="cursor-pointer" wire:click="order('nombre_proveedor')">
+                                    <a>Nombre Proveedor
+
+                                </th>
+
+                                <th class="cursor-pointer" wire:click="order('email')">
+                                    <a>Correo Proveedor
+                                </th>
+                         </tr>
+                    </thead>
 
                     <tbody>
-                        @foreach($productos as $producto)
-                            <tr>
-                                <td>{{ $producto['id'] }}</td>
-                                <td>{{ $producto['nombre'] }}</td>
-                                <td>{{ $producto['stock'] }}</td>
-                                <!-- Agrega otras columnas según sea necesario -->
+                        @foreach ($proveedores as $proveedor)
+                            <tr x-data="window.__controller.dataTableController({{ $proveedor->id }})">
+                                <td>{{ $proveedor->id }}</td>
+                                <td>{{ $proveedor->nombre_proveedor }}</td>
+                                <td>{{ $proveedor->email }}</td>
                             </tr>
                         @endforeach
                     </tbody>
-				</table>
-			</div>
+                </table>
+            </div>
 		</div>
+		@else
+		<div class="px-6 py-4">
+			No se encontro ningún registro
+		</div>
+		@endif
 </div>
 </body>
 </html>

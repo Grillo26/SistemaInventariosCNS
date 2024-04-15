@@ -28,6 +28,7 @@ class Entrada extends Model
         'fecha_caducidad',
         'cantidad',
         'valor_articulo',
+        'n_lote'
     ];
 
     //relación muchos a uno

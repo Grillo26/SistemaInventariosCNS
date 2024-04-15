@@ -78,10 +78,11 @@
                         <input type="date" name="fecha" class="form-control" value="{{ now()->format('Y-m-d') }}"  wire:model="fecha_adquisicion" required>
                     </div>
 
+
                 </div>
 
 <!--#################################################################################################-->
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-4 mb-3">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-5 mb-3">
                     <!--Proveedor -->
                     <div class="col-span-2 p-1">
                         <x-jet-label for="nombre_proveedor" value="{{ __('Proveedor') }}" />
@@ -101,6 +102,7 @@
 
                         </div>
                     </div>
+                    
 
                     @push('scripts')
                         <script>
@@ -128,6 +130,11 @@
                         </div>
                         
                         <x-jet-input-error for="descripcion" class="mt-2" />
+                    </div>
+                    <!-- Campo de entrada para mostrar el número de lote -->
+                    <div class="form-group col-span-1 p-1">
+                        <label for="n_lote">Número de Lote</label>
+                        <input type="text" id="n_lote" name="n_lote" class="form-control" wire:model="n_lote" disabled>
                     </div>
                     
                 </div>
@@ -308,6 +315,20 @@
                                     <i class="text-muted fas fa-sort"></i>
                                 @endif
                             </th>
+
+                            <th class="cursor-pointer" wire:click="order('n_lote')">
+								<a>N°Lote - Comporbante
+                                @if ($sort == 'n_lote')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-up"></i>
+                                    @else
+                                        <i class="fas fa-sort-down"></i>
+                                    @endif
+                                @else
+                                    <i class="text-muted fas fa-sort"></i>
+                                @endif
+                            </th>
+
                             <th class="cursor-pointer" wire:click="order('fecha_adquisicion')" >
                                 <a>Fecha Ingreso
                                 @if ($sort == 'fecha_adquisicion')
@@ -355,6 +376,7 @@
                         @endforeach
                         
                         <td>{{ $entrada->cantidad}}</td>
+                        <td>{{ $entrada->n_lote}}</td>
                         <td>{{ $entrada->fecha_adquisicion}}</td>
                         <td>{{ $entrada->fecha_caducidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">

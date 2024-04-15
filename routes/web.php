@@ -30,6 +30,13 @@ use App\Http\livewire\Dashboard;
 use App\Http\livewire\Reporte;
 use App\Http\livewire\ReporteAlmacen;
 use App\Http\livewire\ReporteEntradas;
+use App\Http\livewire\ReporteSalidas;
+use App\Http\livewire\Kardex;
+use App\Http\livewire\ReporteCaducar;
+use App\Http\livewire\ReporteStock;
+use App\Http\livewire\ReporteSinsalida;
+use App\Http\livewire\ReporteProveedores;
+use App\Http\livewire\ReporteSolicitudes;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +124,7 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('reporte/entradas', [Reporte::class, 'entradas'])->name('reporte.entradas');
     Route::get('reporte/salidas', [Reporte::class, 'salidas'])->name('reporte.salidas');
     Route::get('reporte/proveedores', [Reporte::class, 'proveedores'])->name('reporte.proveedores');
+    Route::get('reporte/solicitudes', [Reporte::class, 'solicitudes'])->name('reporte.solicitudes');
 
     Route::post('entradas/reporteFecha', [PDFController::class, 'generarPDFfechaEntrada'])->name('entradas.fecha');
     Route::post('salidas/reporteFecha', [PDFController::class, 'generarPDFfechaSalida'])->name('salidas.fecha');
@@ -127,6 +135,22 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
 
     Route::get('/reporte/articulos/pdf', [ Reporte::class, 'articulopdf' ])->name('articulos.pdf');
 
-    Route::get('/reporte/entradas/pdf/', [ ReporteEntradas::class, 'pdf' ])->name('entradas.pdf');
+    Route::get('/reporte/entradas/pdf/{fechaInicio}/{fechaFin}', [ReporteEntradas::class, 'pdf'])->name('entradas.pdf');
+    
+    Route::get('/reporte/salidas/pdf/{fechaInicio}/{fechaFin}', [ReporteSalidas::class, 'pdf'])->name('salidas.pdf');
+
+    Route::get('/reporte/caducar/pdf/', [ ReporteCaducar::class, 'pdf' ])->name('caducar.pdf');
+
+    Route::get('/reporte/stock/pdf/{search}', [ ReporteStock::class, 'pdf' ])->name('stock.pdf');
+    Route::get('/reporte/stock/pdf/', [ ReporteStock::class, 'pdfall' ])->name('all.pdf');
+
+    Route::get('/reporte/sinsalida/pdf/', [ ReporteSinsalida::class, 'pdf' ])->name('sinsalida.pdf');
+
+    Route::get('/reporte/proveedor/pdf/', [ ReporteProveedores::class, 'pdf' ])->name('proveedores.pdf');
+
+    Route::get('/reporte/solicitudes/pdf/{estadoSeleccionado}', [ ReporteSolicitudes::class, 'pdf' ])->name('solicitudes.pdf');
+    Route::get('/reporte/solicitudes/pdf/{solicitanteId}', [ ReporteSolicitudes::class, 'pdfSelect' ])->name('solicitud.pdf');
+    
+    Route::get('/reporte/kardex/pdf/{productoId}', [ Kardex::class, 'pdf' ])->name('kardex.pdf');
 
 });

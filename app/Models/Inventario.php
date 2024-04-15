@@ -16,10 +16,12 @@ class Inventario extends Model
 
     public function productos()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Producto::class, 'producto_id','id');
     }
 
     public function proveedors(){
-        return $this->belongsTo(Proveedor::class);
+        return $this->belongsTo(Proveedor::class, 'proveedor_idProveedor');
     }
+
+
 }

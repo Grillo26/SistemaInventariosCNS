@@ -12,6 +12,7 @@ use App\Models\Mesa;
 use App\Models\Producto;
 use App\Models\Inventario;
 use App\Models\Salida;
+use App\Models\Comprobante;
 
 use Livewire\Component;
 
@@ -29,6 +30,7 @@ class Salidas extends Component
     $descripcion, $fecha_salida, $obs,
     $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
     $cantidad, $cantidad_salida, $cantidad_stockTotal=0, $nombre_proveedor;
+    public $n_lote, $ultimoNumeroLote;
 
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
@@ -78,6 +80,20 @@ class Salidas extends Component
 
     }
 
+    public function mount(){
+        // Obtener el último número de lote almacenado en la base de datos
+        $ultimoNumeroLote = Comprobante::max('n_comprobante');
+        if($ultimoNumeroLote == null){
+            $ultimoNumeroLote = 1000;
+            $this->n_lote = $ultimoNumeroLote;
+        }
+        else{
+            $nuevoNumeroLote = $ultimoNumeroLote ? $ultimoNumeroLote + 1 : 1001;
+            $this->n_lote = $nuevoNumeroLote;
+        }
+
+    }
+
     public function guardar(){
 
         $salida = Salida::updateOrCreate(
@@ -107,7 +123,7 @@ class Salidas extends Component
         // Crear un registro en la tabla 'comprobantes'
         $comprobante = Comprobante::updateOrCreate(
             [
-                'n_comprobante' => $this->faker->randomNumber(5),
+                'n_comprobante' => $this->n_lote,
                 'detalle' => $this->obs,
                 'salida_idSalida' => $salida->id,
             ],
@@ -135,7 +151,7 @@ class Salidas extends Component
         $this->proveedores = Inventario::select('proveedor_idProveedor')
         ->groupBy('proveedor_idProveedor')
         ->get();
-
+ 
         
         $this->productos = Producto::join('entradas', 'productos.id', '=', 'entradas.producto_idProducto')
         ->orderBy('productos.id', 'asc')

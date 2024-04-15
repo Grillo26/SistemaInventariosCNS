@@ -78,22 +78,22 @@
                 <!--SUBCATEGORIA-->
                 @if(!is_null($subcategorias))
                     <div class="col-span-1 p-1">
-                    <x-jet-label for="codigo_producto" value="{{ __('Subcategoría') }}" />
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-question"></i>
+                        <x-jet-label for="codigo_producto" value="{{ __('Subcategoría') }}" />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-question"></i>
+                                </div>
                             </div>
+                            <select wire:model ="subcategoria_select" class="form-control">
+                                <option value="">Seleccione Subcategoria</option>
+                                @foreach($subcategorias as $sub)
+                                <option value="{{$sub->id }}">{{ $sub->nombre_subcategoria}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <select wire:model ="subcategoria_select" class="form-control">
-                            <option value="">Seleccione Subcategoria</option>
-                            @foreach($subcategorias as $sub)
-                            <option value="{{$sub->id }}">{{ $sub->nombre_subcategoria}}</option>
-                            @endforeach
-                        </select>
                     </div>
-                </div>
-                @endif
+                @endif 
             </div>
 
             <x-jet-section-border />

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('fecha_caducidad');
             $table->integer('cantidad');
             $table->decimal('valor_articulo',8,3);
+            $table->integer('n_lote');
 
             $table->foreign('producto_idProducto')
             ->references('id')->on('productos')->onDelete('set null');

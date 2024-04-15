@@ -9,6 +9,12 @@ use App\Models\Proveedor;
 use Carbon\Carbon;
 use Livewire\Component;
 
+
+use Illuminate\Http\Request;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
 class ReporteProveedores extends Component
 {
     //Definicion de variables
@@ -43,6 +49,14 @@ class ReporteProveedores extends Component
             $this->sort = $sort;
             $this->direction = 'asc';
         }
+    }
+
+    public function pdf(){
+        $productos = Producto::all();
+        $proveedores = Proveedor::all();
+        $pdf = Pdf::loadView('pages.pdf.proveedores', compact('proveedores','productos'));
+        return $pdf->setPaper('A4')->stream('proveedores.pdf');
+
     }
 
 }

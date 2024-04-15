@@ -9,6 +9,13 @@ use App\Models\Producto;
 use Carbon\Carbon;
 use Livewire\Component;
 
+use Illuminate\Support\Facades\File;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
+
 class ReporteSinsalida extends Component
 {
     //Definicion de variables
@@ -62,6 +69,21 @@ class ReporteSinsalida extends Component
             $this->sort = $sort;
             $this->direction = 'asc';
         }
+    }
+
+    public function pdf(){
+
+        $productos = Producto::all();
+        $proveedores = Proveedor::all();
+        $salidas = Inventario::select('producto_id', 'proveedor_idProveedor')
+        ->selectRaw('SUM(cantidad_entrada) as cantidad_total')
+        ->havingRaw('SUM(cantidad_salida) = 0')
+        ->groupBy('producto_id', 'proveedor_idProveedor')
+        ->get();
+
+        $pdf = Pdf::loadView('pages.pdf.sinsalida', compact('productos','proveedores','salidas'));
+        return $pdf->setPaper('A4')->stream('sinsalida.pdf');
+
     }
 
 }
