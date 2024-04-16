@@ -86,4 +86,58 @@ class ReporteSinsalida extends Component
 
     }
 
+    public function word(){
+        $productos = Producto::all();
+        $proveedores = Proveedor::all();
+        $salidas = Inventario::select('producto_id', 'proveedor_idProveedor')
+        ->selectRaw('SUM(cantidad_entrada) as cantidad_total')
+        ->havingRaw('SUM(cantidad_salida) = 0')
+        ->groupBy('producto_id', 'proveedor_idProveedor')
+        ->get();
+
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+
+        $section->addTitle('Reporte de Artículos si Salida del almacén', 1);
+        // Agregar una tabla para mostrar los datos
+        $table = $section->addTable();
+        $table->setWidth('100%');
+        // Agregar encabezados de tabla
+        $headerCellStyle = array(
+            'borderSize' => 6,
+            'borderColor' => '000000',
+            'valign' => 'center',
+        );
+        $table->addRow();
+        $table->addCell(2000, $headerCellStyle)->addText('Código del Producto');
+        $table->addCell(4000, $headerCellStyle)->addText('Nombre del Producto');
+        $table->addCell(6000, $headerCellStyle)->addText('Nombre del Proveedor');
+        $table->addCell(2000, $headerCellStyle)->addText('Cantidad Total');
+
+        // Iterar sobre las salidas y agregar cada una como una fila en la tabla
+        foreach ($salidas as $salida) {
+            $producto = Producto::find($salida->producto_id);
+            $proveedor = Proveedor::find($salida->proveedor_idProveedor);
+
+            $table->addRow();
+            // Establecer estilos para las celdas de datos
+            $dataCellStyle = array(
+                'borderSize' => 6,
+                'borderColor' => '000000',
+            );
+            $table->addCell(2000, $dataCellStyle)->addText($producto->codigo_producto);
+            $table->addCell(4000, $dataCellStyle)->addText($producto->nombre_producto);
+            $table->addCell(6000, $dataCellStyle)->addText($proveedor->nombre_proveedor);
+            $table->addCell(2000, $dataCellStyle)->addText($salida->cantidad_total);
+        }
+
+        // Guardar el documento
+        $outputPath = storage_path('app/public/sinsalidas.docx');
+        $phpWord->save($outputPath);
+
+        // Descargar el archivo
+        return response()->download($outputPath)->deleteFileAfterSend(true);
+
+    }
+
 }

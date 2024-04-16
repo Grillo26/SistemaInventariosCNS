@@ -136,21 +136,31 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
     Route::get('/reporte/articulos/pdf', [ Reporte::class, 'articulopdf' ])->name('articulos.pdf');
 
     Route::get('/reporte/entradas/pdf/{fechaInicio}/{fechaFin}', [ReporteEntradas::class, 'pdf'])->name('entradas.pdf');
+    Route::get('/reporte/entradas/word/{fechaInicio}/{fechaFin}', [ReporteEntradas::class, 'word'])->name('entradas.word');
     
     Route::get('/reporte/salidas/pdf/{fechaInicio}/{fechaFin}', [ReporteSalidas::class, 'pdf'])->name('salidas.pdf');
+    Route::get('/reporte/salidas/word/{fechaInicio}/{fechaFin}', [ReporteSalidas::class, 'word'])->name('salidas.word');
 
     Route::get('/reporte/caducar/pdf/', [ ReporteCaducar::class, 'pdf' ])->name('caducar.pdf');
+    Route::get('/reporte/caducar/word/', [ ReporteCaducar::class, 'word' ])->name('caducar.word');
 
     Route::get('/reporte/stock/pdf/{search}', [ ReporteStock::class, 'pdf' ])->name('stock.pdf');
+    Route::get('/reporte/stock/word/{search}', [ ReporteStock::class, 'word' ])->name('stock.word');
     Route::get('/reporte/stock/pdf/', [ ReporteStock::class, 'pdfall' ])->name('all.pdf');
+    Route::get('/reporte/stock/word/', [ ReporteStock::class, 'wordall' ])->name('all.word');
 
     Route::get('/reporte/sinsalida/pdf/', [ ReporteSinsalida::class, 'pdf' ])->name('sinsalida.pdf');
+    Route::get('/reporte/sinsalida/word/', [ ReporteSinsalida::class, 'word' ])->name('sinsalida.word');
 
     Route::get('/reporte/proveedor/pdf/', [ ReporteProveedores::class, 'pdf' ])->name('proveedores.pdf');
+    Route::get('/reporte/proveedor/word/', [ ReporteProveedores::class, 'word' ])->name('proveedores.word');
 
     Route::get('/reporte/solicitudes/pdf/{estadoSeleccionado}', [ ReporteSolicitudes::class, 'pdf' ])->name('solicitudes.pdf');
+    Route::get('/reporte/solicitudes/word/{estadoSeleccionado}', [ ReporteSolicitudes::class, 'word' ])->name('solicitudes.word');
+    
     Route::get('/reporte/solicitudes/pdf/{solicitanteId}', [ ReporteSolicitudes::class, 'pdfSelect' ])->name('solicitud.pdf');
     
     Route::get('/reporte/kardex/pdf/{productoId}', [ Kardex::class, 'pdf' ])->name('kardex.pdf');
+    Route::get('/reporte/kardex/word/{productoId}', [ Kardex::class, 'word' ])->name('kardex.word');
 
 });

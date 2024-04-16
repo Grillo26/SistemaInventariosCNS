@@ -13,6 +13,11 @@
                     @include('components.sort-icon', ['field' => 'nombre_proveedor'])
                 </a></th>
 
+                <th><a wire:click.prevent="sortBy('n_telefono')" role="button" href="#">
+                    Número de Telefono
+                    @include('components.sort-icon', ['field' => 'n_telefono'])
+                </a></th>
+
                 <th><a wire:click.prevent="sortBy('email')" role="button" href="#">
                     Correo Proveedor
                     @include('components.sort-icon', ['field' => 'email'])
@@ -26,6 +31,7 @@
                 <tr x-data="window.__controller.dataTableController({{ $proveedor->id }})">
                     <td>{{ $proveedor->id }}</td>
                     <td>{{ $proveedor->nombre_proveedor }}</td>
+                    <td>{{ $proveedor->n_telefono }}</td>
                     <td>{{ $proveedor->email }}</td>
                     <td class="whitespace-no-wrap row-action--icon">
                         <a role="button" href="/proveedor/edit/{{$proveedor->id }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>

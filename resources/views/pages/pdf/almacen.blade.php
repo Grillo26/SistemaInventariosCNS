@@ -45,7 +45,6 @@
     </div>    
 		<div class="row">
 			<div class="table-responsive">
-				<table class="table table-bordered table-striped text-sm text-gray-600">
                 <table class="table table-bordered table-striped text-sm text-gray-600">
 					<thead>
 						<tr>

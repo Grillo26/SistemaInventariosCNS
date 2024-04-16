@@ -61,7 +61,7 @@ $productos = App\Models\Producto::all();
 						<p class="text-truncate font-size-14 mb-2">Total Artículos en Almacén</p>
 						<h4 class="mb-2">{{ $totalArticulos}}</h4>
 						@if($articulos_vencidos > 0)
-							<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulos_vencidos}}</span> Artículos vencidos o por vencer</p>
+							<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulos_vencidos}}</span> Lotes vencidos o por vencer</p>
 						@else
 							<p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ion-ios-cart"></i>{{ $articulosCaducanEn10Dias}}</span> Artículos están por caducar</p>
 						@endif
@@ -149,6 +149,7 @@ $productos = App\Models\Producto::all();
 								<th>Nombre Artículo</th>
 								<th>Fecha Caducidad</th>
 								<th>Vence en</th>
+								<th>N° de Lote</th>
 								
 							</tr>
 						</thead>
@@ -182,6 +183,8 @@ $productos = App\Models\Producto::all();
 										{{ $diasRestantes }} días
 									@endif
 								</td>
+
+								<td>{{ $articulo -> n_lote}}</td>
 					
 							</tr>
 							@endforeach

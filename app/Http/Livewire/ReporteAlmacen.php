@@ -13,8 +13,11 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Style\Font;
+
 
 use Maatwebsite\Excel\Excel;
+
 
 class ReporteAlmacen extends Component
 {
@@ -123,27 +126,78 @@ class ReporteAlmacen extends Component
     }
 
     public function Word(){
-        try {
-            // Cargar el template y procesar los datos
-            $templatePath = storage_path('template.docx');
-            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($templatePath);
-            
-            // Aquí puedes modificar el contenido del template si es necesario
-            // Por ejemplo, reemplazar marcadores de posición con datos dinámicos
-    
-            // Guardar el documento generado
-            $outputPath = storage_path('app/public/Document02.docx');
-            $templateProcessor->saveAs($outputPath);
-    
-            // Devolver el archivo al cliente
-            return response()->file($outputPath, [
-                'Content-Disposition' => 'attachment; filename=almacen.docx; charset=iso-8859-1'
-            ]);
-        } catch (\Exception $e) {
-            // Manejo de excepciones
-            dd($e->getMessage());
+        //$this->imagePath = public_path('img/logo.png');
+        // Productos sin registro en la tabla 'inventario'
+        $productosSinInventario = Producto::whereNotIn('id', Inventario::pluck('producto_id'))->get();
+
+        // Productos con registro en la tabla 'inventario' pero con stock cero
+        $productosConStockCero = Inventario::select('producto_id')
+            ->selectRaw('SUM(cantidad_entrada) - SUM(cantidad_salida) as stock')
+            ->groupBy('producto_id')
+            ->havingRaw('stock = 0')
+            ->get();
+
+        // Crear una matriz de productos y sus detalles
+        $productos = [];
+        foreach ($productosSinInventario as $producto) {
+            $productos[] = [
+                'id' => $producto->codigo_producto,
+                'nombre' => $producto->nombre_producto,
+                'stock' => 0, // No hay stock porque no hay registro en inventario
+            ];
+        }
+        foreach ($productosConStockCero as $producto) {
+            $productos[] = [
+                'id' => Producto::find($producto->producto_id)->codigo_producto,
+                'nombre' => Producto::find($producto->producto_id)->nombre_producto,
+                'stock' => 0, // Stock cero
+            ];
+        }
+   
+        // Crear un nuevo objeto de PHPWord
+        $phpWord = new PhpWord();
+
+        // Agregar una sección al documento
+        $section = $phpWord->addSection();
+
+        // Agregar un título al documento
+        $section->addTitle('Lista de Productos', 1);
+
+        // Agregar una tabla para mostrar los datos
+        $table = $section->addTable();
+        // Establecer ancho de la tabla para que ocupe toda la página
+        $table->setWidth('100%');
+
+        // Agregar encabezados de tabla con estilos
+        $headerCellStyle = array(
+            'borderSize' => 6,
+            'borderColor' => '000000',
+            'valign' => 'center',
+        );
+        $table->addRow();
+        $table->addCell(2000, $headerCellStyle)->addText('Código del Producto');
+        $table->addCell(2000, $headerCellStyle)->addText('Nombre del Producto');
+        $table->addCell(2000, $headerCellStyle)->addText('Stock');
+
+        // Iterar sobre los productos y agregar cada uno como una fila en la tabla
+        foreach ($productos as $producto) {
+            $table->addRow();
+            // Establecer estilos para las celdas de datos
+            $dataCellStyle = array(
+                'borderSize' => 6,
+                'borderColor' => '000000',
+            );
+            $table->addCell(2000, $dataCellStyle)->addText($producto['id']);
+            $table->addCell(2000, $dataCellStyle)->addText($producto['nombre']);
+            $table->addCell(2000, $dataCellStyle)->addText($producto['stock']);
         }
 
+        // Guardar el documento
+        $outputPath = storage_path('app/public/almacen.docx');
+        $phpWord->save($outputPath);
+
+        // Descargar el archivo
+        return response()->download($outputPath)->deleteFileAfterSend(true);
     }
 
     public function excel(){

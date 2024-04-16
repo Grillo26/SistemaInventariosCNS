@@ -198,48 +198,35 @@
 <!--#################################################################################################-->
                 <x-jet-section-border />
                 <div class=" grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <!--Grupo-->
-                <div class="">
-                    <x-jet-label for="grupo_idGrupo" value="{{ __('Grupo') }}" />
+                <!--Categoria-->
+                <div class="col-span-2">
+                    <x-jet-label for="grupo_idGrupo" value="{{ __('Categoria') }}" />
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-box-open"></i>
                             </div>
                         </div>
-                        <input id="grupo" type="text" class="form-control" wire:model.defer="nombre_grupo" disabled>
+                        <input id="grupo" type="text" class="form-control" wire:model.defer="categoria" disabled>
                     </div>
                     <x-jet-input-error for="nombre_grupo" class="mt-2" />
                 </div>
 
-                <!--cuenta_a-->
+                <!--Subcategoria-->
                 <div class="">
-                    <x-jet-label for="cuenta_idCuenta" value="{{ __('Cuenta') }}" />
+                    <x-jet-label for="cuenta_idCuenta" value="{{ __('Tipo') }}" />
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <i class="fas fa-list-ol"></i>
                             </div>
                         </div>
-                        <input id="grupo" type="text" class="form-control" wire:model.defer="nombre_cuenta" disabled>
+                        <input id="grupo" type="text" class="form-control" wire:model.defer="subcategoria" disabled>
                     </div>
                     <!--<x-jet-input id="cuenta_idCuenta" type="text" class="mt-1 block w- form-control shadow-none" wire:model.defer="producto.cuenta_idCuenta" required />-->
                     <x-jet-input-error for="nombre_cuenta" class="mt-2" />
                 </div>
 
-                <!--unidad-->
-                <div class="">
-                    <x-jet-label for="unidad_idUnidad" value="{{ __('Unidad') }}" />
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-building"></i>
-                            </div>
-                        </div>
-                        <input id="grupo" type="text" class="form-control" wire:model.defer="nombre_unidad" disabled>
-                    </div>
-                    <x-jet-input-error for="nombre_unidad" class="mt-2" />
-                </div>
             </div>
 
 

@@ -26,6 +26,8 @@ class CreateProducto extends Component
     public $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa;
     public $categorias, $subcategorias;
     public $categoria_select = null , $subcategoria_select = null;
+    public $codigo_producto;
+    public $codigo_existe = false;
 
 
 
@@ -68,6 +70,7 @@ class CreateProducto extends Component
         ]);*/
 
         $data = $this->producto;
+        $data['codigo_producto'] = $this->codigo_producto;
         $data['unidad_idUnidad'] = $this-> idUnidad;
         $data['grupo_idGrupo'] = $this-> idGrupo;
         $data['cuenta_idCuenta'] = $this-> idCuenta;
@@ -80,6 +83,7 @@ class CreateProducto extends Component
 
         $this->emit('saved');
         $this->reset('producto');
+        $this->limpiarCampos();
     }
 
     public function updateProducto()
@@ -140,6 +144,11 @@ class CreateProducto extends Component
         }
     }
 
+    public function updatedCodigoProducto($value)
+    {
+        $this->codigo_existe = Producto::where('codigo_producto', $value)->exists();
+    }
+
     public function render()
     {
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
@@ -150,6 +159,20 @@ class CreateProducto extends Component
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
         $this->categorias = Categoria::orderBy('id', 'asc')->get();     
         return view('livewire.create-producto');
+    }
+
+    public function limpiarCampos(){
+        $this->codigo_producto = '';
+        $this-> idUnidad = '';
+        $this-> idGrupo = '';
+        $this-> idCuenta = '';
+        $this-> pasillo_idPasillo = '';
+        $this-> estante_idEstante = '';
+        $this-> mesa_idMesa = '';
+        $this-> categoria_select = '';
+        $this-> subcategoria_select = '';
+
+
     }
 
 }

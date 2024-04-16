@@ -15,6 +15,7 @@ class ProveedorFactory extends Factory
     {
         return [
             'nombre_proveedor'=> $this->faker->name(),
+            'n_telefono'=> $this->faker->phoneNumber(),
             'email' => $this->faker->email()
         ];
     }

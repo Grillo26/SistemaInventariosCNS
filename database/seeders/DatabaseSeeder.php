@@ -83,9 +83,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pasillo::factory(10)->create();
         \App\Models\Proveedor::factory(50)->create();
         \App\Models\Dll::factory(50)->create();
-        \App\Models\Comprobante::factory(50)->create();
-
-        \App\Models\Producto::factory(10)->create();
+        \App\Models\Producto::factory(50)->create();
 
     
     }

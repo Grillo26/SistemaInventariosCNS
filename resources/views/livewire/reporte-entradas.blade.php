@@ -16,7 +16,7 @@
 					Exportar EXCEL
 					<span class="fas fa-file-excel"></span> 
 				</a>
-				<a href="#" class="ml-2 btn btn-primary shadow-none">
+				<a href="{{ route('entradas.word', ['fechaInicio' => $fechaInicio, 'fechaFin' => $fechaFin])}}" class="ml-2 btn btn-primary shadow-none">
 					Exportar WORD
 					<span class="fas fa-file-word"></span> 
 				</a>

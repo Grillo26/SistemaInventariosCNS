@@ -37,7 +37,7 @@
                         <input id="lote" type="text" class="form-control phone-number" wire:model.defer="producto.nombre_producto" required>
                     </div>
                     <x-jet-input-error for="producto.nombre_producto" class="mt-2" />
-                </div>
+                </div> 
 
                 <!--Codigo Identificación -->
                 <div class="col-span-2 p-1">
@@ -49,10 +49,14 @@
                                 <i class="fas fa-lock"></i>
                             </div>
                         </div>
-                        <input id="codigo_producto" type="text" class="form-control phone-number" wire:model.defer="producto.codigo_producto" required>
+                        <input id="codigo_producto" type="text" class="form-control phone-number" wire:model.debounce.500ms="codigo_producto" required>
                     </div>
                     <x-jet-input-error for="producto.codigo_producto" class="mt-2" />
+                    @if ($codigo_existe)
+                    <p class="text-danger">El código que ingresó ya existe.</p>
+                    @endif
                 </div>
+                
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-3">

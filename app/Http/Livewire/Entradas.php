@@ -12,6 +12,8 @@ use App\Models\Mesa;
 use App\Models\Producto;
 use App\Models\Inventario;
 use App\Models\Comprobante;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -64,6 +66,9 @@ class Entradas extends Component
                 $this->nombre_grupo = Grupo::find($producto->grupo_idGrupo)->nombre_grupo; 
                 $this->nombre_cuenta = Cuenta::find($producto->cuenta_idCuenta)->nombre_cuenta;
                 $this->nombre_unidad = Unidad::find($producto->unidad_idUnidad)->nombre_unidad;
+
+                $this->categoria = Categoria::find($producto->categoria_idCategoria)->nombre_categoria;
+                $this->subcategoria = Subcategoria::find($producto->subcategoria_idSubcategoria)->nombre_subcategoria;
             } else {
                 $this->nombre_producto = null;
                 $this->nombre_grupo = null;
@@ -147,6 +152,8 @@ class Entradas extends Component
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
         $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
+        $this->categorias = Categoria::orderBy('id', 'asc')->get(); 
+        $this->subcategorias = Subcategoria::orderBy('id', 'asc')->get(); 
         
         $entradas = Entrada::where('producto_idProducto', 'like', '%' . $this->search . '%')
 
