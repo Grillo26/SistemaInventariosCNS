@@ -5,6 +5,8 @@ use App\Models\Entrada;
 use App\Models\Salida;
 use App\Models\Inventario;
 use App\Models\Producto;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -129,6 +131,62 @@ class ReporteEntradas extends Component
         // Descargar el archivo
         return response()->download($outputPath)->deleteFileAfterSend(true);
 
+    }
+
+    public function comp($id){
+        $user = auth()->user();
+        $fechaActual = now();
+        $productos = Producto::all();
+        $categorias = Categoria::all();
+        $subcategorias = Subcategoria::all();
+
+        $data = Entrada::find($id);
+
+        foreach($productos as $producto){
+            if($data['producto_idProducto'] == $producto->id){
+                $codigo_producto = $producto->codigo_producto;
+                $nombre_producto = $producto->nombre_producto;
+            }
+            foreach($categorias as $categoria){
+                if($producto->categoria_idCategoria == $categoria->id){
+                    $categoria = $categoria->nombre_categoria;
+                }
+            }
+            foreach($subcategorias as $subcategoria){
+                if($producto->subcategoria_idSubcategoria == $subcategoria->id){
+                    $subcategoria = $subcategoria->nombre_subcategoria;
+                }
+            }
+        }
+        $descripcion = $data['descripcion'];
+        $fecha_adquisicion = $data['fecha_adquisicion'];
+        $fecha_caducidad = $data['fecha_caducidad'];
+        $cantidad = $data['cantidad'];
+
+        try {
+            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(Storage_path('templateingreso.docx'));
+            $templateProcessor->setValue('name',$user);
+            $templateProcessor->setValue('date_now',$fechaActual);
+            $templateProcessor->setValue('desc',$descripcion);
+            $templateProcessor->setValue('codigo_producto',$codigo_producto);
+            $templateProcessor->setValue('nombre_producto',$nombre_producto);
+            $templateProcessor->setValue('cate',$categoria);
+            $templateProcessor->setValue('subcate',$subcategoria);
+            $templateProcessor->setValue('date',$fecha_adquisicion);
+            $templateProcessor->setValue('venc',$fecha_caducidad);
+            $templateProcessor->setValue('cantidad',$cantidad);
+            
+            // Guardar el documento Word generado
+            $outputPath = storage_path('app/public/documento_generado.docx');
+            $templateProcessor->saveAs($outputPath);
+
+            // Descargar el archivo
+            return response()->download($outputPath)->deleteFileAfterSend(true);
+        }
+        catch (\Exception $e) {
+            // Manejo de excepciones
+            dd($e->getMessage());
+        }
     }
 
 }

@@ -368,7 +368,7 @@
                         <td>{{ $entrada->fecha_caducidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">
                             <a wire:click="editar({{$entrada->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
-                            <a wire:click="editar({{$entrada->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-file-pdf"></i></a>
+                            <a href="/reporte/entrada/word/{{ $entrada->id}}" role="button" class="mr-3"><i class="fa fa-16px fa-file-pdf"></i></a>
 							<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
 						</td>
 						</tr>
