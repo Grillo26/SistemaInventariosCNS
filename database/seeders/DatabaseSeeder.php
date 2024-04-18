@@ -69,20 +69,46 @@ class DatabaseSeeder extends Seeder
         $categoria3->nombre_categoria ='Artículo de Limpieza';
         $categoria3->save();
 
+        $unidad1 = new Unidad();
+        $unidad1->nombre_unidad = 'Distrital Yacuiba';
+        $unidad1->save();
+
+        $cuenta1 = new Cuenta();
+        $cuenta1->nombre_cuenta = 'Cuentas De Ingresos';
+        $cuenta1 ->codigo_cuenta = '224A';
+        $cuenta1 ->save();
+
+        $cuenta2 = new Cuenta();
+        $cuenta2->nombre_cuenta = 'Cuenta de Gastos';
+        $cuenta2 ->codigo_cuenta = '221F';
+        $cuenta2 ->save();
+
+        $cuenta3 = new Cuenta();
+        $cuenta3->nombre_cuenta = 'Cuenta de Activos';
+        $cuenta3 ->codigo_cuenta = '33R';
+        $cuenta3 ->save();
+
+        $grupo1= new Grupo();
+        $grupo1->nombre_grupo = 'Gastos Administrativos';
+        $grupo1->save();
+
+        $grupo2= new Grupo();
+        $grupo2->nombre_grupo = 'Gastos de Mantenimiento';
+        $grupo2->save();
+
+        $grupo3= new Grupo();
+        $grupo3->nombre_grupo = 'Suministros médicos';
+        $grupo3->save();
+
         $this->call(RoleSeeder::class); //Agrega a la base de datos los roles
         $this->call(UserSeeder::class);
         $this->call(SubcategoriaSeeder::class);
     
 
-
-        \App\Models\Unidad::factory(10)->create();
-        \App\Models\Cuenta::factory(10)->create();
         \App\Models\Estante::factory(10)->create();
-        \App\Models\Grupo::factory(10)->create();
-        \App\Models\Mesa::factory(10)->create();
-        \App\Models\Pasillo::factory(10)->create();
-        \App\Models\Proveedor::factory(50)->create();
-        \App\Models\Dll::factory(50)->create();
+        \App\Models\Mesa::factory(4)->create();
+        \App\Models\Pasillo::factory(12)->create();
+        \App\Models\Proveedor::factory(10)->create();
         \App\Models\Producto::factory(50)->create();
 
     

@@ -16,9 +16,6 @@ return new class extends Migration
         Schema::create('grupos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_grupo');
-            $table->string('grupo');
-            $table->string('cuenta_a');
-            $table->string('partida_a');
             $table->timestamps();
         });
     }

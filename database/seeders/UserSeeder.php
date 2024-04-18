@@ -20,10 +20,21 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Ernesto Torrez',
-            'lastname' => 'Viilagomex',
-            'username' => 'vill',
+            'name' => 'Carlos Enrique',
+            'lastname' => 'Mamani Torrez',
+            'username' => 'admin',
             'email' => 'valla@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('kuynva26101997'),
+            'remember_token' => Str::random(10)
+
+        ])->assignRole('Admin');
+
+        User::create([
+            'name' => 'Benjamín',
+            'lastname' => 'Montero',
+            'username' => 'admin1',
+            'email' => 'benja@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('kuynva26101997'),
             'remember_token' => Str::random(10)

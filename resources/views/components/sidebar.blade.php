@@ -83,15 +83,14 @@ $links = [
     [
         "href" => [
             [
-                "section_text" => "Información",
+                "section_text" => "Ubicación",
                 "icon" => "fas fa-database",
                 "section_list" => [
                     ["href" => "pasillos", "text" => "Pasillos"],
                     ["href" => "mesas", "text" => "Mesas"],
                     ["href" => "estantes", "text" => "Estantes"],
-                    ["href" => "comprobantes", "text" => "Comprobantes"],
-                    ["href" => "dll", "text" => "Dll"],
-                    ["href" => "estados", "text" => "Estados"],
+                 
+                    
                 ]
     
             ]

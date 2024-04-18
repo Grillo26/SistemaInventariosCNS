@@ -48,9 +48,6 @@ class CreateGrupo extends Component
             ->where('id', $this->grupoId)
             ->update([
                 "nombre_grupo" => $this->grupo->nombre_grupo,
-                "grupo" => $this->grupo->grupo,
-                "cuenta_a" => $this->grupo->cuenta_a,
-                "partida_a" => $this->grupo->partida_a,
             ]);
 
         $this->emit('saved');

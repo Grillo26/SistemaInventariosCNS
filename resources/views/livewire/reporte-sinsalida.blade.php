@@ -12,10 +12,6 @@
 					Exportar PDF
 					<span class="fas fa-file-export"></span> 
 				</a>
-				<a href="#" class="ml-2 btn btn-danger shadow-none">
-					Exportar EXCEL
-					<span class="fas fa-file-excel"></span> 
-				</a>
 
 				<a href="{{route('sinsalida.word')}}" class="ml-2 btn btn-primary shadow-none">
 					Exportar WORD

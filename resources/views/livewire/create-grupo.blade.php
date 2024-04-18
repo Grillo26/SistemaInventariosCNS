@@ -38,50 +38,7 @@
                     <x-jet-input-error for="grupo.nombre_grupo" class="mt-2" />
                 </div>
 
-                <!--Grupo-->
-                <div class="col-span-2 p-1">
-                    <x-jet-label for="grupo" value="{{ __('Grupo') }}" />
-                    
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-list-ol"></i>
-                            </div>
-                        </div>
-                        <input id="grupo" type="text" class="form-control phone-number" wire:model.defer="grupo.grupo" required>
-                    </div>
-                    <x-jet-input-error for="grupo.grupo" class="mt-2" />
-                </div>
-
-                <!--cuenta_a-->
-                <div class="col-span-1 p-1">
-                    <x-jet-label for="grupo.cuenta_a" value="{{ __('Cuenta Analítica') }}" />
-                    
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-list-ol"></i>
-                            </div>
-                        </div>
-                        <input id="cuenta_a" type="text" class="form-control phone-number" wire:model.defer="grupo.cuenta_a" required>
-                    </div>
-                    <x-jet-input-error for="grupo.cuenta_a" class="mt-2" />
-                </div>
-
-                <!--partida_a-->
-                <div class="col-span-2 p-1">
-                    <x-jet-label for="partida_a" value="{{ __('Partida Presupuestaria') }}" />
-                    
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-list-ol"></i>
-                            </div>
-                        </div>
-                        <input id="partida_a" type="text" class="form-control phone-number" wire:model.defer="grupo.partida_a" required>
-                    </div>
-                    <x-jet-input-error for="grupo.partida_a" class="mt-2" />
-                </div>
+            
             </div>
 
         </x-slot>

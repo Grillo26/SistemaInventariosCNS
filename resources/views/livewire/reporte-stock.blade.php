@@ -13,11 +13,6 @@
 					<span class="fas fa-file-export"></span> 
 				    </a>
 
-                    <a href="#" class="ml-2 btn btn-danger shadow-none">
-					Exportar EXCEL
-					<span class="fas fa-file-excel"></span> 
-				    </a>
-
                     <a href="{{ route('all.word')}}" class="ml-2 btn btn-primary shadow-none">
 					Exportar Todo WORD
 					<span class="fas fa-file-word"></span> 
@@ -26,11 +21,6 @@
                     <a href="/reporte/stock/pdf/{{$search}}" class="ml-2 btn btn-success shadow-none">
 					Exportar PDF
 					<span class="fas fa-file-export"></span> 
-				    </a>
-
-                    <a href="#" class="ml-2 btn btn-danger shadow-none">
-					Exportar EXCEL
-					<span class="fas fa-file-excel"></span> 
 				    </a>
 
                     <a href="/reporte/stock/word/{{$search}}" class="ml-2 btn btn-primary shadow-none">
