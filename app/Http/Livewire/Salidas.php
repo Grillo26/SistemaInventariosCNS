@@ -136,7 +136,6 @@ class Salidas extends Component
                 'n_comprobante' => $this->n_lote,
                 'detalle' => $this->obs,
                 'salida_idSalida' => $salida->id,
-                $idSalida = $salida->id
             ],
         );
 
