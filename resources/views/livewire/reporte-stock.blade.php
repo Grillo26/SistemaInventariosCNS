@@ -135,7 +135,6 @@
                                 @endif
                             </th>
                         
-                        <th><a>Acciones</th>
                     </tr>
                     </thead>
 
@@ -169,7 +168,6 @@
                             @endforeach
                             <td>{{ $item->cantidad }}</td>
                             <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$item->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a></td>
                         </tr>
                     @endforeach
 

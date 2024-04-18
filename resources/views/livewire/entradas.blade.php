@@ -95,7 +95,7 @@
                             </div>
                             <select wire:model="nombre_proveedor" class="form-control select2" id="proveedor">
                                 <option value=""> </option>
-                                @foreach($proveedors as $proveedor)
+                                @foreach($proveedores as $proveedor)
                                     <option value="{{ $proveedor->id }}">{{ $proveedor->nombre_proveedor}}</option>
                                 @endforeach
                             </select>
@@ -228,7 +228,23 @@
                 </div>
 
             </div>
-
+            <!--Receçionandte-->
+            
+                    <div class="p-1">
+                        <x-jet-label for="nombre_producto" value="{{ __('Nombre Proveedor') }}" />
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <input id="valor_articulo" type="text" class="form-control " wire:model="recep"
+                            required>
+                        </div>
+                        <x-jet-input-error for="valor_articulo" class="mt-2" />
+                    </div>
+                    
 
 			</x-slot>
 			<x-slot name="footer">
@@ -281,6 +297,18 @@
                             <th class="cursor-pointer" wire:click="order('producto_idProducto')">
 								<a>Nombre Producto
                                 @if ($sort == 'producto_idProducto')
+                                    @if ($direction == 'asc')
+                                        <i class="fas fa-sort-up"></i>
+                                    @else
+                                        <i class="fas fa-sort-down"></i>
+                                    @endif
+                                @else
+                                    <i class="text-muted fas fa-sort"></i>
+                                @endif
+                            </th>
+                            <th class="cursor-pointer" wire:click="order('proveedor_idProveedor')">
+								<a>Proveedor
+                                @if ($sort == 'proveedor_idProveedor')
                                     @if ($direction == 'asc')
                                         <i class="fas fa-sort-up"></i>
                                     @else
@@ -361,14 +389,19 @@
                                 <td>{{ $producto-> nombre_producto }}</td>
                             @endif
                         @endforeach
+
+                        @foreach ($proveedores as $proveedor)
+                            @if($entrada->proveedor_idProveedor == $proveedor->id)
+                                <td>{{ $proveedor-> nombre_proveedor }}</td>
+                            @endif
+                        @endforeach
                         
                         <td>{{ $entrada->cantidad}}</td>
                         <td>{{ $entrada->n_lote}}</td>
                         <td>{{ $entrada->fecha_adquisicion}}</td>
                         <td>{{ $entrada->fecha_caducidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$entrada->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
-                            <a href="/reporte/entrada/word/{{ $entrada->id}}" role="button" class="mr-3"><i class="fa fa-16px fa-file-pdf"></i></a>
+                            <a href="/reporte/entrada/pdf/{{ $entrada->id}}" role="button" class="mr-3"><i class="fa fa-16px fa-file-pdf"></i></a>
 							<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
 						</td>
 						</tr>

@@ -19,6 +19,7 @@ class CreateSalidasTable extends Migration
             $table->date('fecha_salida');
             $table->integer('cantidad');
             $table->string('obs');
+            $table->string('recep');
 
 
             $table->foreign('producto_idProducto')

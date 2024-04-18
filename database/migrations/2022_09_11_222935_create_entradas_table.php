@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->decimal('valor_articulo',8,3);
             $table->integer('n_lote');
+            $table->string('recep');
 
             $table->foreign('producto_idProducto')
             ->references('id')->on('productos')->onDelete('set null');

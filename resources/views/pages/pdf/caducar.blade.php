@@ -36,12 +36,29 @@
             font-size: 24px;
             text-align: center;
         }
+        /* Estilos del apartado de firma */
+        .firma {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .firma p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
+    <div style="display: flex; align-items: center">
+        <img src="{{$imagePath}}" width="750px" height="160px" style="margin-right: 10px;">
+    </div>
     <div class="header">
         
-        <h1>"ARTÍCULOS POR VENCER"</h1>
+        <h1>"REPORTE DE PRODUCTOS CADUCADOS O PRÓXIMOS A CADUCAR"</h1>
+    </div>
+    <p>Mediante la presente, y en virtud de mis funciones, hago llegar el siguiente reporte de artículos que están próximos a caducar 
+        deacuerdo con la fecha establecida y que por consiguiente ruego a quien corresponda tomar medidas oportunas con respecto
+        al informe detallado en la siguiente tabla:
+    <div class="header">
+        
     </div>    
 	@if($articulosCaducar->count())
 		<div class="row">
@@ -54,6 +71,9 @@
                             </th>
                             <th class="cursor-pointer">
 								<a>Nombre Producto
+                            </th>
+							<th class="cursor-pointer"  >
+                                <a>Proveedor
                             </th>
 							<th class="cursor-pointer"  >
                                 <a>Vence en
@@ -73,6 +93,11 @@
                             @if($articulo->producto_idProducto == $producto->id)
                                 <td>{{ $producto-> codigo_producto }}</td>
 								<td>{{ $producto-> nombre_producto }}</td>
+                            @endif
+                        @endforeach
+                        @foreach ($proveedores as $proveedor)
+                            @if($articulo->proveedor_idProveedor == $proveedor->id)
+                                <td>{{ $proveedor-> nombre_proveedor}}</td>
                             @endif
                         @endforeach
                         <td>
@@ -101,6 +126,11 @@
 			No se encontro ningún registro
 		</div>
 		@endif
+
+        <div class="firma">
+        <p>{{ $user->name . ' ' . $user->lastname }}</p>
+        <p>Encargado de Almacén</p>
+    </div>
 </div>
 </body>
 </html>

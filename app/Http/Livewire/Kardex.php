@@ -74,8 +74,11 @@ class Kardex extends Component
                 ->sum('cantidad_entrada') - Inventario::where('producto_id', $productoId)
                 ->sum('cantidad_salida');
 
+
+        $this->imagePath = public_path('img/cns.png');
+
         
-        $pdf = Pdf::loadView('pages.pdf.kardex', compact('nombreProducto','kardex','cantidad','proveedores'));
+        $pdf = Pdf::loadView('pages.pdf.kardex', compact('nombreProducto','kardex','cantidad','proveedores'),['imagePath' => $this->imagePath]);
         return $pdf->setPaper('A4')->stream('kardex.pdf');
 
     }

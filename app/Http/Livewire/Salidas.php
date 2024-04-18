@@ -10,9 +10,18 @@ use App\Models\Pasillo;
 use App\Models\Estante;
 use App\Models\Mesa;
 use App\Models\Producto;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 use App\Models\Inventario;
 use App\Models\Salida;
 use App\Models\Comprobante;
+
+use Illuminate\Support\Facades\File;
+use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 use Livewire\Component;
 
@@ -30,7 +39,7 @@ class Salidas extends Component
     $descripcion, $fecha_salida, $obs,
     $pasillo_idPasillo, $estante_idEstante, $mesa_idMesa, 
     $cantidad, $cantidad_salida, $cantidad_stockTotal=0, $nombre_proveedor;
-    public $n_lote, $ultimoNumeroLote;
+    public $n_lote, $ultimoNumeroLote, $recep;
 
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
@@ -102,6 +111,7 @@ class Salidas extends Component
             'fecha_salida' => $this->fecha_salida,
             'cantidad' => $this->cantidad_salida,
             'obs' => $this->obs,
+            'recep' => $this->recep,
         ]);
 
         // Crear un registro en la tabla 'inventarios' o actualizar si ya existe
@@ -126,13 +136,18 @@ class Salidas extends Component
                 'n_comprobante' => $this->n_lote,
                 'detalle' => $this->obs,
                 'salida_idSalida' => $salida->id,
+                $idSalida = $salida->id
             ],
         );
+
+        
         $this->limpiarCampos();
         
+
         $this->open=false;
         $this->emit('saved');
-
+        
+        
         //Para alerta de Editado
         if($this->verifiEdit == true){
             $this->emit('edit');
@@ -230,6 +245,55 @@ class Salidas extends Component
         $this->cantidad_salida = '';
         $this->cantidad_stockTotal = '';
         $this->total = 0;
+
+        
+    }
+
+    public function comp($idSalida){
+        $user = auth()->user();
+        $fechaActual = now();
+        $productos = Producto::all();
+        $categorias = Categoria::all();
+        $subcategorias = Subcategoria::all();
+        $proveedores = Proveedor::all();
+
+        $data = Salida::find($idSalida);
+        $horaCreacion = $data->created_at->format('H:i:s'); // Formato HH:MM:SS
+        $comprobante = Comprobante::where('salida_idSalida', $idSalida)->first();
+        if ($comprobante) {
+            $comprobante->n_comprobante;
+        } else {
+            // Retorna null si no se encontró un comprobante asociado a la salida
+            return null;
+        }
+
+
+        foreach($productos as $producto){
+            if($data['producto_idProducto'] == $producto->id){
+                $codigo_producto = $producto->codigo_producto;
+                $nombre_producto = $producto->nombre_producto;
+            }
+            foreach($categorias as $categoria){
+                if($producto->categoria_idCategoria == $categoria->id){
+                    $categoriaNombre = $categoria->nombre_categoria;
+                }
+            }
+            foreach($subcategorias as $subcategoria){
+                if($producto->subcategoria_idSubcategoria == $subcategoria->id){
+                    $subcategoriak = $subcategoria->nombre_subcategoria;
+                }
+            }
+        }
+        
+        $descripcion = $data['obs'];
+        $n_lote = $comprobante;
+        $fecha_salida = $data['fecha_salida'];
+        $cantidad = $data['cantidad'];
+        $recep = $data['recep'];
+
+        $pdf = Pdf::loadView('pages.pdf.salida', compact('n_lote','productos','recep','user',
+        'codigo_producto','nombre_producto','categoriaNombre','horaCreacion','subcategoriak','descripcion','fecha_salida','cantidad'));
+        return $pdf->setPaper('A4')->stream('salida.pdf');
 
         
     }

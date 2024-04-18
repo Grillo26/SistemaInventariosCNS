@@ -137,10 +137,12 @@ Route::group([ "middleware" => ['auth:sanctum', 'verified'] ], function() {
 
     Route::get('/reporte/entradas/pdf/{fechaInicio}/{fechaFin}', [ReporteEntradas::class, 'pdf'])->name('entradas.pdf');
     Route::get('/reporte/entradas/word/{fechaInicio}/{fechaFin}', [ReporteEntradas::class, 'word'])->name('entradas.word');
-    Route::get('/reporte/entrada/word/{id}', [ReporteEntradas::class, 'comp'])->name('comp.word');
+    Route::get('/reporte/entrada/pdf/{idEntrada}', [ReporteEntradas::class, 'comp'])->name('comp.word');
     
     Route::get('/reporte/salidas/pdf/{fechaInicio}/{fechaFin}', [ReporteSalidas::class, 'pdf'])->name('salidas.pdf');
     Route::get('/reporte/salidas/word/{fechaInicio}/{fechaFin}', [ReporteSalidas::class, 'word'])->name('salidas.word');
+    Route::get('/reporte/salida/pdf/{idSalida}', [ReporteSalidas::class, 'comp'])->name('comp.pdf');
+
 
     Route::get('/reporte/caducar/pdf/', [ ReporteCaducar::class, 'pdf' ])->name('caducar.pdf');
     Route::get('/reporte/caducar/word/', [ ReporteCaducar::class, 'word' ])->name('caducar.word');

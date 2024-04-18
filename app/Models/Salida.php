@@ -21,6 +21,7 @@ class Salida extends Model
         'fecha_salida',
         'cantidad',
         'obs',
+        'recep',
     ];
 
     //relación muchos a uno

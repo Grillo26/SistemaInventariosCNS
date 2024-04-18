@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 use App\Models\Entrada;
 use App\Models\Salida;
 use App\Models\Inventario;
+use App\Models\Proveedor;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
@@ -30,7 +31,7 @@ class ReporteEntradas extends Component
     
     public $fechaInicio;
     public $fechaFin;
-    public $entradas, $fechaRango;
+    public $entradas, $fechaRango, $idEntrada;
 
 
     public function mount(){
@@ -71,8 +72,11 @@ class ReporteEntradas extends Component
     public function pdf(Request $request, $fechaInicio, $fechaFin){
         $productos = Producto::all();
         $entradas = Entrada::whereBetween('fecha_adquisicion', [$fechaInicio, $fechaFin])->get();
+        $this->imagePath = public_path('img/encabezado.png');
+        $fechaI = Carbon::parse($fechaInicio)->toDateString();
+        $fechaF = Carbon::parse($fechaFin)->toDateString();
         // Filtra las entradas del almacén según el rango de fechas seleccionado
-        $pdf = Pdf::loadView('pages.pdf.entradas', compact('entradas','productos'));
+        $pdf = Pdf::loadView('pages.pdf.entradas', compact('entradas','productos','fechaI','fechaF'),['imagePath' => $this->imagePath]);
         return $pdf->setPaper('A4')->stream('entradas.pdf');
 
     }
@@ -133,14 +137,15 @@ class ReporteEntradas extends Component
 
     }
 
-    public function comp($id){
+    public function comp($idEntrada){
         $user = auth()->user();
         $fechaActual = now();
         $productos = Producto::all();
         $categorias = Categoria::all();
         $subcategorias = Subcategoria::all();
+        $proveedores = Proveedor::all();
 
-        $data = Entrada::find($id);
+        $data = Entrada::find($idEntrada);
 
         foreach($productos as $producto){
             if($data['producto_idProducto'] == $producto->id){
@@ -149,44 +154,35 @@ class ReporteEntradas extends Component
             }
             foreach($categorias as $categoria){
                 if($producto->categoria_idCategoria == $categoria->id){
-                    $categoria = $categoria->nombre_categoria;
+                    $categoriaNombre = $categoria->nombre_categoria;
                 }
             }
             foreach($subcategorias as $subcategoria){
                 if($producto->subcategoria_idSubcategoria == $subcategoria->id){
-                    $subcategoria = $subcategoria->nombre_subcategoria;
+                    $subcategoriak = $subcategoria->nombre_subcategoria;
                 }
             }
         }
+        foreach($proveedores as $proveedor){
+            if($data['proveedor_idProveedor'] == $proveedor->id){
+                $proveedor_nombre = $proveedor->nombre_proveedor;
+            }
+        }
         $descripcion = $data['descripcion'];
+        $n_lote = $data['n_lote'];
         $fecha_adquisicion = $data['fecha_adquisicion'];
         $fecha_caducidad = $data['fecha_caducidad'];
         $cantidad = $data['cantidad'];
+        $recep = $data['recep'];
+        $this->imagePath = public_path('img/encabezado.png');
 
-        try {
-            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(Storage_path('templateingreso.docx'));
-            $templateProcessor->setValue('name',$user);
-            $templateProcessor->setValue('date_now',$fechaActual);
-            $templateProcessor->setValue('desc',$descripcion);
-            $templateProcessor->setValue('codigo_producto',$codigo_producto);
-            $templateProcessor->setValue('nombre_producto',$nombre_producto);
-            $templateProcessor->setValue('cate',$categoria);
-            $templateProcessor->setValue('subcate',$subcategoria);
-            $templateProcessor->setValue('date',$fecha_adquisicion);
-            $templateProcessor->setValue('venc',$fecha_caducidad);
-            $templateProcessor->setValue('cantidad',$cantidad);
-            
-            // Guardar el documento Word generado
-            $outputPath = storage_path('app/public/documento_generado.docx');
-            $templateProcessor->saveAs($outputPath);
 
-            // Descargar el archivo
-            return response()->download($outputPath)->deleteFileAfterSend(true);
-        }
-        catch (\Exception $e) {
-            // Manejo de excepciones
-            dd($e->getMessage());
-        }
+        $pdf = Pdf::loadView('pages.pdf.entrada', compact('n_lote','productos','recep','user',
+        'codigo_producto','nombre_producto','proveedor_nombre','categoriaNombre','subcategoriak','descripcion','fecha_adquisicion','fecha_caducidad','cantidad'
+    ),['imagePath' => $this->imagePath]);
+        return $pdf->setPaper('A4')->stream('entrada.pdf');
+
+        
     }
 
 }

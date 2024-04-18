@@ -24,6 +24,7 @@
 		</div>
 
 		<!--Modal-->
+
 		<x-jet-dialog-modal wire:model="open">
 			<x-slot name="title">Registrar Salida</x-slot>
 			<x-slot name="content">
@@ -69,6 +70,7 @@
                                     <i class="fas fa-text-height"></i>
                                 </div>
                             </div>
+                    
                             <input id="nombre_producto" type="text" class="form-control phone-number" wire:model.defer="nombre_producto" disabled>
                         </div>
                         <x-jet-input-error for="nombre_producto" class="mt-2" />
@@ -243,6 +245,23 @@
                 
                 </div>
 
+                  <!--Receçionandte-->
+            
+                  <div class="p-1">
+                        <x-jet-label for="nombre_producto" value="{{ __('Nombre Recepcionante') }}" />
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <input id="valor_articulo" type="text" class="form-control " wire:model="recep"
+                            required>
+                        </div>
+                        <x-jet-input-error for="valor_articulo" class="mt-2" />
+                    </div>
+
 
 			</x-slot>
 			<x-slot name="footer">
@@ -352,9 +371,9 @@
                         <td>{{ $salida->fecha_salida}}</td>
                         <td>{{ $salida->cantidad}}</td>
                         <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$salida->id}})" role="button" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
-								<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
-								</td>
+                            <a href="/reporte/salida/pdf/{{ $salida->id}}" role="button" class="mr-3"><i class="fa fa-16px fa-file-pdf"></i></a>
+							<a x-on:click.prevent="deleteItem" role="button"><i class="fa fa-16px fa-trash text-red-500"></i></a>
+						</td>
 						</tr>
 						@endforeach
 						</tbody>

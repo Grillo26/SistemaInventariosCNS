@@ -4,6 +4,10 @@ namespace App\Http\Livewire;
 use App\Models\Entrada;
 use App\Models\Salida;
 use App\Models\Inventario;
+use App\Models\Comprobante;
+use App\Models\Proveedor;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 use App\Models\Producto;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -28,10 +32,11 @@ class ReporteSalidas extends Component
     
     public $fechaInicio;
     public $fechaFin;
-    public $salidas, $fechaRango;
+    public $salidas, $fechaRango, $idSalida;
 
     public function mount(){
         $this->productos = Producto::all();
+        $this->proveedores = Proveedor::all();
         $this->fechaInicio = Carbon::today()->subWeek(); // Establece la fecha de inicio por defecto
         $this->fechaFin = Carbon::today();
         $this->filtrarSalidas();
@@ -66,10 +71,16 @@ class ReporteSalidas extends Component
     }
 
     public function pdf(Request $request, $fechaInicio, $fechaFin){
+        $user = auth()->user();
         $productos = Producto::all();
         $salidas = Salida::whereBetween('fecha_salida', [$fechaInicio, $fechaFin])->get();
+        $this->imagePath = public_path('img/encabezado.png');
         // Filtra las salidas del almacén según el rango de fechas seleccionado
-        $pdf = Pdf::loadView('pages.pdf.salidas', compact('salidas','productos'));
+
+        $fechaI = Carbon::parse($this->fechaInicio)->toDateString();
+        $fechaF = Carbon::parse($this->fechaFin)->toDateString();
+
+        $pdf = Pdf::loadView('pages.pdf.salidas', compact('salidas','productos','user','fechaI','fechaF'),['imagePath' => $this->imagePath]);
         return $pdf->setPaper('A4')->stream('salidas.pdf');
 
     }
@@ -127,6 +138,61 @@ class ReporteSalidas extends Component
         // Descargar el archivo
         return response()->download($outputPath)->deleteFileAfterSend(true);
 
+    }
+
+    public function comp($idSalida){
+        $user = auth()->user();
+        $fechaActual = now();
+        $productos = Producto::all();
+        $categorias = Categoria::all();
+        $subcategorias = Subcategoria::all();
+        $proveedores = Proveedor::all();
+
+        
+
+
+        $data = Salida::find($idSalida);
+        $horaCreacion = $data->created_at->format('H:i:s'); // Formato HH:MM:SS
+        $comprobante = Comprobante::where('salida_idSalida', $idSalida)->first();
+        if ($comprobante) {
+            $comprobante->n_comprobante;
+        } else {
+            // Retorna null si no se encontró un comprobante asociado a la salida
+            return null;
+        }
+
+
+        foreach($productos as $producto){
+            if($data['producto_idProducto'] == $producto->id){
+                $codigo_producto = $producto->codigo_producto;
+                $nombre_producto = $producto->nombre_producto;
+            }
+            foreach($categorias as $categoria){
+                if($producto->categoria_idCategoria == $categoria->id){
+                    $categoriaNombre = $categoria->nombre_categoria;
+                }
+            }
+            foreach($subcategorias as $subcategoria){
+                if($producto->subcategoria_idSubcategoria == $subcategoria->id){
+                    $subcategoriak = $subcategoria->nombre_subcategoria;
+                }
+            }
+        }
+
+        
+        $descripcion = $data['obs'];
+        $n_lote = $comprobante;
+        $fecha_salida = $data['fecha_salida'];
+        $cantidad = $data['cantidad'];
+        $recep = $data['recep'];
+
+        $this->imagePath = public_path('img/encabezado.png');
+
+        $pdf = Pdf::loadView('pages.pdf.salida', compact('n_lote','productos','recep','user',
+        'codigo_producto','nombre_producto','categoriaNombre','horaCreacion','subcategoriak','descripcion','fecha_salida','cantidad'),['imagePath' => $this->imagePath]);
+        return $pdf->setPaper('A4')->stream('salida.pdf');
+
+        
     }
 
 }

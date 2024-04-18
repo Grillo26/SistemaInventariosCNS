@@ -39,7 +39,15 @@
     </style>
 </head>
 <body>
+	<div style="display: flex; align-items: center">
+        <img src="{{$imagePath}}" width="80px" height="70px" style="margin-right: 10px;">
+    </div>
     <div class="header">
+		<div style="display: flex; align-items: center; padding: 30px;">
+		
+		<h2 style="text-align: center; color: green; margin-top: -40px">CAJA NACIONAL DE SALUD </h2>
+		<p style="text-align: center; color: gray; margin-top: -10px; font-size:10px">DISTRITAL YACUIBA-TARIJA-BOLIVIA C/CREAVAUX N°243-TELEFAX 6822256-6282259</p>
+	</div>
         
         <h1>"KARDEX DE ARTICULO"</h1>
     </div>    
@@ -56,7 +64,7 @@
 				<div class="table-responsive">
 					<table class="table table-centered mb-0 align-middle table-hover table-nowrap">
 						<thead>
-							<tr>
+							<tr style="background: #D0CECE;">
 								<th>Fecha</th>
 								<th>Hora</th>
 								<th>Proveedor</th>								

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use App\Models\Entrada;
 use App\Models\Producto;
+use App\Models\Proveedor;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -60,7 +61,9 @@ class ReporteCaducar extends Component
     }
 
     public function pdf(){
+        $user = auth()->user();
         $productos = Producto::all();
+        $proveedores = Proveedor::all();
         // Obtener artículos próximos a caducar
         $articulosCaducar = Entrada::whereDate('fecha_caducidad', '<', Carbon::now())
        ->orWhereHas('productos', function($query) { 
@@ -73,8 +76,10 @@ class ReporteCaducar extends Component
         // Eliminado el uso de '%'
        ->orderBy($this->sort, $this->direction)
        ->get();
+       $this->imagePath = public_path('img/encabezado.png');
+
        
-        $pdf = Pdf::loadView('pages.pdf.caducar', compact('articulosCaducar','productos'));
+        $pdf = Pdf::loadView('pages.pdf.caducar', compact('articulosCaducar','user','productos','proveedores'),['imagePath' => $this->imagePath]);
         return $pdf->setPaper('A4')->stream('caducar.pdf');
     }
 

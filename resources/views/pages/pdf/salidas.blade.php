@@ -36,13 +36,30 @@
             font-size: 24px;
             text-align: center;
         }
+        p {
+            font-size: 16px;
+        }
+        /* Estilos del apartado de firma */
+        .firma {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .firma p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        
-        <h1>"REPORTE DE SALIDAS AL ALMACÉN"</h1>
+    <div style="display: flex; align-items: center">
+        <img src="{{$imagePath}}" width="750px" height="160px" style="margin-right: 10px;">
     </div>
+
+    <div class="header">
+        <h1>"REPORTE DE SALIDAS DEL ALMACÉN"</h1>
+    </div>
+    <p>Reporte de salidas de artículos del almacén entre el rango de fechas {{$fechaI}} y {{$fechaF}} en la unidad de Almacenes de
+        la Caja Nacional de Salud Distrital Yacuiba.
+    </p>
 	<!--TABLE-->
     @if($salidas->count())
 		<div class="row">
@@ -90,6 +107,11 @@
 			No se encontro ningún registro
 		</div>
 		@endif
+
+        <div class="firma">
+        <p>{{ $user->name . ' ' . $user->lastname }}</p>
+        <p>Encargado Almacén</p>
+        </div>
 	
 </div>
 </body>

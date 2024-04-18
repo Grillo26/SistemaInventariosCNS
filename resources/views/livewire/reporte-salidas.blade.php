@@ -109,7 +109,6 @@
                                 @endif
                             </th>
 
-                        <th><a>Acciones</th>
                     </tr>
                     </thead>
 
@@ -125,10 +124,6 @@
 
                         <td>{{ $salida->fecha_salida}}</td>
                         <td>{{ $salida->cantidad}}</td>
-
-                        <td class="whitespace-no-wrap row-action--icon">
-                            <a wire:click="editar({{$salida->id}})" role="button" class="mr-3"><i class="fa fa-50px fa-print"></i></a>
-						</td>
 					</tr>
 					@endforeach
 					</tbody>

@@ -39,10 +39,16 @@
     </style>
 </head>
 <body>
+    <div style="display: flex; align-items: center">
+        <img src="{{$imagePath}}" width="750px" height="160px" style="margin-right: 10px;">
+    </div>
     <div class="header">
         
         <h1>"REPORTE DE ENTRADAS AL ALMACÉN"</h1>
     </div>
+    <p>Reporte de Entradas de artículos del almacén entre el rango de fechas {{$fechaI}} y {{$fechaF}} en la unidad de Almacenes de
+        la Caja Nacional de Salud Distrital Yacuiba.
+    </p>
 	<!--TABLE-->
 	@if($entradas->count())
 		<div class="row">
@@ -69,7 +75,7 @@
 
                     <tbody>
                     @foreach ($entradas as $entrada)
-                    <tr x-data="window.__controller.dataTableController({{ $entrada->id }})">
+                    <tr>
                         @foreach ($productos as $producto)
                             @if($entrada->producto_idProducto == $producto->id)
                                 <td>{{ $producto-> codigo_producto }}</td>

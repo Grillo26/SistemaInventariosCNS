@@ -34,7 +34,7 @@ class Entradas extends Component
     $nombre_proveedor, $descripcion, 
     $fecha_adquisicion, $fecha_caducidad,
      $nombre_grupo, $nombre_cuenta, $nombre_unidad, 
-    $cantidad, $valor_articulo, $total=0, $n_lote, $ultimoNumeroLote;
+    $cantidad, $valor_articulo, $total=0, $n_lote, $ultimoNumeroLote, $recep;
 
     protected $listeners = [ "deleteItem" => "delete_item" , 'calcular'];
 
@@ -103,6 +103,7 @@ class Entradas extends Component
             'cantidad' => $this->cantidad, //Esta cantidad es editable
             'valor_articulo' => $this->valor_articulo,
             'n_lote' => $this->n_lote,
+            'recep' => $this->recep,
         ]);
 
         // Crear un registro en la tabla 'inventarios' o actualizar si ya existe
@@ -148,7 +149,7 @@ class Entradas extends Component
         $this->grupos = Grupo::orderBy('id', 'asc')->get();   
         $this->cuentas = Cuenta::orderBy('id', 'asc')->get();   
         $this->unidades = Unidad::orderBy('id', 'asc')->get();   
-        $this->proveedors = Proveedor::orderBy('id', 'asc')->get();   
+        $this->proveedores = Proveedor::orderBy('id', 'asc')->get();   
         $this->pasillos = Pasillo::orderBy('id', 'asc')->get();   
         $this->estantes = Estante::orderBy('id', 'asc')->get();   
         $this->mesas = Mesa::orderBy('id', 'asc')->get(); 
